@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import styles from "./Detail.module.css";
 function Detail() {
   const { id } = useParams();
   const [detail, setDetail] = useState([]);
@@ -14,13 +15,15 @@ function Detail() {
   }, []);
   console.log(detail);
   return (
-    <div>
-      <h1>Detail of {detail.title_long}</h1>
-      <img src={detail.large_cover_image}></img>
+    <div className={styles.container}>
+      <img src={detail.medium_cover_image}></img>
+      <div className={styles.description}>
+      <h1 className={styles.description}>{detail.title_long}</h1>
       <p>Rating : {detail.rating}</p>
       <p>Runtime : {detail.runtime}</p>
       <p>download : {detail.download_count}</p>
-      <p>summary : {detail.description_full}</p>
+      <ul>{detail.genres.map((gg) => (<li key={gg}>{gg}</li>))}</ul>
+      </div>
     </div>
   );
 }
