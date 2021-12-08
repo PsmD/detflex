@@ -4,6 +4,12 @@
     justify-content: center;
   }
   
+  .bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  
   .movies {
     display: grid;
     grid-template-columns: repeat(2, minmax(400px, 1fr));
