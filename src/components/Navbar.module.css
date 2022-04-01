@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  padding: 0px 30px;
+  justify-content: space-between;
+  background-color: rgb(255, 239, 239);
+  z-index: 10;
+}
+
+.MenuItem a {
+  margin: 0px 20px;
+  position: relative;
+  top: 20%;
+  font-size: 20px;
+}
+
+.webName {
+  position: relative;
+  font-size: 20px;
+  top: 20%;
+  text-shadow: 2px 2px #c7cdd4;
+}
+
+.webName:hover {
+  transform: scale(1.1);
+}
+
+.MenuItem {
+  display: flex;
+  align-content: center;
+  text-shadow: 2px 2px #c7cdd4;
+  margin-left: 160px;
+}
+
+.Item {
+  display: flex;
+  align-content: center;
+  text-shadow: 2px 2px #c7cdd4;
+}
+
+.Item_i:hover {
+  transform: scale(1.1);
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+}
+
+.sign {
+  display: flex;
+  font-size: 12px;
+  margin-right: 10px;
+  margin-top: 5px;
+  text-shadow: 1px 1px #c7cdd4;
+}
+
+.sign a {
+  margin-right: 10px;
+}
+
+.signIn:hover {
+  transform: scale(1.1);
+}
+
+.signUp:hover {
+  transform: scale(1.1);
+}
+
+.searchBar input {
+  border: 1px solid black;
+  border-radius: 20px;
+  height: 30px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.searchBar button {
+  border: none;
+  cursor: pointer;
+}
