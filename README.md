@@ -27,3 +27,13 @@
   - hover시 텍스트 박스 scale이 1.1배 증가하는 효과 구현
 
   - Top에서 투명색인 Navbar 백그라운드 컬러를 스크롤을 60이상 내리면 서서히 애니메이션과 함께 지정한 rgb 색이 나오는 효과 구현 (position을 fixed로 두어 스크롤을 내려도 Navnar가 사라지지 않는다)
+
+<br>
+
+**_`22/04/02`_**
+
+- **Sign In, Sign Up을 위한 Modal창 구현**
+
+  - 중첩 라우팅으로 Home 화면 위에 modal 렌더링
+
+  - modal창 위에 Overlay 박스를 두어서 클릭하면 창이 닫히도록 구현
