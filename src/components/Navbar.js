@@ -5,14 +5,34 @@ import { Menu_obj, Menu_key_arr } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import SignIn from "../modals/SignIn";
+import SignUp from "../modals/SignUp";
 
 function Navbar() {
+  const [signInOn, setSignInOn] = useState(false);
+  const [signUpOn, setSignUpOn] = useState(false);
   const [search, setSearch] = useState(null);
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
 
   const searchClick = (event) => {
     setSearch(event.target.value);
+  };
+
+  const openSignIn = () => {
+    setSignInOn(true);
+  };
+
+  const openSignUp = () => {
+    setSignUpOn(true);
+  };
+
+  const closedSignIn = () => {
+    setSignInOn(false);
+  };
+
+  const closedSignUp = () => {
+    setSignUpOn(false);
   };
 
   const navVariants = {
@@ -35,50 +55,58 @@ function Navbar() {
   }, [scrollY, navAnimation]);
 
   return (
-    <motion.div variants={navVariants} animate={navAnimation} initial={"top"} className={styles.container}>
-      <div className={styles.webName}>
-        <Link to={"/"}>DGFLEX</Link>
-      </div>
-      <div className={styles.MenuItem}>
-        {Menu_key_arr.map((key) => {
-          return (
-            <div className={styles.Item} key={key}>
-              <div className={styles.Item_i}>
-                <Link to={`/page/${Menu_obj[key]}/1`}>{key}</Link>
+    <>
+      <motion.div variants={navVariants} animate={navAnimation} initial={"top"} className={styles.container}>
+        <div className={styles.webName}>
+          <Link to={"/"}>DGFLEX</Link>
+        </div>
+        <div className={styles.MenuItem}>
+          {Menu_key_arr.map((key) => {
+            return (
+              <div className={styles.Item} key={key}>
+                <div className={styles.Item_i}>
+                  <Link to={`/page/${Menu_obj[key]}/1`}>{key}</Link>
+                </div>
               </div>
+            );
+          })}
+        </div>
+        <div className={styles.searchBar}>
+          <div className={styles.sign}>
+            <div className={styles.signIn}>
+              <Link to={`/signin`} onClick={openSignIn}>
+                Sign In
+              </Link>
             </div>
-          );
-        })}
-      </div>
-      <div className={styles.searchBar}>
-        <div className={styles.sign}>
-          <div className={styles.signIn}>
-            <Link to={`/signin`}>Sign In</Link>
+            <div className={styles.signUp}>
+              <Link to={`/signup`} onClick={openSignUp}>
+                Sign Up
+              </Link>
+            </div>
           </div>
-          <div className={styles.signUp}>
-            <Link to={`/signup`}>Sign Up</Link>
+          <div>
+            <form>
+              <input
+                type="text"
+                value={search}
+                onChange={searchClick}
+                placeholder="Search!"
+                onMouseOut={() => {
+                  setSearch("");
+                }}
+              ></input>
+              <Link to={`/search/${search}`}>
+                <button>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+                </button>
+              </Link>
+            </form>
           </div>
         </div>
-        <div>
-          <form>
-            <input
-              type="text"
-              value={search}
-              onChange={searchClick}
-              placeholder="Search!"
-              onMouseOut={() => {
-                setSearch("");
-              }}
-            ></input>
-            <Link to={`/search/${search}`}>
-              <button>
-                <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
-              </button>
-            </Link>
-          </form>
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+      <SignIn state={signInOn} closeModal={closedSignIn} />
+      <SignUp state={signUpOn} closeModal={closedSignUp} />
+    </>
   );
 }
 
