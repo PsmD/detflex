@@ -3,8 +3,8 @@ import { RecoilRoot } from "recoil";
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
 import Navbar from "./components/Navbar";
-import SignIn from "./modals/SignIn";
-import SignUp from "./modals/SignUp";
+import SignIn from "./modals/Signs/SignIn";
+import SignUp from "./modals/Signs/SignUp";
 
 function App() {
   return (
