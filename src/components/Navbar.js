@@ -5,12 +5,13 @@ import { Menu_obj, Menu_key_arr } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import SignIn from "../modals/SignIn";
-import SignUp from "../modals/SignUp";
+import Modal from "../modals/Modal";
+import SignIn from "../modals/Signs/SignIn";
+import SignUp from "../modals/Signs/SignUp";
 
 function Navbar() {
-  const [signInOn, setSignInOn] = useState(false);
-  const [signUpOn, setSignUpOn] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [chageModal, setChageModal] = useState("signIn");
   const [search, setSearch] = useState(null);
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
@@ -19,20 +20,21 @@ function Navbar() {
     setSearch(event.target.value);
   };
 
-  const openSignIn = () => {
-    setSignInOn(true);
+  const modalOpen = (e) => {
+    if (e.target.name === "signIn") {
+      setChageModal("signIn");
+    } else {
+      setChageModal("signUp");
+    }
+    setOpenModal(true);
   };
 
-  const openSignUp = () => {
-    setSignUpOn(true);
+  const transModal = () => {
+    setChageModal("signUp");
   };
 
-  const closedSignIn = () => {
-    setSignInOn(false);
-  };
-
-  const closedSignUp = () => {
-    setSignUpOn(false);
+  const closeModal = () => {
+    setOpenModal(false);
   };
 
   const navVariants = {
@@ -74,12 +76,12 @@ function Navbar() {
         <div className={styles.searchBar}>
           <div className={styles.sign}>
             <div className={styles.signIn}>
-              <Link to={`/signin`} onClick={openSignIn}>
+              <Link to={`/signin`} onClick={modalOpen}>
                 Sign In
               </Link>
             </div>
             <div className={styles.signUp}>
-              <Link to={`/signup`} onClick={openSignUp}>
+              <Link to={`/signup`} onClick={modalOpen}>
                 Sign Up
               </Link>
             </div>
@@ -104,8 +106,10 @@ function Navbar() {
           </div>
         </div>
       </motion.div>
-      <SignIn state={signInOn} closeModal={closedSignIn} />
-      <SignUp state={signUpOn} closeModal={closedSignUp} />
+      <Modal state={openModal} closeModal={closeModal}>
+        {chageModal === "signIn" && <SignIn chage={transModal} />}
+        {chageModal === "signUp" && <SignUp />}
+      </Modal>
     </>
   );
 }
