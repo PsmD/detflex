@@ -5,13 +5,12 @@ import { Menu_obj, Menu_key_arr } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import Modal from "../modals/Modal";
-import SignIn from "../modals/Signs/SignIn";
-import SignUp from "../modals/Signs/SignUp";
+import SignIn from "../modals/SignIn";
+import SignUp from "../modals/SignUp";
 
 function Navbar() {
   const [openModal, setOpenModal] = useState(false);
-  const [chageModal, setChageModal] = useState("signIn");
+  const [changeModal, setChangeModal] = useState("signIn");
   const [search, setSearch] = useState(null);
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
@@ -22,15 +21,11 @@ function Navbar() {
 
   const modalOpen = (e) => {
     if (e.target.name === "signIn") {
-      setChageModal("signIn");
+      setChangeModal("signIn");
     } else {
-      setChageModal("signUp");
+      setChangeModal("signUp");
     }
     setOpenModal(true);
-  };
-
-  const transModal = () => {
-    setChageModal("signUp");
   };
 
   const closeModal = () => {
@@ -76,12 +71,12 @@ function Navbar() {
         <div className={styles.searchBar}>
           <div className={styles.sign}>
             <div className={styles.signIn}>
-              <Link to={`/signin`} onClick={modalOpen}>
+              <Link to={`/signin`} name="signIn" onClick={modalOpen}>
                 Sign In
               </Link>
             </div>
             <div className={styles.signUp}>
-              <Link to={`/signup`} onClick={modalOpen}>
+              <Link to={`/signup`} name="signUp" onClick={modalOpen}>
                 Sign Up
               </Link>
             </div>
@@ -106,10 +101,8 @@ function Navbar() {
           </div>
         </div>
       </motion.div>
-      <Modal state={openModal} closeModal={closeModal}>
-        {chageModal === "signIn" && <SignIn chage={transModal} />}
-        {chageModal === "signUp" && <SignUp />}
-      </Modal>
+      {changeModal === "signIn" && <SignIn state={openModal} closeModal={closeModal} scrollY={scrollY} />}
+      {changeModal === "signUp" && <SignUp state={openModal} closeModal={closeModal} scrollY={scrollY} />}
     </>
   );
 }
