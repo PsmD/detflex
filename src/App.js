@@ -3,8 +3,6 @@ import { RecoilRoot } from "recoil";
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
 import Navbar from "./components/Navbar";
-import SignIn from "./modals/SignIn";
-import SignUp from "./modals/SignUp";
 
 function App() {
   return (
@@ -12,10 +10,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path={"/"} element={<Home />}>
-            <Route path={"/signin"} element={<SignIn />} />
-            <Route path={"/signup"} element={<SignUp />} />
-          </Route>
+          <Route path={"/"} element={<Home />} />
           <Route path={`/movie/:id`} element={<Detail />} />
         </Routes>
       </Router>

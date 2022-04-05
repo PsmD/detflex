@@ -1,5 +1,8 @@
 import React from "react";
 import styles from "./SignIn.module.css";
+import OrLine from "../components/OrLine";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 function SignIn({ state, closeModal, scrollY }) {
   return state ? (
@@ -22,7 +25,11 @@ function SignIn({ state, closeModal, scrollY }) {
             <input className={styles.passwordInput} placeholder="Password"></input>
           </div>
           <button className={styles.signInButton}>Sign In</button>
-          <button className={styles.googleLoginButton}>Google Login</button>
+          <OrLine text={"OR"} />
+          <button className={styles.googleLoginButton}>
+            <FontAwesomeIcon icon={faGoogle} size="lg" />
+            &nbsp; Google Login
+          </button>
         </div>
       </div>
     </div>
