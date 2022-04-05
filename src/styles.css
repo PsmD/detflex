@@ -6,9 +6,14 @@
 }
 
 body {
+  -ms-overflow-style: none;
   font-family: "Work Sans", sans-serif;
   background-color: #eff3f7;
   height: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 a {
