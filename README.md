@@ -34,8 +34,6 @@
 
 - **Sign In, Sign Up을 위한 Modal창 구현**
 
-  - 중첩 라우팅으로 Home 화면 위에 modal 렌더링
-
   - modal창 위에 Overlay 박스를 두어서 클릭하면 창이 닫히도록 구현
 
 <br>
@@ -44,7 +42,7 @@
 
 - **Modal 구현 코드 리팩토링 및 재사용성 증가**
 
-  - 공통 모달을 두고 자식 컴포넌트만 변화를 주어 재사용성을 높임
+  - 공통 modal을 두고 자식 컴포넌트만 변화를 주어 재사용성을 높임
 
   - 반복적인 코드 정리
 
@@ -57,3 +55,15 @@
   - Email adress와 Password로 구성
 
   - google 로그인 기능 추가 예정
+
+<br>
+
+**_`22/04/05`_**
+
+- **Sign Up Modal 스타일 설정 및 스크롤 방지**
+
+  - User name, Email adress, Password, Confirm password로 구성
+
+  - google 회원가입 기능 추가 예정
+
+  - modal이 켜진 상태에서 스크롤이 작동하던 문제 해결
