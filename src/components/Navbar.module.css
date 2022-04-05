@@ -44,7 +44,7 @@
   transform: scale(1.1);
 }
 
-.searchBar {
+.sign_searchBar {
   display: flex;
   align-items: center;
 }
@@ -57,8 +57,9 @@
   text-shadow: 1px 1px #c7cdd4;
 }
 
-.sign a {
+.sign span {
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .signIn:hover {
@@ -69,7 +70,7 @@
   transform: scale(1.1);
 }
 
-.searchBar input {
+.sign_searchBar input {
   border: 1px solid black;
   border-radius: 20px;
   height: 30px;
@@ -77,7 +78,12 @@
   text-align: center;
 }
 
-.searchBar button {
+.sign_searchBar button {
   border: none;
   cursor: pointer;
+}
+
+.searchIcon:hover {
+  background-color: rgb(255, 239, 239);
+  transform: scale(1.1);
 }
