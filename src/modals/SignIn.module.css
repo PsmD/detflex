@@ -8,7 +8,7 @@
 }
 
 .modalBox {
-  position: fixed;
+  position: absolute;
   width: 500px;
   height: 400px;
   left: 0;
@@ -23,17 +23,25 @@
 .header {
   display: flex;
   justify-content: space-between;
-  padding: 5px 25px;
+  padding: 9px 32px;
 }
 
 .title {
   font-size: 30px;
+  text-shadow: 1px 1px #c7cdd4;
+  color: rgb(63, 63, 63);
 }
 
 .closeButton {
   margin-top: 3px;
   font-size: 25px;
   cursor: pointer;
+  text-shadow: 1px 1px #c7cdd4;
+  color: rgb(63, 63, 63);
+}
+
+.closeButton:hover {
+  transform: scale(1.1);
 }
 
 .modalBody {
@@ -56,6 +64,7 @@
 .emailLabel {
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
 }
 
 input::placeholder {
@@ -64,7 +73,7 @@ input::placeholder {
 
 .emailInput {
   margin-bottom: 10px;
-  border-radius: 3px;
+  border-radius: 8px;
   border: 1px solid #e5e5e5;
   padding: 8px 10px;
 }
@@ -77,10 +86,11 @@ input::placeholder {
 .passwordLabel {
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
 }
 
 .passwordInput {
-  border-radius: 3px;
+  border-radius: 8px;
   border: 1px solid #e5e5e5;
   padding: 8px 10px;
 }
@@ -90,13 +100,18 @@ input::placeholder {
   font-size: 14px;
   padding: 13px 30px;
   cursor: pointer;
-  background-color: rgb(129, 171, 249);
+  background-color: rgb(154, 188, 252);
   color: white;
   line-height: 1px;
-  margin-top: 40px;
+  margin-top: 35px;
   margin-bottom: 12px;
   border-radius: 10px;
+  text-shadow: 0.5px 0.5px #c7cdd4;
   border-style: none;
+}
+
+.signInButton:hover {
+  transform: scale(1.009);
 }
 
 .googleLoginButton {
@@ -106,9 +121,15 @@ input::placeholder {
   box-sizing: border-box;
   height: 40px;
   margin-bottom: 0px;
-  background-color: #242eec;
-  border-color: #242eec;
+  background-color: #4285f4;
+  border-color: #4285f4;
+  font-size: 14px;
   color: white;
   border-radius: 10px;
+  text-shadow: 0.5px 0.5px #c7cdd4;
   cursor: pointer;
+}
+
+.googleLoginButton:hover {
+  transform: scale(1.009);
 }

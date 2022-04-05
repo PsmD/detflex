@@ -1,0 +1,13 @@
+.line {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #aaa;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
+
+.line span {
+  color: #848383;
+  padding: 0 10px;
+  background-color: #f6f6f6;
+}
