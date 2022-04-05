@@ -26,10 +26,12 @@ function Navbar() {
       setChangeModal("signUp");
     }
     setOpenModal(true);
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setOpenModal(false);
+    document.body.style.overflow = "unset";
   };
 
   const navVariants = {
@@ -68,17 +70,17 @@ function Navbar() {
             );
           })}
         </div>
-        <div className={styles.searchBar}>
+        <div className={styles.sign_searchBar}>
           <div className={styles.sign}>
             <div className={styles.signIn}>
-              <Link to={`/signin`} name="signIn" onClick={modalOpen}>
+              <span name="signIn" onClick={modalOpen}>
                 Sign In
-              </Link>
+              </span>
             </div>
             <div className={styles.signUp}>
-              <Link to={`/signup`} name="signUp" onClick={modalOpen}>
+              <span name="signUp" onClick={modalOpen}>
                 Sign Up
-              </Link>
+              </span>
             </div>
           </div>
           <div>
@@ -94,7 +96,7 @@ function Navbar() {
               ></input>
               <Link to={`/search/${search}`}>
                 <button>
-                  <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+                  <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" className={styles.searchIcon} />
                 </button>
               </Link>
             </form>
