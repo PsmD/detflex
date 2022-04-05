@@ -20,6 +20,7 @@
 .img {
   height: 345px;
 }
+
 .textbox {
   padding: 0 16px 0 32px;
   width: 300px;
@@ -29,10 +30,11 @@
 .title {
   font-weight: bold;
   font-size: 28px;
+  margin-bottom: 20px;
 }
 
 .title:hover {
-  text-decoration: underline;
+  transform: scale(1.03);
 }
 
 .title a {
