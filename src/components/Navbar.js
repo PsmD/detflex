@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
-import { Menu_obj, Menu_key_arr } from "../atom/NavMenu";
+import { MovieMenu_obj, MovieMenu_key_arr } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -60,11 +60,11 @@ function Navbar() {
           <Link to={"/"}>DGFLEX</Link>
         </div>
         <div className={styles.MenuItem}>
-          {Menu_key_arr.map((key) => {
+          {MovieMenu_key_arr.map((key) => {
             return (
               <div className={styles.Item} key={key}>
                 <div className={styles.Item_i}>
-                  <Link to={`/page/${Menu_obj[key]}/1`}>{key}</Link>
+                  <Link to={`/page/${MovieMenu_obj[key]}/1`}>{key}</Link>
                 </div>
               </div>
             );
@@ -72,16 +72,12 @@ function Navbar() {
         </div>
         <div className={styles.sign_searchBar}>
           <div className={styles.sign}>
-            <div className={styles.signIn}>
-              <span name="signIn" onClick={modalOpen}>
-                Sign In
-              </span>
-            </div>
-            <div className={styles.signUp}>
-              <span name="signUp" onClick={modalOpen}>
-                Sign Up
-              </span>
-            </div>
+            <span className={styles.signIn} name="signIn" onClick={modalOpen}>
+              Sign In
+            </span>
+            <span className={styles.signUp} name="signUp" onClick={modalOpen}>
+              Sign Up
+            </span>
           </div>
           <div>
             <form>
