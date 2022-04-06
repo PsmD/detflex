@@ -3,6 +3,7 @@ import { RecoilRoot } from "recoil";
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
 import Navbar from "./components/Navbar";
+import MovieMenu from "./routes/MovieMenu";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path={"/"} element={<Home />} />
+          <Route path={`/page/:menu/:page`} element={<MovieMenu />} />
           <Route path={`/movie/:id`} element={<Detail />} />
         </Routes>
       </Router>
