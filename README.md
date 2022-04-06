@@ -67,3 +67,13 @@
   - google 회원가입 기능 추가 예정
 
   - modal이 켜진 상태에서 스크롤이 작동하던 문제 해결
+
+<br>
+
+**_`22/04/06`_**
+
+- **Navbar Menu에 따라 다른 Movie data fetching**
+
+  - React Hook useEffect has a missing dependency(exhaustive-deps-warning) warning 문구 해결 (usecallback 사용)
+
+  - useParams를 사용하여 구현
