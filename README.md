@@ -77,3 +77,13 @@
   - React Hook useEffect has a missing dependency(exhaustive-deps-warning) warning 문구 해결 (usecallback 사용)
 
   - useParams를 사용하여 구현
+
+<br>
+
+**_`22/04/07`_**
+
+- **API를 가져오는 방식을 fetch에서 axios 방식으로 변경**
+
+  - 기타 Movie cards 내용 수정(Movie detail에만 영화 줄거리 렌더링)
+
+  - e.target.name undefined 문제 getAttribute()로 해결(DOM API가 있는 태그는 그냥 써도 되지만 다른 요소에서는 DOM에 접근할 수 없어서 e.target.name 방식이 작동하지 않는데, 그런 경우 getAttribute()로 원하는 속성 값을 가져올 수 있다!)
