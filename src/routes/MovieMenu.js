@@ -3,6 +3,7 @@ import styles from "./MovieMenu.module.css";
 import MovieCard from "../components/MovieCard";
 import Loading from "../components/Loading";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function MovieMenu() {
   const { menu, page } = useParams();
@@ -10,9 +11,15 @@ function MovieMenu() {
   const [movies, setMovies] = useState([]);
 
   const getMovies = useCallback(async () => {
-    const json = await (await fetch(`https://yts.mx/api/v2/list_movies.json?page=${page}&${menu}&sort_by=rating`)).json();
-    setMovies(json.data.movies);
-    setLoading(false);
+    await axios
+      .get(`https://yts.mx/api/v2/list_movies.json?page=${page}&${menu}&sort_by=rating`)
+      .then((res) => {
+        setMovies(res.data.data.movies);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [menu, page]);
 
   useEffect(() => {
@@ -36,6 +43,7 @@ function MovieMenu() {
               rating={movie.rating}
               runtime={movie.runtime}
               year={movie.year}
+              genres={movie.genres}
             />
           ))}
         </div>

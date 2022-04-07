@@ -2,16 +2,24 @@ import { useEffect, useState } from "react";
 import Movie from "../components/Movie";
 import styles from "./Home.module.css";
 import Loading from "../components/Loading";
+import axios from "axios";
 
 function Home() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
+
   const getMovies = async () => {
-    const json = await (await fetch(`https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year`)).json();
-    setMovies(json.data.movies);
-    setLoading(false);
-    console.log(json);
+    await axios
+      .get("https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year")
+      .then((res) => {
+        setMovies(res.data.data.movies);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
   useEffect(() => {
     getMovies();
   }, []);
