@@ -19,8 +19,8 @@ function Navbar() {
     setSearch(event.target.value);
   };
 
-  const modalOpen = (e) => {
-    if (e.target.name === "signIn") {
+  const modalOpen = (event) => {
+    if (event.target.getAttribute("name") === "signIn") {
       setChangeModal("signIn");
     } else {
       setChangeModal("signUp");
@@ -72,10 +72,10 @@ function Navbar() {
         </div>
         <div className={styles.sign_searchBar}>
           <div className={styles.sign}>
-            <span className={styles.signIn} name="signIn" onClick={modalOpen}>
+            <span name={"signIn"} onClick={modalOpen} className={styles.signIn}>
               Sign In
             </span>
-            <span className={styles.signUp} name="signUp" onClick={modalOpen}>
+            <span name={"signUp"} onClick={modalOpen} className={styles.signUp}>
               Sign Up
             </span>
           </div>
