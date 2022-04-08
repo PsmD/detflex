@@ -57,7 +57,7 @@ function Navbar() {
     <>
       <motion.div variants={navVariants} animate={navAnimation} initial={"top"} className={styles.container}>
         <div className={styles.webName}>
-          <Link to={"/"}>DGFLEX</Link>
+          <Link to={"/"}>DETFLEX</Link>
         </div>
         <div className={styles.MenuItem}>
           {MovieMenu_key_arr.map((key) => {
