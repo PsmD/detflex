@@ -10,7 +10,7 @@ function Home() {
 
   const getMovies = async () => {
     await axios
-      .get("https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year")
+      .get("https://yts.mx/api/v2/list_movies.json?&sort_by=rating")
       .then((res) => {
         setMovies(res.data.data.movies);
         setLoading(false);
