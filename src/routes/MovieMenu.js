@@ -2,8 +2,10 @@ import { useEffect, useState, useCallback } from "react";
 import styles from "./MovieMenu.module.css";
 import MovieCard from "../components/MovieCard";
 import Loading from "../components/Loading";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+
+const listNumbers = [...Array(10)].map((_, i) => i + 1);
 
 function MovieMenu() {
   const { menu, page } = useParams();
@@ -40,14 +42,26 @@ function MovieMenu() {
               id={movie.id}
               title={movie.title}
               coverImg={movie.medium_cover_image}
+              year={movie.year}
               rating={movie.rating}
               runtime={movie.runtime}
-              year={movie.year}
-              genres={movie.genres}
             />
           ))}
         </div>
       )}
+      <ul className={styles.footer}>
+        {loading
+          ? null
+          : listNumbers.map((lN) => {
+              return (
+                <li>
+                  <Link to={`/page/${menu}/${lN}`} className={lN === page ? styles.focusing : null}>
+                    {lN}
+                  </Link>
+                </li>
+              );
+            })}
+      </ul>
     </div>
   );
 }
