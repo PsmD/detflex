@@ -87,3 +87,11 @@
   - 기타 Movie cards 내용 수정(Movie detail에만 영화 줄거리 렌더링)
 
   - e.target.name undefined 문제 getAttribute()로 해결(DOM API가 있는 태그는 그냥 써도 되지만 다른 요소에서는 DOM에 접근할 수 없어서 e.target.name 방식이 작동하지 않는데, 그런 경우 getAttribute()로 원하는 속성 값을 가져올 수 있다!)
+
+<br>
+
+**_`22/04/08`_**
+
+- **Navbar 메뉴에 따라 다른 영화 리스트 스타일링(v1)**
+
+  - 영화를 Rating순으로 정렬하고 20위 까지만 보여준 뒤 밑에 숫자바를 설치해 다음 영화 리스트 페이지로 이동 가능하게 구현
