@@ -1,7 +1,8 @@
 .container {
   height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .movies {
@@ -11,4 +12,29 @@
   grid-gap: 5px;
   width: 90%;
   padding-top: 150px;
+}
+
+.footer {
+  display: flex;
+  list-style: none;
+  width: 30%;
+  justify-content: space-around;
+  margin-bottom: 50px;
+  align-items: center;
+}
+
+.nums {
+  font-size: 100%;
+  text-shadow: 3px 3px #c7cdd4;
+  transition: all 0.4s ease;
+}
+
+.nums:hover {
+  transform: translateY(-3px);
+}
+
+.focusing {
+  pointer-events: none;
+  font-weight: bold;
+  zoom: 1.3;
 }

@@ -54,8 +54,8 @@ function MovieMenu() {
           ? null
           : listNumbers.map((lN) => {
               return (
-                <li>
-                  <Link to={`/page/${menu}/${lN}`} className={lN === page ? styles.focusing : null}>
+                <li key={lN} className={styles.nums}>
+                  <Link to={`/page/${menu}/${lN}`} className={lN == page ? styles.focusing : null}>
                     {lN}
                   </Link>
                 </li>
