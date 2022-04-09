@@ -1,4 +1,4 @@
-# React.JS-movie-web-service (DGFLEX)
+# React.JS-movie-web-service (DETFLEX)
 
 ### 유저를 위한 영화 추천 웹
 
@@ -95,3 +95,13 @@
 - **Navbar 메뉴에 따라 다른 영화 리스트 스타일링(v1)**
 
   - 영화를 Rating순으로 정렬하고 20위 까지만 보여준 뒤 밑에 숫자바를 설치해 다음 영화 리스트 페이지로 이동 가능하게 구현
+
+<br>
+
+**_`22/04/09`_**
+
+- **Navbar 메뉴에 따라 다른 영화 리스트 스타일링(v2)**
+
+  - page number bar 스타일링 (현재 페이지 number는 css zoom을 이용하여 강조)
+
+  - Home 화면 Main slider 초기 세팅 작업
