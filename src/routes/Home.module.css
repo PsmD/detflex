@@ -1,20 +1,19 @@
 .container {
   height: 100%;
-  display: flex;
-  justify-content: center;
 }
 
-.bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.movies {
+.row {
+  margin-top: 200px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(400px, 1fr));
-  grid-gap: 20px;
-  padding: 50px;
-  width: 97%;
-  padding-top: 120px;
+  gap: 10px;
+  grid-template-columns: repeat(6, 1fr);
+  position: absolute;
+  width: 100%;
+}
+
+.box {
+  background-color: white;
+  height: 200px;
+  color: red;
+  font-size: 66px;
 }
