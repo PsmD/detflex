@@ -21,10 +21,11 @@
   font-size: 20px;
   top: 20%;
   text-shadow: 2px 2px #c7cdd4;
+  transition: all 0.4s ease;
 }
 
 .webName:hover {
-  transform: scale(1.1);
+  transform: translateY(-3px);
 }
 
 .MenuItem {
@@ -40,8 +41,12 @@
   text-shadow: 2px 2px #c7cdd4;
 }
 
+.Item_i {
+  transition: all 0.4s ease;
+}
+
 .Item_i:hover {
-  transform: scale(1.1);
+  transform: translateY(-3px);
 }
 
 .sign_searchBar {
@@ -62,12 +67,20 @@
   cursor: pointer;
 }
 
+.signIn {
+  transition: all 0.4s ease;
+}
+
 .signIn:hover {
-  transform: scale(1.1);
+  transform: translateY(-2px);
+}
+
+.signUp {
+  transition: all 0.4s ease;
 }
 
 .signUp:hover {
-  transform: scale(1.1);
+  transform: translateY(-2px);
 }
 
 .sign_searchBar input {
