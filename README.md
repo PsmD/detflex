@@ -1,4 +1,4 @@
-# React.JS-movie-web-service (DETFLEX)
+# DETFLEX
 
 ### 유저를 위한 영화 추천 웹
 
