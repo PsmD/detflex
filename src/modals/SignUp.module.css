@@ -157,6 +157,7 @@ input::placeholder {
   box-sizing: border-box;
   height: 40px;
   margin-bottom: 0px;
+  border-style: none;
   background-color: #4285f4;
   border-color: #4285f4;
   font-size: 14px;
