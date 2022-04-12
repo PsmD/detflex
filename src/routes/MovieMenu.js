@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-import styles from "./MovieMenu.module.css";
 import MovieCard from "../components/MovieCard";
 import Loading from "../components/Loading";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 
 const listNumbers = [...Array(10)].map((_, i) => i + 1);
 
@@ -31,11 +31,11 @@ function MovieMenu() {
   }, [getMovies]);
 
   return (
-    <div className={styles.container}>
+    <Container>
       {loading ? (
         <Loading />
       ) : (
-        <div className={styles.movies}>
+        <Movies>
           {movies.map((movie) => (
             <MovieCard
               key={movie.id}
@@ -47,23 +47,61 @@ function MovieMenu() {
               runtime={movie.runtime}
             />
           ))}
-        </div>
+        </Movies>
       )}
-      <ul className={styles.footer}>
+      <Footer>
         {loading
           ? null
           : listNumbers.map((lN) => {
               return (
-                <li key={lN} className={styles.nums}>
-                  <Link to={`/page/${menu}/${lN}`} className={lN == page ? styles.focusing : null}>
-                    {lN}
-                  </Link>
-                </li>
+                <Nums lN={lN} page={page} key={lN}>
+                  <Link to={`/page/${menu}/${lN}`}>{lN}</Link>
+                </Nums>
               );
             })}
-      </ul>
-    </div>
+      </Footer>
+    </Container>
   );
 }
 
 export default MovieMenu;
+
+const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Movies = styled.div`
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+  width: 90%;
+  margin-top: 150px;
+`;
+
+const Footer = styled.ul`
+  display: flex;
+  list-style: none;
+  width: 30%;
+  justify-content: space-around;
+  margin-bottom: 12vh;
+  align-items: center;
+`;
+
+const Nums = styled.li`
+  font-size: 100%;
+  text-shadow: 2px 2px #c7cdd4;
+  transition: all 0.4s ease;
+  text-align: center;
+  pointer-events: ${(props) => props.lN == props.page && "none"};
+  font-weight: ${(props) => props.lN == props.page && "bold"};
+  zoom: ${(props) => props.lN == props.page && "1.3"};
+  margin-bottom: ${(props) => props.lN == props.page && "0.9vh"};
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+`;

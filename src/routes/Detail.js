@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import MovieDetail from "../components/MovieDetail";
 import Loading from "../components/Loading";
-import styles from "./Home.module.css";
 import axios from "axios";
+import styled from "styled-components";
 
 function Detail() {
   const { id } = useParams();
@@ -27,7 +27,7 @@ function Detail() {
   }, [getMovie]);
 
   return (
-    <div className={styles.container}>
+    <Container>
       {loading ? (
         <Loading />
       ) : (
@@ -43,7 +43,17 @@ function Detail() {
           description_full={detail.description_full}
         />
       )}
-    </div>
+    </Container>
   );
 }
 export default Detail;
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+`;
