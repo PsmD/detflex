@@ -26,7 +26,7 @@
 
   - hover시 텍스트 박스 scale이 1.1배 증가하는 효과 구현
 
-  - Top에서 투명색인 Navbar 백그라운드 컬러를 스크롤을 60이상 내리면 서서히 애니메이션과 함께 지정한 rgb 색이 나오는 효과 구현 (position을 fixed로 두어 스크롤을 내려도 Navnar가 사라지지 않는다)
+  - Top에서 투명색인 Navbar 백그라운드 컬러를 스크롤을 60이상 내리면 서서히 애니메이션과 함께 지정한 rgb 색이 나오는 효과 구현 (position을 fixed로 두어 스크롤을 내려도 Navbar가 사라지지 않는다)
 
 <br>
 
@@ -42,7 +42,7 @@
 
 - **Modal 구현 코드 리팩토링 및 재사용성 증가**
 
-  - 공통 modal을 두고 자식 컴포넌트만 변화를 주어 재사용성을 높임
+  - ~~공통 modal을 두고 자식 컴포넌트만 변화를 주어 재사용성을 높임~~ 2022/04/04: Sign In과 Sign up modal의 modal 크기가 달라 굳이 할 필요가 없어서 공통 modal 방식 코드 삭제
 
   - 반복적인 코드 정리
 
@@ -86,7 +86,7 @@
 
   - 기타 Movie cards 내용 수정(Movie detail에만 영화 줄거리 렌더링)
 
-  - e.target.name undefined 문제 getAttribute()로 해결(DOM API가 있는 태그는 그냥 써도 되지만 다른 요소에서는 DOM에 접근할 수 없어서 e.target.name 방식이 작동하지 않는데, 그런 경우 getAttribute()로 원하는 속성 값을 가져올 수 있다!)
+  - e.target.name undefined 문제 getAttribute()로 해결(DOM API가 있는 태그는 그냥 써도 되지만 다른 요소에서는 DOM에 접근할 수 없어서 e.target.name 방식이 작동하지 않는데, 그런 경우 getAttribute()로 원하는 속성 값을 가져올 수 있다)
 
 <br>
 
@@ -94,7 +94,7 @@
 
 - **Navbar 메뉴에 따라 다른 영화 리스트 스타일링(v1)**
 
-  - 영화를 Rating순으로 정렬하고 20위 까지만 보여준 뒤 밑에 숫자바를 설치해 다음 영화 리스트 페이지로 이동 가능하게 구현
+  - 영화를 Rating(평점)순으로 정렬하고 20위 까지만 보여준 뒤 밑에 숫자바를 설치해 다음 영화 리스트 페이지로 이동 가능하게 구현
 
 <br>
 
@@ -102,7 +102,7 @@
 
 - **Navbar 메뉴에 따라 다른 영화 리스트 스타일링(v2)**
 
-  - page number bar 스타일링 (현재 페이지 number는 css zoom을 이용하여 강조)
+  - 하단 page number bar 스타일링 (현재 페이지에 해당하는 number는 css zoom을 이용하여 강조)
 
   - Home 화면 Main slider 초기 세팅 작업
 
@@ -119,3 +119,13 @@
   - index값이 끝에 도달해도 다시 처음으로 돌아오는 무한 슬라이드 구현
 
   - 슬라이드 왼쪽에 absolute 속성을 준 박스를 두어 텍스트를 작성할 수 있게 세팅하고 이미지는 오른쪽에 정렬
+
+<br>
+
+**_`22/04/12`_**
+
+- **css module --> styled-components 방식으로 변경, Home 화면 Main slider 구현(v2)**
+
+  - 기능에 변화를 주지 않고 styled-components 방식만 채택 (css 코드에 props를 주기 쉽게하기 위함)
+
+  - linear-gradient를 사용하여 텍스트 박스와 슬라이더 사이의 경계선을 흐릿하게 처리
