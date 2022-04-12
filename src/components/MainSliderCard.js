@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import styles from "./MainSliderCard.module.css";
+import styled from "styled-components";
 
-function MainSliderCard({ id, large_cover_image, title }) {
+function MainSliderCard({ id, large_cover_image }) {
   return (
-    <div className={styles.movie}>
+    <>
       <Link to={`/movie/${id}`}>
-        <img src={large_cover_image} alt={title} className={styles.movie__img} />
+        <MovieImg img={large_cover_image} />
       </Link>
-    </div>
+    </>
   );
 }
 
@@ -19,3 +19,10 @@ MainSliderCard.prototypes = {
 };
 
 export default MainSliderCard;
+
+const MovieImg = styled.div`
+  height: 70vh;
+  width: 60vw;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url("${(props) => props.img}");
+  background-size: 100% 100%;
+`;
