@@ -130,3 +130,13 @@
   - 기능에 변화를 주지 않고 styled-components 방식만 채택 (css 코드에 props를 주기 쉽게하기 위함)
 
   - linear-gradient를 사용하여 텍스트 박스와 슬라이더 사이의 경계선을 흐릿하게 처리
+
+<br>
+
+**_`22/04/14`_**
+
+- **슬라이더 framer-motion --> swiper 방식으로 변경, 영화 데이터 api 사이트 변경 , Home 화면 Main slider 구현(v3)**
+
+  - 기존 api 사이트는 배너 사진이 고해상도가 없고 자료도 너무 한정적이라 변경
+
+  - framer-motion으로는 슬라이더를 만들 때 제한사항이 많아 변경
