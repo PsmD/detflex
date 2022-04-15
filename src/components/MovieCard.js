@@ -2,17 +2,15 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-function MovieCard({ id, coverImg, title, year, rating, runtime }) {
+function MovieCard({ id, title, poster_path, year, vote_average }) {
   return (
     <Link to={`/movie/${id}`}>
       <Movie>
-        <MovieImg src={coverImg} alt={title} />
-
+        <MovieImg src={poster_path} alt={title} />
         <MovieTextBox>
           <MovieTitle>{title.length > 18 ? `${title.slice(0, 18)}...` : title}</MovieTitle>
           <MovieYear>{year}</MovieYear>
-          <MovieRating>Rating: {rating} / 10</MovieRating>
-          <MovieRuntime>Runtime: {runtime} min</MovieRuntime>
+          <MovieRating>Rating: {vote_average} / 10</MovieRating>
         </MovieTextBox>
       </Movie>
     </Link>
@@ -67,10 +65,6 @@ const MovieYear = styled.span`
 `;
 
 const MovieRating = styled.span`
-  font-size: 12px;
-`;
-
-const MovieRuntime = styled.span`
   font-size: 12px;
   margin-bottom: 8px;
 `;

@@ -4,8 +4,18 @@ import Loading from "../components/Loading";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 
 const listNumbers = [...Array(10)].map((_, i) => i + 1);
+const today = new Date();
+const year = today.getFullYear();
+const nextyear = today.getFullYear() + 1;
+const month = ("0" + (today.getMonth() + 1)).slice(-2);
+const prevmonth = ("0" + today.getMonth()).slice(-2);
+const date = ("0" + today.getDate()).slice(-2);
+const currentday = year + "-" + month + "-" + date;
+const prevmonthday = year + "-" + prevmonth + "-" + date;
+const nextyearday = nextyear + "-" + month + "-" + date;
 
 function MovieMenu() {
   const { menu, page } = useParams();
@@ -13,15 +23,39 @@ function MovieMenu() {
   const [movies, setMovies] = useState([]);
 
   const getMovies = useCallback(async () => {
-    await axios
-      .get(`https://yts.mx/api/v2/list_movies.json?page=${page}&${menu}&sort_by=rating`)
-      .then((res) => {
-        setMovies(res.data.data.movies);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (menu === "now_playing") {
+      await axios
+        .get(
+          `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${page}`
+        )
+        .then((res) => {
+          setMovies(res.data.results);
+          setLoading(false);
+        });
+    } else if (menu === "top_rated") {
+      await axios
+        .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=150&page=${page}`)
+        .then((res) => {
+          setMovies(res.data.results);
+          setLoading(false);
+        });
+    } else if (menu === "popular") {
+      await axios
+        .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}`)
+        .then((res) => {
+          setMovies(res.data.results);
+          setLoading(false);
+        });
+    } else if (menu === "upcoming") {
+      await axios
+        .get(
+          `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${currentday}&primary_release_date.lte=${nextyearday}&page=${page}`
+        )
+        .then((res) => {
+          setMovies(res.data.results);
+          setLoading(false);
+        });
+    }
   }, [menu, page]);
 
   useEffect(() => {
@@ -41,10 +75,9 @@ function MovieMenu() {
               key={movie.id}
               id={movie.id}
               title={movie.title}
-              coverImg={movie.medium_cover_image}
-              year={movie.year}
-              rating={movie.rating}
-              runtime={movie.runtime}
+              poster_path={`${IMAGE_BASE_URL}original${movie.poster_path}`}
+              year={movie.release_date}
+              vote_average={movie.vote_average}
             />
           ))}
         </Movies>
