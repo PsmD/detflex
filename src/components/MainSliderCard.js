@@ -1,16 +1,13 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import "swiper/css";
 
-function MainSliderCard({ id, img, title, overview }) {
+function MainSliderCard({ id, img }) {
   return (
     <>
-      <TextBox>
-        <Title>{title}</Title>
-        <Overview>{overview.length > 160 ? `${overview.slice(0, 160)}...` : overview}</Overview>
-      </TextBox>
       <Link to={`/movie/${id}`}>
-        <MovieImg src={img} />
+        <MovieImg img={img} />
       </Link>
     </>
   );
@@ -18,24 +15,14 @@ function MainSliderCard({ id, img, title, overview }) {
 
 MainSliderCard.prototypes = {
   id: PropTypes.number.isRequired,
-  backdrop_path: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
 };
 
 export default MainSliderCard;
 
-const MovieImg = styled.img`
-  height: 90vh;
-  width: 100vw;
-`;
-
-const TextBox = styled.div`
-  position: absolute;
-`;
-
-const Title = styled.div`
-  color: white;
-`;
-
-const Overview = styled.div`
-  color: white;
+const MovieImg = styled.div`
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0) 60vw, rgba(0, 0, 0, 1)), url(${(props) => props.img});
+  background-size: 100% 100%;
 `;
