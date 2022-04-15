@@ -4,6 +4,7 @@ import MovieDetail from "../components/MovieDetail";
 import Loading from "../components/Loading";
 import axios from "axios";
 import styled from "styled-components";
+import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 
 function Detail() {
   const { id } = useParams();
@@ -12,9 +13,11 @@ function Detail() {
 
   const getMovie = useCallback(async () => {
     await axios
-      .get(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+      .get(`${BASE_PATH}/movie/${id}?api_key=${API_KEY}`)
       .then((res) => {
-        setDetail(res.data.data.movie);
+        console.log(res.data);
+        console.log(id);
+        setDetail(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -32,15 +35,14 @@ function Detail() {
         <Loading />
       ) : (
         <MovieDetail
-          background_image_original={detail.background_image_original}
-          medium_cover_image={detail.medium_cover_image}
-          url={detail.url}
-          title_long={detail.title_long}
-          rating={detail.rating}
+          id={detail.id}
+          backdrop_path={`${IMAGE_BASE_URL}original${detail.backdrop_path}`}
+          poster_path={`${IMAGE_BASE_URL}original${detail.poster_path}`}
+          title={detail.title}
           runtime={detail.runtime}
+          vote_average={detail.vote_average}
           genres={detail.genres}
-          download_count={detail.download_count}
-          description_full={detail.description_full}
+          overview={detail.overview}
         />
       )}
     </Container>

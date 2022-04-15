@@ -1,43 +1,28 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-function MovieDetail({
-  background_image_original,
-  medium_cover_image,
-  url,
-  title_long,
-  rating,
-  runtime,
-  genres,
-  download_count,
-  description_full,
-}) {
+function MovieDetail({ id, backdrop_path, poster_path, title, vote_average, runtime, genres, overview }) {
   return (
     <>
-      <MovieBg src={background_image_original} />
+      <MovieBg bgimg={backdrop_path} />
       <MovieShow>
-        <MovieImg src={medium_cover_image} />
+        <MovieImg src={poster_path} />
         <MovieTextbox>
-          <MovieTitle>
-            <MovieTitleLink href={url} target="_blank">
-              {title_long}
-            </MovieTitleLink>
-          </MovieTitle>
+          <MovieTitle>{title}</MovieTitle>
           <MovieTextboxList>
-            <li>Rating: {rating}</li>
+            <li>vote_average: {vote_average}</li>
             <li>Runtime: {runtime}</li>
-            <li>Download: {download_count}</li>
             <li>
               Genres:
               <ul>
                 {genres.map((genre) => (
-                  <li>{genre}</li>
+                  <li>{genre.name}</li>
                 ))}
               </ul>
             </li>
             <MovieTextboxSummary>
               <h4>Summary: </h4>
-              {description_full.length > 160 ? `${description_full.slice(0, 160)}...` : description_full}
+              {overview.length > 160 ? `${overview.slice(0, 160)}...` : overview}
             </MovieTextboxSummary>
           </MovieTextboxList>
         </MovieTextbox>
@@ -61,13 +46,15 @@ MovieDetail.propTypes = {
 
 export default MovieDetail;
 
-const MovieBg = styled.img`
+const MovieBg = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   min-width: 100%;
   min-height: 100%;
-  filter: brightness(50%);
+  filter: brightness(40%);
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 60vh, rgba(239, 243, 247, 1)), url(${(props) => props.bgimg});
+  background-size: 100% 100%;
 `;
 
 const MovieShow = styled.div`
@@ -93,15 +80,11 @@ const MovieTitle = styled.h1`
   font-weight: bold;
   font-size: 28px;
   margin-bottom: 20px;
+  color: white;
 
   &:hover {
     transform: scale(1.03);
   }
-`;
-
-const MovieTitleLink = styled.a`
-  color: white;
-  text-decoration: none;
 `;
 
 const MovieTextboxList = styled.ul`
