@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-function MovieDetail({ id, backdrop_path, poster_path, title, vote_average, runtime, genres, overview }) {
+function MovieDetail({ id, backdrop_path, poster_path, title, runtime, vote_average, genres, overview }) {
   return (
     <>
       <MovieBg bgimg={backdrop_path} />
@@ -33,15 +33,13 @@ function MovieDetail({ id, backdrop_path, poster_path, title, vote_average, runt
 
 MovieDetail.propTypes = {
   id: PropTypes.number.isRequired,
-  background_image_original: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  medium_cover_image: PropTypes.string.isRequired,
+  backdrop_path: PropTypes.string.isRequired,
+  poster_path: PropTypes.string.isRequired,
   title_long: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
+  vote_average: PropTypes.number.isRequired,
   runtime: PropTypes.number.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
-  download_count: PropTypes.number.isRequired,
-  description_full: PropTypes.string.isRequired,
+  overview: PropTypes.string.isRequired,
 };
 
 export default MovieDetail;
@@ -50,11 +48,14 @@ const MovieBg = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  min-width: 100%;
-  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  min-width: ${window.innerWidth - 1}px;
+  min-height: ${window.innerHeight - 1}px;
   filter: brightness(40%);
   background-image: linear-gradient(rgba(0, 0, 0, 0) 60vh, rgba(239, 243, 247, 1)), url(${(props) => props.bgimg});
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: center center;
 `;
 
 const MovieShow = styled.div`
@@ -62,6 +63,8 @@ const MovieShow = styled.div`
   top: 20%;
   left: 25%;
   z-index: 8;
+  min-width: 541px;
+  min-height: 344px;
   display: flex;
   align-items: center;
 `;

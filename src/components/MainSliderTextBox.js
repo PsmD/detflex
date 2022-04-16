@@ -15,7 +15,7 @@ function MainSliderTextBox({ id, title, overview }) {
 MainSliderTextBox.prototypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  summary: PropTypes.string.isRequired,
+  overview: PropTypes.string.isRequired,
 };
 
 export default MainSliderTextBox;

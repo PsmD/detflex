@@ -76,10 +76,12 @@ const Container = styled.div`
 `;
 
 const StyledSwiper = styled(Swiper)`
-  margin-top: 10vh;
+  margin-top: ${window.innerHeight / 10 - 1}px;
   position: relative;
   display: flex;
   width: 100vw;
+  min-width: ${window.innerWidth - 1}px;
+  min-height: ${(window.innerHeight / 10) * 9 - 1}px;
   height: 90vh;
 
   @keyframes text-fade-in {

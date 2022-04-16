@@ -53,6 +53,8 @@ export default Detail;
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  min-width: ${window.innerWidth - 1}px;
+  min-height: ${window.innerHeight - 1}px;
   display: flex;
   padding: 0;
   margin: 0;
