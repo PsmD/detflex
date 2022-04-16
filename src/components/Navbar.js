@@ -7,16 +7,18 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import SignIn from "../modals/SignIn";
 import SignUp from "../modals/SignUp";
 import styled from "styled-components";
+console.log(window.innerWidth - 1);
+console.log(window.innerHeight - 1);
 
 function Navbar() {
   const [openModal, setOpenModal] = useState(false);
   const [changeModal, setChangeModal] = useState("signIn");
-  const [search, setSearch] = useState(null);
+  const [searchText, setSearchText] = useState(null);
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
 
   const searchClick = (event) => {
-    setSearch(event.target.value);
+    setSearchText(event.target.value);
   };
 
   const modalOpen = (event) => {
@@ -81,16 +83,8 @@ function Navbar() {
           </Signs>
           <div>
             <form>
-              <Input
-                type="text"
-                value={search}
-                onChange={searchClick}
-                placeholder="Search!"
-                onMouseOut={() => {
-                  setSearch("");
-                }}
-              ></Input>
-              <Link to={`/search/${search}`}>
+              <Input type="text" value={searchText} onChange={searchClick} placeholder="Search!"></Input>
+              <Link to={`/search/${searchText}/1`}>
                 <SearchButton>
                   <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
                 </SearchButton>
@@ -116,6 +110,8 @@ const Container = styled(motion.div)`
   justify-content: space-between;
   background-color: rgb(255, 239, 239);
   z-index: 10;
+  min-width: ${window.innerWidth - 1}px;
+  min-height: 50px;
 `;
 
 const WebName = styled.div`
