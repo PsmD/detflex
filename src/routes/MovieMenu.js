@@ -7,12 +7,15 @@ import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 
 const listNumbers = [...Array(10)].map((_, i) => i + 1);
+
 const today = new Date();
+
 const year = today.getFullYear();
 const nextyear = today.getFullYear() + 1;
 const month = ("0" + (today.getMonth() + 1)).slice(-2);
 const prevmonth = ("0" + today.getMonth()).slice(-2);
 const date = ("0" + today.getDate()).slice(-2);
+
 const currentday = year + "-" + month + "-" + date;
 const prevmonthday = year + "-" + prevmonth + "-" + date;
 const nextyearday = nextyear + "-" + month + "-" + date;
@@ -29,21 +32,22 @@ function MovieMenu() {
           `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${page}`
         )
         .then((res) => {
-          setMovies(res.data.results);
+          console.log(res);
+          setMovies(res.data);
           setLoading(false);
         });
     } else if (menu === "top_rated") {
       await axios
         .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=150&page=${page}`)
         .then((res) => {
-          setMovies(res.data.results);
+          setMovies(res.data);
           setLoading(false);
         });
     } else if (menu === "popular") {
       await axios
         .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}`)
         .then((res) => {
-          setMovies(res.data.results);
+          setMovies(res.data);
           setLoading(false);
         });
     } else if (menu === "upcoming") {
@@ -52,7 +56,7 @@ function MovieMenu() {
           `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${currentday}&primary_release_date.lte=${nextyearday}&page=${page}`
         )
         .then((res) => {
-          setMovies(res.data.results);
+          setMovies(res.data);
           setLoading(false);
         });
     }
@@ -60,9 +64,10 @@ function MovieMenu() {
 
   useEffect(() => {
     setLoading(true);
+    window.scrollTo(0, 0);
     getMovies();
     return;
-  }, [getMovies]);
+  }, [getMovies, page]);
 
   return (
     <Container>
@@ -70,7 +75,7 @@ function MovieMenu() {
         <Loading />
       ) : (
         <Movies>
-          {movies.map((movie) => (
+          {movies.results.map((movie) => (
             <MovieCard
               key={movie.id}
               id={movie.id}
@@ -104,6 +109,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: ${window.innerWidth - 1}px;
+  min-height: ${window.innerHeight - 1}px;
 `;
 
 const Movies = styled.div`
@@ -112,7 +119,7 @@ const Movies = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
   width: 90%;
-  margin-top: 150px;
+  margin-top: 24vh;
 `;
 
 const Footer = styled.ul`
@@ -120,7 +127,8 @@ const Footer = styled.ul`
   list-style: none;
   width: 30%;
   justify-content: space-around;
-  margin-bottom: 12vh;
+  margin-bottom: 10vh;
+  margin-top: 3vh;
   align-items: center;
 `;
 
