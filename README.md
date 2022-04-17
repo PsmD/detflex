@@ -139,8 +139,6 @@
 
   - 기존 api 사이트는 배너 사진이 고해상도가 없고 자료도 너무 한정적이라 변경
 
-  - framer-motion으로는 슬라이더를 만들 때 제한사항이 많아 변경
-
 <br>
 
 **_`22/04/15`_**
@@ -162,3 +160,13 @@
   - 키워드를 입력하면 관련 영화를 찾아주는 검색 기능 추가
 
   - 포스터 이미지가 없는 영화의 경우에 대체하는 이미지 삽입
+
+<br>
+
+## 📑 Reference
+
+<br>
+
+- 참고 강의: https://nomadcoders.co/react-for-beginners
+
+- 영화 API 제공 사이트: https://www.themoviedb.org/
