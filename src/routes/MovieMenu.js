@@ -6,7 +6,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 
-const listNumbers = [...Array(10)].map((_, i) => i + 1);
+const pagesPerList = 10;
 
 const today = new Date();
 
@@ -24,47 +24,71 @@ function MovieMenu() {
   const { menu, page } = useParams();
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getMovies = useCallback(async () => {
     if (menu === "now_playing") {
       await axios
         .get(
-          `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${page}`
+          `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${currentPage}`
         )
         .then((res) => {
-          console.log(res);
-          setMovies(res.data);
+          setMovies(res.data.results);
+          setTotalPages(res.data.total_pages);
           setLoading(false);
         });
     } else if (menu === "top_rated") {
       await axios
-        .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=150&page=${page}`)
+        .get(
+          `${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=150&page=${currentPage}`
+        )
         .then((res) => {
-          setMovies(res.data);
+          setMovies(res.data.results);
+          setTotalPages(res.data.total_pages);
           setLoading(false);
         });
     } else if (menu === "popular") {
       await axios
-        .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}`)
+        .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${currentPage}`)
         .then((res) => {
-          setMovies(res.data);
+          setMovies(res.data.results);
+          setTotalPages(res.data.total_pages);
           setLoading(false);
         });
     } else if (menu === "upcoming") {
       await axios
         .get(
-          `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${currentday}&primary_release_date.lte=${nextyearday}&page=${page}`
+          `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${currentday}&primary_release_date.lte=${nextyearday}&page=${currentPage}`
         )
         .then((res) => {
-          setMovies(res.data);
+          setMovies(res.data.results);
+          setTotalPages(res.data.total_pages);
           setLoading(false);
         });
     }
-  }, [menu, page]);
+  }, [menu, currentPage]);
+
+  const pageLogic = () => {
+    let firstPaginationNumber = currentPage - (currentPage % pagesPerList) + 1;
+    let lastPaginationNumber = currentPage - (currentPage % pagesPerList) + pagesPerList;
+    if (lastPaginationNumber > totalPages) lastPaginationNumber = totalPages;
+    return {
+      firstPaginationNumber,
+      lastPaginationNumber,
+    };
+  };
+
+  const listNumbers = new Array();
+
+  for (let i = pageLogic().firstPaginationNumber; i <= pageLogic().lastPaginationNumber; i++) {
+    listNumbers.push(i);
+  }
 
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
+    setCurrentPage(page);
     getMovies();
     return;
   }, [getMovies, page]);
@@ -75,7 +99,7 @@ function MovieMenu() {
         <Loading />
       ) : (
         <Movies>
-          {movies.results.map((movie) => (
+          {movies.map((movie) => (
             <MovieCard
               key={movie.id}
               id={movie.id}
