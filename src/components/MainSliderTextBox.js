@@ -12,7 +12,7 @@ function MainSliderTextBox({ id, title, overview }) {
   );
 }
 
-MainSliderTextBox.prototypes = {
+MainSliderTextBox.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   overview: PropTypes.string.isRequired,

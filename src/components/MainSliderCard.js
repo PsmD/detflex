@@ -13,7 +13,7 @@ function MainSliderCard({ id, img }) {
   );
 }
 
-MainSliderCard.prototypes = {
+MainSliderCard.propTypes = {
   id: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,
 };

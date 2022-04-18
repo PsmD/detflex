@@ -7,8 +7,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import SignIn from "../modals/SignIn";
 import SignUp from "../modals/SignUp";
 import styled from "styled-components";
-console.log(window.innerWidth - 1);
-console.log(window.innerHeight - 1);
 
 function Navbar() {
   const [openModal, setOpenModal] = useState(false);
