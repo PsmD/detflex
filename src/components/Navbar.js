@@ -64,7 +64,7 @@ function Navbar() {
             return (
               <Item key={key}>
                 <ItemLink>
-                  <Link to={`/page/${MovieMenu_obj[key]}/1`}>{key}</Link>
+                  <Link to={`/page/${MovieMenu_obj[key]}`}>{key}</Link>
                 </ItemLink>
               </Item>
             );

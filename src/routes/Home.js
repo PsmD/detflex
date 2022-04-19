@@ -19,7 +19,6 @@ function Home() {
     await axios
       .get(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`)
       .then((res) => {
-        console.log(res);
         setMovies(res.data.results);
         setLoading(false);
       })

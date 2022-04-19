@@ -13,9 +13,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path={"/"} element={<Home />} />
-          <Route path={`/page/:menu/:page`} element={<MovieMenu />} />
+          <Route path={`/page/:menu`} element={<MovieMenu />} />
           <Route path={`/movie/:id`} element={<Detail />} />
-          <Route path={`/search/:searchText/:page`} element={<Search />} />
+          <Route path={`/search/:searchText`} element={<Search />} />
         </Routes>
       </Router>
     </RecoilRoot>
