@@ -6,8 +6,6 @@ import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 
-const pagesPerList = 10;
-
 const today = new Date();
 
 const year = today.getFullYear();
@@ -21,11 +19,14 @@ const prevmonthday = year + "-" + prevmonth + "-" + date;
 const nextyearday = nextyear + "-" + month + "-" + date;
 
 function MovieMenu() {
-  const { menu, page } = useParams();
+  const { menu } = useParams();
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [pagesPerList, setPagesPerList] = useState(10);
+  const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(10);
+  const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
   const getMovies = useCallback(async () => {
     if (menu === "now_playing") {
@@ -34,6 +35,8 @@ function MovieMenu() {
           `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${currentPage}`
         )
         .then((res) => {
+          console.log(res.data);
+          console.log(currentPage);
           setMovies(res.data.results);
           setTotalPages(res.data.total_pages);
           setLoading(false);
@@ -72,6 +75,10 @@ function MovieMenu() {
   const pageLogic = () => {
     let firstPaginationNumber = currentPage - (currentPage % pagesPerList) + 1;
     let lastPaginationNumber = currentPage - (currentPage % pagesPerList) + pagesPerList;
+    if (totalPages === 1) return;
+    if (totalPages < currentPage) {
+      currentPage = totalPages;
+    }
     if (lastPaginationNumber > totalPages) lastPaginationNumber = totalPages;
     return {
       firstPaginationNumber,
@@ -79,19 +86,43 @@ function MovieMenu() {
     };
   };
 
-  const listNumbers = new Array();
+  const listNumbers = [];
 
   for (let i = pageLogic().firstPaginationNumber; i <= pageLogic().lastPaginationNumber; i++) {
     listNumbers.push(i);
   }
 
+  const handleClick = (event) => {
+    setCurrentPage(Number(event.target.id));
+  };
+
+  const handleNextbtn = () => {
+    setCurrentPage(currentPage + 1);
+
+    if (currentPage + 1 > maxPageNumberLimit) {
+      setmaxPageNumberLimit(maxPageNumberLimit + pagesPerList);
+      setminPageNumberLimit(minPageNumberLimit + pagesPerList);
+    }
+  };
+
+  const handlePrevbtn = () => {
+    setCurrentPage(currentPage - 1);
+
+    if ((currentPage - 1) % pagesPerList == 0) {
+      setmaxPageNumberLimit(maxPageNumberLimit - pagesPerList);
+      setminPageNumberLimit(minPageNumberLimit - pagesPerList);
+    }
+  };
+
+  const isLastPage = currentPage === totalPages;
+  const isFirstPage = currentPage === 1;
+
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
-    setCurrentPage(page);
     getMovies();
     return;
-  }, [getMovies, page]);
+  }, [getMovies, currentPage]);
 
   return (
     <Container>
@@ -111,17 +142,32 @@ function MovieMenu() {
           ))}
         </Movies>
       )}
-      <Footer>
-        {loading
-          ? null
-          : listNumbers.map((lN) => {
-              return (
-                <Nums lN={lN} page={page} key={lN}>
-                  <Link to={`/page/${menu}/${lN}`}>{lN}</Link>
-                </Nums>
-              );
-            })}
-      </Footer>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <Footer>
+          <First onClick={() => setCurrentPage(1)} disabled={isFirstPage}>
+            &lt;&lt;
+          </First>
+          <Prev onClick={handlePrevbtn} disabled={isFirstPage}>
+            &lt;
+          </Prev>
+          {listNumbers.map((lN) => {
+            return (
+              <Nums lN={lN} currentPage={currentPage} key={lN} id={lN} onClick={handleClick}>
+                {lN}
+              </Nums>
+            );
+          })}
+          <Next onClick={handleNextbtn} disabled={isLastPage}>
+            &gt;
+          </Next>
+          <Last onClick={() => setCurrentPage(totalPages)} disabled={isLastPage}>
+            &gt;&gt;
+          </Last>
+        </Footer>
+      )}
     </Container>
   );
 }
@@ -149,23 +195,69 @@ const Movies = styled.div`
 const Footer = styled.ul`
   display: flex;
   list-style: none;
-  width: 30%;
+  width: 37%;
+  color: #262626;
   justify-content: space-around;
-  margin-bottom: 10vh;
-  margin-top: 3vh;
+  margin-bottom: 15vh;
+  margin-top: 5vh;
   align-items: center;
+  font-weight: bold;
+  font-size: 100%;
+  text-align: center;
+  text-shadow: 2px 2px #c7cdd4;
 `;
 
 const Nums = styled.li`
-  font-size: 100%;
-  text-shadow: 2px 2px #c7cdd4;
+  pointer-events: ${(props) => props.lN == props.currentPage && "none"};
+  font-weight: ${(props) => props.lN == props.currentPage && "bold"};
+  zoom: ${(props) => props.lN == props.currentPage && "1.3"};
+  margin-bottom: ${(props) => props.lN == props.currentPage && "0.9vh"};
+  cursor: pointer;
   transition: all 0.4s ease;
-  text-align: center;
-  pointer-events: ${(props) => props.lN == props.page && "none"};
-  font-weight: ${(props) => props.lN == props.page && "bold"};
-  zoom: ${(props) => props.lN == props.page && "1.3"};
-  margin-bottom: ${(props) => props.lN == props.page && "0.9vh"};
+  &:hover {
+    transform: translateY(-3px);
+  }
+`;
 
+const First = styled.li`
+  color: ${({ disabled }) => disabled && "#9f9f9f"};
+  pointer-events: ${({ disabled }) => disabled && "none"};
+  text-shadow: ${({ disabled }) => disabled && "2px 2px #E4E4E4"};
+  cursor: pointer;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(-3px);
+  }
+`;
+
+const Prev = styled.li`
+  color: ${({ disabled }) => disabled && "#9f9f9f"};
+  pointer-events: ${({ disabled }) => disabled && "none"};
+  text-shadow: ${({ disabled }) => disabled && "2px 2px #E4E4E4"};
+  cursor: pointer;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(-3px);
+  }
+`;
+
+const Next = styled.li`
+  color: ${({ disabled }) => disabled && "#9f9f9f"};
+  pointer-events: ${({ disabled }) => disabled && "none"};
+  text-shadow: ${({ disabled }) => disabled && "2px 2px #E4E4E4"};
+  cursor: pointer;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(-3px);
+  }
+`;
+
+const Last = styled.li`
+  color: ${({ disabled }) => disabled && "#9f9f9f"};
+  pointer-events: ${({ disabled }) => disabled && "none"};
+  text-shadow: ${({ disabled }) => disabled && "2px 2px #E4E4E4"};
+  cursor: pointer;
+  transition: all 0.4s ease;
   &:hover {
     transform: translateY(-3px);
   }
