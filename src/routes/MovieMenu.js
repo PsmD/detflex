@@ -1,10 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
 import MovieCard from "../components/MovieCard";
 import Loading from "../components/Loading";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
+
+const pagesPerList = 10;
 
 const today = new Date();
 
@@ -24,7 +26,6 @@ function MovieMenu() {
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pagesPerList, setPagesPerList] = useState(10);
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(10);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
@@ -35,8 +36,6 @@ function MovieMenu() {
           `${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${currentPage}`
         )
         .then((res) => {
-          console.log(res.data);
-          console.log(currentPage);
           setMovies(res.data.results);
           setTotalPages(res.data.total_pages);
           setLoading(false);
@@ -73,8 +72,9 @@ function MovieMenu() {
   }, [menu, currentPage]);
 
   const pageLogic = () => {
-    let firstPaginationNumber = currentPage - (currentPage % pagesPerList) + 1;
-    let lastPaginationNumber = currentPage - (currentPage % pagesPerList) + pagesPerList;
+    let lastPaginationNumber = Math.ceil(currentPage / pagesPerList) * pagesPerList;
+    let firstPaginationNumber = lastPaginationNumber - 9;
+
     if (totalPages === 1) return;
     if (totalPages < currentPage) {
       currentPage = totalPages;
@@ -116,6 +116,10 @@ function MovieMenu() {
 
   const isLastPage = currentPage === totalPages;
   const isFirstPage = currentPage === 1;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [menu]);
 
   useEffect(() => {
     setLoading(true);
@@ -198,7 +202,7 @@ const Footer = styled.ul`
   width: 37%;
   color: #262626;
   justify-content: space-around;
-  margin-bottom: 15vh;
+  margin-bottom: 10vh;
   margin-top: 5vh;
   align-items: center;
   font-weight: bold;
