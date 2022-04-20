@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { MovieMenu_obj, MovieMenu_key_arr } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,7 @@ function Navbar() {
   const [searchText, setSearchText] = useState(null);
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
+  const location = useLocation();
 
   const searchClick = (event) => {
     setSearchText(event.target.value);
@@ -42,6 +43,10 @@ function Navbar() {
       backgroundColor: "rgb(255, 239, 239)",
     },
   };
+
+  useEffect(() => {
+    setSearchText("");
+  }, [location.pathname]);
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -82,7 +87,7 @@ function Navbar() {
           <div>
             <form>
               <Input type="text" value={searchText} onChange={searchClick} placeholder="Search!"></Input>
-              <Link to={`/search/${searchText}/1`}>
+              <Link to={`/search/${searchText}`}>
                 <SearchButton>
                   <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
                 </SearchButton>

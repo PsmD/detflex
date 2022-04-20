@@ -22,7 +22,7 @@ MovieCard.propTypes = {
   id: PropTypes.number.isRequired,
   poster_path: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  year: PropTypes.number.isRequired,
+  year: PropTypes.string.isRequired,
   vote_average: PropTypes.number.isRequired,
 };
 
