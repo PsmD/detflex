@@ -12,7 +12,8 @@
     <img src="https://img.shields.io/badge/react_router_dom-^6.3.0-critical?logo=React Table"/>
     <img src="https://img.shields.io/badge/Recoil-^0.6.1-green?logo=recoil"/>
     <img src="https://img.shields.io/badge/Framer Motion-^4.1.17-purple?logo=Framer"/>
-    <img src="https://img.shields.io/badge/styled components-^5.3.5-ff69b4?logo=styled-components"/>
+    <img src="https://img.shields.io/badge/Styled components-^5.3.5-ff69b4?logo=styled-components"/>
+    <img src="https://img.shields.io/badge/Swiper-^8.1.0-6332F6?logo=Swiper"/>
 </p>
 
 <br>
