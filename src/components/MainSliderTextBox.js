@@ -4,11 +4,15 @@ import styled from "styled-components";
 
 function MainSliderTextBox({ id, title, overview }) {
   return (
-    <Link to={`/movie/${id}`}>
-      <NowPlaying>Now Playing!</NowPlaying>
-      <Title>{title}</Title>
+    <>
+      <Link to={"/page/now_playing"}>
+        <NowPlaying>Now Playing!</NowPlaying>
+      </Link>
+      <Link to={`/movie/${id}`}>
+        <Title>{title}</Title>
+      </Link>
       <Overview>{overview.length > 70 ? `${overview.slice(0, 70)}...` : overview}</Overview>
-    </Link>
+    </>
   );
 }
 
@@ -34,7 +38,7 @@ const NowPlaying = styled.div`
 `;
 
 const Title = styled.div`
-  margin-top: 20px;
+  margin-top: 10vh;
   font-size: 50px;
   font-weight: bold;
   color: #e9e9e9;

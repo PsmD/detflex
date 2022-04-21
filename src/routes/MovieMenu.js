@@ -193,7 +193,7 @@ const Movies = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
   width: 90%;
-  margin-top: 24vh;
+  margin-top: 15vh;
 `;
 
 const Footer = styled.ul`

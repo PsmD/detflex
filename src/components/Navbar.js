@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { MovieMenu_obj, MovieMenu_key_arr } from "../atom/NavMenu";
+import { MovieMenu_obj } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -65,11 +65,11 @@ function Navbar() {
           <Link to={"/"}>DETFLEX</Link>
         </WebName>
         <MenuItems>
-          {MovieMenu_key_arr.map((key) => {
+          {MovieMenu_obj.map(({ title, path }) => {
             return (
-              <Item key={key}>
+              <Item>
                 <ItemLink>
-                  <Link to={`/page/${MovieMenu_obj[key]}`}>{key}</Link>
+                  <Link to={`/page/${path}`}>{title}</Link>
                 </ItemLink>
               </Item>
             );
@@ -108,7 +108,7 @@ const Container = styled(motion.div)`
   display: flex;
   position: fixed;
   width: 100%;
-  height: 50px;
+  height: 8vh;
   padding: 0px 30px;
   justify-content: space-between;
   background-color: rgb(255, 239, 239);
