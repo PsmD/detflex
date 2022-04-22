@@ -10,7 +10,7 @@ function MovieCard({ id, title, poster_path, year, vote_average }) {
         <MovieImg poster_path={poster_path} />
         <MovieTextBox>
           <MovieTitle>{title.length > 18 ? `${title.slice(0, 18)}...` : title}</MovieTitle>
-          <MovieYear>{year}</MovieYear>
+          <MovieYear>{year ? year : "Unknown"}</MovieYear>
           <MovieRating>Rating: {vote_average} / 10</MovieRating>
         </MovieTextBox>
       </Movie>
