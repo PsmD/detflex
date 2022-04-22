@@ -5,6 +5,7 @@ import Detail from "./routes/Detail";
 import Navbar from "./components/Navbar";
 import MovieMenu from "./routes/MovieMenu";
 import Search from "./routes/Search";
+import NotFound from "./routes/NotFound";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path={`/page/:menu`} element={<MovieMenu />} />
           <Route path={`/movie/:id`} element={<Detail />} />
           <Route path={`/search/:searchText`} element={<Search />} />
+          <Route path={"*"} element={<NotFound />} />
         </Routes>
       </Router>
     </RecoilRoot>
