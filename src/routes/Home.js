@@ -9,21 +9,10 @@ import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 import styled from "styled-components";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { currentday, nextyearday } from "../atom/Date";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-const today = new Date();
-
-const year = today.getFullYear();
-const nextyear = today.getFullYear() + 1;
-const month = ("0" + (today.getMonth() + 1)).slice(-2);
-const prevmonth = ("0" + today.getMonth()).slice(-2);
-const date = ("0" + today.getDate()).slice(-2);
-
-const currentday = year + "-" + month + "-" + date;
-const prevmonthday = year + "-" + prevmonth + "-" + date;
-const nextyearday = nextyear + "-" + month + "-" + date;
 
 function Home() {
   const [loading, setLoading] = useState(true);
@@ -280,7 +269,6 @@ const MainSwiper = styled(Swiper)`
     background-position: center;
     border-radius: 50%;
     transition: 0.4s;
-    position: absolute;
     font-weight: bold;
   }
 
@@ -311,7 +299,7 @@ const UpcomingTitle = styled.div`
   height: 10vh;
   font-size: 50px;
   font-family: "Work Sans", sans-serif;
-  text-shadow: 3px 3px #c7cdd4;
+  text-shadow: 4px 4px #c7cdd4;
   a {
     transition: all 0.4s ease;
     &:hover {
@@ -321,7 +309,7 @@ const UpcomingTitle = styled.div`
 `;
 
 const UpcomingSwiper = styled(Swiper)`
-  width: 85vw;
+  width: 90vw;
   height: 100%;
   background-color: #eff3f7;
 
@@ -338,7 +326,7 @@ const UpcomingSwiper = styled(Swiper)`
     border-radius: 5px;
     width: 35px;
     height: 70px;
-    color: rgba(159, 159, 159, 0.2);
+    color: rgba(159, 159, 159, 0.7);
     transition: 0.4s;
     font-weight: bold;
     margin-top: -10vh;
@@ -362,7 +350,7 @@ const PopularTitle = styled.div`
   height: 10vh;
   font-size: 50px;
   font-family: "Work Sans", sans-serif;
-  text-shadow: 3px 3px #c7cdd4;
+  text-shadow: 4px 4px #c7cdd4;
   a {
     transition: all 0.4s ease;
     &:hover {
@@ -372,7 +360,7 @@ const PopularTitle = styled.div`
 `;
 
 const PopularSwiper = styled(Swiper)`
-  width: 85vw;
+  width: 90vw;
   height: 100%;
   background-color: #eff3f7;
 
@@ -389,7 +377,7 @@ const PopularSwiper = styled(Swiper)`
     border-radius: 5px;
     width: 35px;
     height: 70px;
-    color: rgba(159, 159, 159, 0.2);
+    color: rgba(159, 159, 159, 0.7);
     transition: 0.4s;
     font-weight: bold;
     margin-top: -10vh;
@@ -414,7 +402,7 @@ const TopRatingTitle = styled.div`
   height: 10vh;
   font-size: 50px;
   font-family: "Work Sans", sans-serif;
-  text-shadow: 3px 3px #c7cdd4;
+  text-shadow: 4px 4px #c7cdd4;
   a {
     transition: all 0.4s ease;
     &:hover {
@@ -424,7 +412,7 @@ const TopRatingTitle = styled.div`
 `;
 
 const TopRatingSwiper = styled(Swiper)`
-  width: 85vw;
+  width: 90vw;
   height: 100%;
   background-color: #eff3f7;
   margin-bottom: 20vh;
@@ -442,7 +430,7 @@ const TopRatingSwiper = styled(Swiper)`
     border-radius: 5px;
     width: 35px;
     height: 70px;
-    color: rgba(159, 159, 159, 0.2);
+    color: rgba(159, 159, 159, 0.7);
     transition: 0.4s;
     font-weight: bold;
     margin-top: -10vh;

@@ -5,20 +5,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
+import { currentday, prevmonthday, nextyearday } from "../atom/Date";
 
 const pagesPerList = 10;
-
-const today = new Date();
-
-const year = today.getFullYear();
-const nextyear = today.getFullYear() + 1;
-const month = ("0" + (today.getMonth() + 1)).slice(-2);
-const prevmonth = ("0" + today.getMonth()).slice(-2);
-const date = ("0" + today.getDate()).slice(-2);
-
-const currentday = year + "-" + month + "-" + date;
-const prevmonthday = year + "-" + prevmonth + "-" + date;
-const nextyearday = nextyear + "-" + month + "-" + date;
 
 function MovieMenu() {
   const { menu } = useParams();
