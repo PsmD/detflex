@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import OrLine from "../components/OrLine";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import { authService, firebaseInstance } from "../FireDatabase/fbase";
 import styled from "styled-components";
 
 function SignUp({ state, closeModal, scrollY }) {
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "userName") {
+      setUserName(value);
+    } else if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    } else if (name === "confirmPassword") {
+      setConfirmPassword(value);
+    }
+  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    let data;
+    data = await authService.createUserWithEmailAndPassword(userName, email, password);
+    console.log(data);
+  };
+
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
+    let provider;
+    if (name === "google") {
+      provider = new firebaseInstance.auth.GoogleAuthProvider();
+    }
+    const data = await authService.signInWithPopup(provider);
+    console.log(data);
+  };
   return state ? (
     <>
       <Overlay onClick={closeModal} />
@@ -16,23 +53,53 @@ function SignUp({ state, closeModal, scrollY }) {
         <ModalBody>
           <UserName>
             <UserNameLabel>User name</UserNameLabel>
-            <UserNameInput placeholder="Enter your user name"></UserNameInput>
+            <UserNameInput
+              name="userName"
+              type="text"
+              required
+              value={userName}
+              onChange={onChange}
+              placeholder="Enter your user name"
+            ></UserNameInput>
           </UserName>
           <Email>
             <EmailLabel>Email address</EmailLabel>
-            <EmailInput placeholder="Enter email"></EmailInput>
+            <EmailInput
+              name="email"
+              type="email"
+              required
+              value={email}
+              onChange={onChange}
+              placeholder="Enter email"
+            ></EmailInput>
           </Email>
           <Password>
             <PasswordLabel>Password</PasswordLabel>
-            <PasswordInput placeholder="Password"></PasswordInput>
+            <PasswordInput
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+              value={confirmPassword}
+              onChange={onChange}
+            ></PasswordInput>
           </Password>
           <ConfirmPassword>
             <ConfirmPasswordLabel>Confirm password</ConfirmPasswordLabel>
-            <ConfirmPasswordInput placeholder="Confirm password"></ConfirmPasswordInput>
+            <ConfirmPasswordInput
+              name="confirmPassword"
+              type="password"
+              required
+              placeholder="Confirm password"
+              value={password}
+              onChange={onChange}
+            ></ConfirmPasswordInput>
           </ConfirmPassword>
-          <SignUpButton>Sign Up</SignUpButton>
+          <SignUpButton type="submit" onSubmit={onSubmit}>
+            Sign Up
+          </SignUpButton>
           <OrLine text={"OR"} />
-          <GoogleSignUpButton>
+          <GoogleSignUpButton onClick={onSocialClick} name="google">
             <FontAwesomeIcon icon={faGoogle} size="lg" />
             &nbsp; Sign Up with Google
           </GoogleSignUpButton>
