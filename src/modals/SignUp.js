@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import OrLine from "../components/OrLine";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { authService, firebaseInstance } from "../FireDatabase/fbase";
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth";
+import { authService } from "../fbase";
 import styled from "styled-components";
 
 function SignUp({ state, closeModal, scrollY }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const onChange = (event) => {
     const {
       target: { name, value },
@@ -26,22 +29,34 @@ function SignUp({ state, closeModal, scrollY }) {
   };
   const onSubmit = async (event) => {
     event.preventDefault();
-    let data;
-    data = await authService.createUserWithEmailAndPassword(userName, email, password);
+    await createUserWithEmailAndPassword(authService, email, password)
+      .then((result) => {
+        result.user.updateProfile({ displayName: userName });
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        if (error.code === "auth/internal-error") {
+          setError("Please fill out all the information");
+        } else if (error.code === "auth/weak-password") {
+          setError("Please write a password of at least 6 characters");
+        } else if (error.code === "auth/email-already-in-use") {
+          setError("Email is already in use");
+        } else if (error.code === "auth/invalid-email") {
+          setError("Invalid email address");
+        }
+      });
+    window.location.reload();
+  };
+
+  const onSocialClick = async () => {
+    let provider;
+    provider = new GoogleAuthProvider();
+    const data = await signInWithPopup(authService, provider);
+    window.location.reload();
     console.log(data);
   };
 
-  const onSocialClick = async (event) => {
-    const {
-      target: { name },
-    } = event;
-    let provider;
-    if (name === "google") {
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
-    }
-    const data = await authService.signInWithPopup(provider);
-    console.log(data);
-  };
   return state ? (
     <>
       <Overlay onClick={closeModal} />
@@ -80,7 +95,7 @@ function SignUp({ state, closeModal, scrollY }) {
               type="password"
               placeholder="Password"
               required
-              value={confirmPassword}
+              value={password}
               onChange={onChange}
             ></PasswordInput>
           </Password>
@@ -91,11 +106,12 @@ function SignUp({ state, closeModal, scrollY }) {
               type="password"
               required
               placeholder="Confirm password"
-              value={password}
+              value={confirmPassword}
               onChange={onChange}
             ></ConfirmPasswordInput>
           </ConfirmPassword>
-          <SignUpButton type="submit" onSubmit={onSubmit}>
+          {error}
+          <SignUpButton type="submit" onClick={onSubmit}>
             Sign Up
           </SignUpButton>
           <OrLine text={"OR"} />
