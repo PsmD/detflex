@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { authService } from "../fbase";
 import OrLine from "../components/OrLine";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import styled from "styled-components";
 
 function SignIn({ state, closeModal, scrollY }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      let data;
+      data = await signInWithEmailAndPassword(authService, email, password);
+      console.log(data);
+      window.location.reload();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
   return state ? (
     <>
       <Overlay onClick={closeModal} />
@@ -16,13 +44,28 @@ function SignIn({ state, closeModal, scrollY }) {
         <ModalBody>
           <Email>
             <EmailLabel>Email address</EmailLabel>
-            <EmailInput placeholder="Enter email"></EmailInput>
+            <EmailInput
+              name="email"
+              type="email"
+              required
+              value={email}
+              onChange={onChange}
+              placeholder="Enter email"
+            ></EmailInput>
           </Email>
           <Password>
             <PasswordLabel>Password</PasswordLabel>
-            <PasswordInput placeholder="Password"></PasswordInput>
+            <PasswordInput
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={onChange}
+            ></PasswordInput>
           </Password>
-          <SignInButton>Sign In</SignInButton>
+          {error}
+          <SignInButton onClick={onSubmit}>Sign In</SignInButton>
           <OrLine text={"OR"} />
           <GoogleLoginButton>
             <FontAwesomeIcon icon={faGoogle} size="lg" />
