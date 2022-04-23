@@ -14,6 +14,7 @@
     <img src="https://img.shields.io/badge/Framer Motion-^4.1.17-purple?logo=Framer"/>
     <img src="https://img.shields.io/badge/Styled components-^5.3.5-ff69b4?logo=styled-components"/>
     <img src="https://img.shields.io/badge/Swiper-^8.1.0-6332F6?logo=Swiper"/>
+    <img src="https://img.shields.io/badge/Firebase-^9.6.11-yellow?logo=Firebase"/>
 </p>
 
 <br>
