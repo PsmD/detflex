@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { MovieMenu_obj } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { UserContext } from "../AboutFirebase/UseAuth";
 import SignIn from "../modals/SignIn";
 import SignUp from "../modals/SignUp";
 import styled from "styled-components";
@@ -15,6 +17,7 @@ function Navbar() {
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
   const location = useLocation();
+  const { user } = useContext(UserContext);
 
   const searchClick = (event) => {
     setSearchText(event.target.value);
@@ -76,14 +79,21 @@ function Navbar() {
           })}
         </MenuItems>
         <SignSearchBar>
-          <Signs>
-            <Sign__In name={"signIn"} onClick={modalOpen}>
-              Sign In
-            </Sign__In>
-            <Sign__Up name={"signUp"} onClick={modalOpen}>
-              Sign Up
-            </Sign__Up>
-          </Signs>
+          {!user ? (
+            <Signs>
+              <Sign__In name={"signIn"} onClick={modalOpen}>
+                Sign In
+              </Sign__In>
+              <Sign__Up name={"signUp"} onClick={modalOpen}>
+                Sign Up
+              </Sign__Up>
+            </Signs>
+          ) : (
+            <Signs>
+              <MyPage name={"myPage"}>My Page</MyPage>
+              <LogOut name={"logOut"}>Sign Up</LogOut>
+            </Signs>
+          )}
           <div>
             <form>
               <Input type="text" value={searchText} onChange={searchClick} placeholder="Search!"></Input>
@@ -177,6 +187,24 @@ const Sign__In = styled.span`
 `;
 
 const Sign__Up = styled.span`
+  margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+const MyPage = styled.span`
+  margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+
+const LogOut = styled.span`
   margin-right: 10px;
   cursor: pointer;
   transition: all 0.4s ease;
