@@ -274,12 +274,12 @@ const MainSwiper = styled(Swiper)`
 
   .swiper-button-next {
     position: absolute;
-    right: 0;
+    right: 10;
   }
 
   .swiper-button-prev {
     position: absolute;
-    left: 0;
+    left: 10;
   }
 
   .swiper-button-next:hover,
