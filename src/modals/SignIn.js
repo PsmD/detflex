@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { authService } from "../fbase";
+import { authService } from "../AboutFirebase/fbase";
 import OrLine from "../components/OrLine";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -9,7 +9,9 @@ import styled from "styled-components";
 function SignIn({ state, closeModal, scrollY }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [tooManyReqError, setToomanyreqerror] = useState("");
 
   const onChange = (event) => {
     const {
@@ -30,7 +32,27 @@ function SignIn({ state, closeModal, scrollY }) {
       console.log(data);
       window.location.reload();
     } catch (error) {
-      setError(error.message);
+      setEmailError("");
+      setPasswordError("");
+      setToomanyreqerror("");
+      console.log(error.code);
+      if (error.code === "auth/invalid-email") {
+        setEmailError("Please write it in the correct email format");
+      } else if (error.code === "auth/user-not-found") {
+        setEmailError("No user has matching email");
+      } else if (error.code === "auth/too-many-requests") {
+        setToomanyreqerror("Access blocked due to many login failures.");
+      } else if (password.length === 0) {
+        setPasswordError("Please fill out the password");
+      } else if (error.code === "auth/wrong-password") {
+        setPasswordError("Passwords do not match");
+      }
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
     }
   };
   return state ? (
@@ -41,9 +63,11 @@ function SignIn({ state, closeModal, scrollY }) {
           <Title>Sign In</Title>
           <CloseButton onClick={closeModal}>&times;</CloseButton>
         </Header>
-        <ModalBody>
+        <ModalBody onKeyPress={handleKeyPress}>
           <Email>
-            <EmailLabel>Email address</EmailLabel>
+            <EmailLabel>
+              Email address <EmailErrorMessage>{emailError}</EmailErrorMessage>
+            </EmailLabel>
             <EmailInput
               name="email"
               type="email"
@@ -54,7 +78,9 @@ function SignIn({ state, closeModal, scrollY }) {
             ></EmailInput>
           </Email>
           <Password>
-            <PasswordLabel>Password</PasswordLabel>
+            <PasswordLabel>
+              Password<PasswordErrorMessage>{passwordError}</PasswordErrorMessage>
+            </PasswordLabel>
             <PasswordInput
               name="password"
               type="password"
@@ -64,7 +90,7 @@ function SignIn({ state, closeModal, scrollY }) {
               onChange={onChange}
             ></PasswordInput>
           </Password>
-          {error}
+          <ToomanyError>{tooManyReqError}</ToomanyError>
           <SignInButton onClick={onSubmit}>Sign In</SignInButton>
           <OrLine text={"OR"} />
           <GoogleLoginButton>
@@ -88,7 +114,7 @@ const Overlay = styled.div`
   z-index: 14;
 `;
 
-const ModalBox = styled.div`
+const ModalBox = styled.form`
   position: absolute;
   width: 500px;
   height: 400px;
@@ -143,8 +169,15 @@ const Email = styled.div`
 `;
 
 const EmailLabel = styled.label`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
+`;
+
+const EmailErrorMessage = styled.div`
+  color: #fd5050;
   text-shadow: 0.5px 0.5px #c7cdd4;
 `;
 
@@ -165,8 +198,15 @@ const Password = styled.div`
 `;
 
 const PasswordLabel = styled.label`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
+`;
+
+const PasswordErrorMessage = styled.div`
+  color: #fd5050;
   text-shadow: 0.5px 0.5px #c7cdd4;
 `;
 
@@ -178,6 +218,12 @@ const PasswordInput = styled.input`
   ::placeholder {
     color: #999999;
   }
+`;
+
+const ToomanyError = styled.div`
+  position: absolute;
+  color: #fd5050;
+  text-shadow: 0.5px 0.5px #c7cdd4;
 `;
 
 const SignInButton = styled.button`
@@ -193,9 +239,10 @@ const SignInButton = styled.button`
   border-radius: 10px;
   text-shadow: 0.5px 0.5px #c7cdd4;
   border-style: none;
+  transition: 0.3s;
 
   &:hover {
-    transform: scale(1.009);
+    transform: scale(1.02);
   }
 `;
 
@@ -213,8 +260,9 @@ const GoogleLoginButton = styled.button`
   border-radius: 10px;
   text-shadow: 0.5px 0.5px #c7cdd4;
   cursor: pointer;
+  transition: 0.3s;
 
   &:hover {
-    transform: scale(1.009);
+    transform: scale(1.02);
   }
 `;
