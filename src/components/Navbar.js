@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MovieMenu_obj } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { authService } from "../AboutFirebase/fbase";
 import { useContext } from "react";
 import { UserContext } from "../AboutFirebase/UseAuth";
 import SignIn from "../modals/SignIn";
@@ -17,6 +18,7 @@ function Navbar() {
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
   const searchClick = (event) => {
@@ -45,6 +47,12 @@ function Navbar() {
     scroll: {
       backgroundColor: "rgb(255, 239, 239)",
     },
+  };
+
+  const signOut = () => {
+    authService.signOut();
+    navigate("/");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -90,8 +98,10 @@ function Navbar() {
             </Signs>
           ) : (
             <Signs>
-              <MyPage name={"myPage"}>My Page</MyPage>
-              <LogOut name={"logOut"}>Sign Up</LogOut>
+              <My_Page>
+                <Link to={"/my_page"}>My Page</Link>
+              </My_Page>
+              <Sign__Out onClick={signOut}>Sign Out</Sign__Out>
             </Signs>
           )}
           <div>
@@ -153,6 +163,7 @@ const Item = styled.div`
 
 const ItemLink = styled.div`
   transition: all 0.4s ease;
+
   &:hover {
     transform: translateY(-3px);
   }
@@ -195,16 +206,20 @@ const Sign__Up = styled.span`
   }
 `;
 
-const MyPage = styled.span`
-  margin-right: 10px;
+const My_Page = styled.span`
+  margin-right: 12px;
   cursor: pointer;
   transition: all 0.4s ease;
   &:hover {
     transform: translateY(-2px);
   }
+  a {
+    font-family: "PT Sans";
+    font-weight: normal;
+  }
 `;
 
-const LogOut = styled.span`
+const Sign__Out = styled.span`
   margin-right: 10px;
   cursor: pointer;
   transition: all 0.4s ease;
