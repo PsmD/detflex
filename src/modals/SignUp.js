@@ -3,15 +3,18 @@ import OrLine from "../components/OrLine";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth";
-import { authService } from "../fbase";
+import { authService } from "../AboutFirebase/fbase";
 import styled from "styled-components";
 
 function SignUp({ state, closeModal, scrollY }) {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [userNameError, setUserNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
   const onChange = (event) => {
     const {
@@ -27,26 +30,36 @@ function SignUp({ state, closeModal, scrollY }) {
       setConfirmPassword(value);
     }
   };
+
   const onSubmit = async (event) => {
     event.preventDefault();
-    await createUserWithEmailAndPassword(authService, email, password)
-      .then((result) => {
-        result.user.updateProfile({ displayName: userName });
-        const user = result.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        if (error.code === "auth/internal-error") {
-          setError("Please fill out all the information");
-        } else if (error.code === "auth/weak-password") {
-          setError("Please write a password of at least 6 characters");
-        } else if (error.code === "auth/email-already-in-use") {
-          setError("Email is already in use");
-        } else if (error.code === "auth/invalid-email") {
-          setError("Invalid email address");
-        }
+    try {
+      await createUserWithEmailAndPassword(authService, email, password).then(() => {
+        updateProfile(authService.currentUser, {
+          displayName: userName,
+        }).then(() => {
+          window.location.reload();
+        });
       });
-    window.location.reload();
+    } catch (error) {
+      setUserNameError("");
+      setEmailError("");
+      setPasswordError("");
+      setConfirmPasswordError("");
+      if (userName.length === 0) {
+        setUserNameError("Please write your user name");
+      } else if (password.length < 6) {
+        setPasswordError("Please write a password of at least 6 characters");
+      } else if (error.code === "auth/email-already-in-use") {
+        setEmailError("Email is already in use");
+      } else if (error.code === "auth/invalid-email") {
+        setEmailError("Please write it in the correct email format");
+      } else if (email.length === 0) {
+        setEmailError("Please write your email address");
+      } else if (password !== confirmPassword) {
+        setConfirmPasswordError("Passwords do not match.");
+      }
+    }
   };
 
   const onSocialClick = async () => {
@@ -57,17 +70,24 @@ function SignUp({ state, closeModal, scrollY }) {
     console.log(data);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
   return state ? (
     <>
       <Overlay onClick={closeModal} />
-      <ModalBox style={{ top: scrollY.get() + 80 }}>
+      <ModalBox style={{ top: scrollY.get() + 80 }} onKeyPress={handleKeyPress}>
         <Header>
           <Title>Sign Up</Title>
           <CloseButton onClick={closeModal}>&times;</CloseButton>
         </Header>
         <ModalBody>
           <UserName>
-            <UserNameLabel>User name</UserNameLabel>
+            <UserNameLabel>
+              User name <UserNameError>{userNameError}</UserNameError>
+            </UserNameLabel>
             <UserNameInput
               name="userName"
               type="text"
@@ -78,7 +98,9 @@ function SignUp({ state, closeModal, scrollY }) {
             ></UserNameInput>
           </UserName>
           <Email>
-            <EmailLabel>Email address</EmailLabel>
+            <EmailLabel>
+              Email address <EmailError>{emailError}</EmailError>
+            </EmailLabel>
             <EmailInput
               name="email"
               type="email"
@@ -89,7 +111,9 @@ function SignUp({ state, closeModal, scrollY }) {
             ></EmailInput>
           </Email>
           <Password>
-            <PasswordLabel>Password</PasswordLabel>
+            <PasswordLabel>
+              Password <PasswordError>{passwordError}</PasswordError>
+            </PasswordLabel>
             <PasswordInput
               name="password"
               type="password"
@@ -100,7 +124,9 @@ function SignUp({ state, closeModal, scrollY }) {
             ></PasswordInput>
           </Password>
           <ConfirmPassword>
-            <ConfirmPasswordLabel>Confirm password</ConfirmPasswordLabel>
+            <ConfirmPasswordLabel>
+              Confirm password <ConfirmPasswordError>{confirmPasswordError}</ConfirmPasswordError>
+            </ConfirmPasswordLabel>
             <ConfirmPasswordInput
               name="confirmPassword"
               type="password"
@@ -110,7 +136,6 @@ function SignUp({ state, closeModal, scrollY }) {
               onChange={onChange}
             ></ConfirmPasswordInput>
           </ConfirmPassword>
-          {error}
           <SignUpButton type="submit" onClick={onSubmit}>
             Sign Up
           </SignUpButton>
@@ -136,10 +161,10 @@ const Overlay = styled.div`
   z-index: 14;
 `;
 
-const ModalBox = styled.div`
+const ModalBox = styled.form`
   position: absolute;
   width: 500px;
-  height: 530px;
+  height: 540px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -191,8 +216,15 @@ const UserName = styled.div`
 `;
 
 const UserNameLabel = styled.label`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
+`;
+
+const UserNameError = styled.div`
+  color: #fd5050;
   text-shadow: 0.5px 0.5px #c7cdd4;
 `;
 
@@ -213,8 +245,15 @@ const Email = styled.div`
 `;
 
 const EmailLabel = styled.label`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
+`;
+
+const EmailError = styled.div`
+  color: #fd5050;
   text-shadow: 0.5px 0.5px #c7cdd4;
 `;
 
@@ -235,8 +274,15 @@ const Password = styled.div`
 `;
 
 const PasswordLabel = styled.label`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
+`;
+
+const PasswordError = styled.div`
+  color: #fd5050;
   text-shadow: 0.5px 0.5px #c7cdd4;
 `;
 
@@ -257,8 +303,15 @@ const ConfirmPassword = styled.div`
 `;
 
 const ConfirmPasswordLabel = styled.label`
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 5px;
   color: #676767;
+  text-shadow: 0.5px 0.5px #c7cdd4;
+`;
+
+const ConfirmPasswordError = styled.div`
+  color: #fd5050;
   text-shadow: 0.5px 0.5px #c7cdd4;
 `;
 
@@ -285,9 +338,10 @@ const SignUpButton = styled.button`
   border-radius: 10px;
   text-shadow: 0.5px 0.5px #c7cdd4;
   border-style: none;
+  transition: 0.3s;
 
   &:hover {
-    transform: scale(1.009);
+    transform: scale(1.02);
   }
 `;
 
@@ -306,8 +360,9 @@ const GoogleSignUpButton = styled.button`
   border-radius: 10px;
   text-shadow: 0.5px 0.5px #c7cdd4;
   cursor: pointer;
+  transition: 0.3s;
 
   &:hover {
-    transform: scale(1.009);
+    transform: scale(1.02);
   }
 `;
