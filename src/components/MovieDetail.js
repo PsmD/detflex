@@ -84,10 +84,6 @@ const MovieTitle = styled.h1`
   font-size: 28px;
   margin-bottom: 20px;
   color: white;
-
-  &:hover {
-    transform: scale(1.03);
-  }
 `;
 
 const MovieTextboxList = styled.ul`
