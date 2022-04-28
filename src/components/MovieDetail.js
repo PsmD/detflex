@@ -35,7 +35,7 @@ MovieDetail.propTypes = {
   id: PropTypes.number.isRequired,
   backdrop_path: PropTypes.string.isRequired,
   poster_path: PropTypes.string.isRequired,
-  title_long: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   vote_average: PropTypes.number.isRequired,
   runtime: PropTypes.number.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -45,7 +45,7 @@ MovieDetail.propTypes = {
 export default MovieDetail;
 
 const MovieBg = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
