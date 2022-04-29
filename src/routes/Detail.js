@@ -6,19 +6,20 @@ import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 import { dbService } from "../AboutFirebase/fbase";
+import { addDoc, onSnapshot, collection, query, where } from "firebase/firestore";
 import { UserContext } from "../AboutFirebase/UseAuth";
 
 function Detail() {
-  const { id } = useParams();
+  const { movieId } = useParams();
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState([]);
   const [comment, setComment] = useState("");
-  const [allComments, setAllComments] = useState([]);
+  const [detailMovieComments, setDetailMovieComments] = useState([]);
   const currentUser = useContext(UserContext);
 
   const getMovie = useCallback(async () => {
     await axios
-      .get(`${BASE_PATH}/movie/${id}?api_key=${API_KEY}`)
+      .get(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`)
       .then((res) => {
         console.log(res.data);
         setDetail(res.data);
@@ -27,16 +28,18 @@ function Detail() {
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+  }, [movieId]);
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await dbService.collection("comments").add({
+    await addDoc(collection(dbService, "comments"), {
       text: comment,
       createdAt: Date.now(),
-      creatorId: currentUser.uid,
+      creatorId: currentUser.user.uid,
+      detailMovieId: movieId,
     });
     setComment("");
+    console.log(currentUser);
   };
   const onChange = (event) => {
     const {
@@ -46,18 +49,15 @@ function Detail() {
   };
 
   useEffect(() => {
-    getMovie();
-  }, [getMovie]);
-
-  useEffect(() => {
-    dbService.collection("comments").onSnapshot((snapshot) => {
+    onSnapshot(collection(dbService, "comments"), (snapshot) => {
       const commentArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      setAllComments(commentArray);
+      setDetailMovieComments(commentArray);
     });
-  }, []);
+    getMovie();
+  }, [getMovie]);
 
   return (
     <Container>
@@ -75,19 +75,19 @@ function Detail() {
           overview={detail.overview}
         />
       )}
-      <div>
-        <form onSubmit={onSubmit}>
+      <CommentContainer>
+        <CommentForm>
           <input value={comment} onChange={onChange} type="text" maxLength={500} />
-          <input type="submit" value="add" />
-        </form>
-        <div>
-          {allComments.map((_comment) => (
-            <div key={_comment.id}>
-              <h4>{_comment.text}</h4>
-            </div>
+          <SubmitButton onClick={onSubmit}>add</SubmitButton>
+        </CommentForm>
+        <MovieComments>
+          {detailMovieComments.map((_comment) => (
+            <CommentTextBox key={_comment.id}>
+              <CommentText>{_comment.text}</CommentText>
+            </CommentTextBox>
           ))}
-        </div>
-      </div>
+        </MovieComments>
+      </CommentContainer>
     </Container>
   );
 }
@@ -104,3 +104,18 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const CommentContainer = styled.div`
+  display: flex;
+  position: relative;
+  height: 130vh;
+  align-items: end;
+`;
+const CommentForm = styled.form``;
+const SubmitButton = styled.button`
+  width: 100px;
+  height: 100px;
+`;
+const MovieComments = styled.div``;
+const CommentTextBox = styled.div``;
+const CommentText = styled.div``;
