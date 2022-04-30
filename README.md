@@ -253,9 +253,11 @@
 
 <br>
 
-**_`22/04/28`_**
+**_`22/04/30`_**
 
-- **Firebase 기반 영화 상세 페이지 댓글, 좋아요 기능 구현을 위한 추가 공부 중...**
+- **Movie detail page 댓글 구현(v1)**
+
+  - 댓글을 쓴 장소의 파라미터와 comment value를 Cloud firebase `comments` collection에 문서로 보내놓고 firebase query문을 활용하여 현재 페이지 파라미터 `movieId` 와 같다면 가져오도록 하여 각각의 Movie detail 마다 다른 댓글을 달 수 있도록 구현. 프로필 이미지도 넣을 수 있게하고 댓글에도 좋아요 기능을 추가할 예정
 
 <br>
 
