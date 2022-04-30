@@ -49,8 +49,8 @@ function Navbar() {
     },
   };
 
-  const signOut = () => {
-    authService.signOut();
+  const signOut = async () => {
+    await authService.signOut();
     navigate("/");
     window.location.reload();
   };
