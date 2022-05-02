@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { authService } from "../AboutFirebase/fbase";
 import OrLine from "../components/OrLine";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -50,6 +50,14 @@ function SignIn({ state, closeModal, scrollY }) {
     }
   };
 
+  const onSocialClick = async () => {
+    let provider;
+    provider = new GoogleAuthProvider();
+    const data = await signInWithPopup(authService, provider);
+    window.location.reload();
+    console.log(data);
+  };
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       onSubmit();
@@ -93,7 +101,7 @@ function SignIn({ state, closeModal, scrollY }) {
           <ToomanyError>{tooManyReqError}</ToomanyError>
           <SignInButton onClick={onSubmit}>Sign In</SignInButton>
           <OrLine text={"OR"} />
-          <GoogleLoginButton>
+          <GoogleLoginButton onClick={onSocialClick} name="google">
             <FontAwesomeIcon icon={faGoogle} size="lg" />
             &nbsp; Google Login
           </GoogleLoginButton>
