@@ -14,6 +14,7 @@ function Detail() {
   const { movieId } = useParams();
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState([]);
+  const [cast, setCast] = useState([]);
   const [comment, setComment] = useState("");
   const [like, setLike] = useState(false);
   const [detailMovieComments, setDetailMovieComments] = useState([]);
@@ -31,6 +32,19 @@ function Detail() {
         console.log(err);
       });
   }, [movieId]);
+
+  const getMovieCast = async () => {
+    await axios
+      .get(`${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}`)
+      .then((res) => {
+        console.log(res.data);
+        setCast(res.data.cast);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onSubmitLike = async (event) => {
     event.preventDefault();
@@ -84,7 +98,8 @@ function Detail() {
       setDetailMovieComments(commentArray);
     });
     getMovie();
-  }, [getMovie]);
+    getMovieCast();
+  }, []);
 
   const textRef = useRef();
   const handleResizeHeight = useCallback(() => {
@@ -107,36 +122,46 @@ function Detail() {
             vote_average={detail.vote_average}
             genres={detail.genres}
             overview={detail.overview}
+            cast={cast}
+            cast_id={cast.cast_id}
+            character={cast.character}
+            name={cast.name}
+            order={cast.order}
+            profile_path={cast.profile_path}
           />
         )}
       </MovieDetailContainer>
-      <CommentContainer>
-        <WhatDoyouThink>What do you think of this movie?</WhatDoyouThink>
-        <CommentForm>
-          <CommentInput
-            value={comment}
-            onChange={onChange}
-            placeholder="Comment"
-            required
-            ref={textRef}
-            onInput={handleResizeHeight}
-            maxLength={1000}
-          />
-          <CommentSubmitButton onClick={onSubmitComment}>Add</CommentSubmitButton>
-        </CommentForm>
-        <MovieComments>
-          {detailMovieComments.map((_comment) => (
-            <CommentTextBox key={_comment.id}>
-              <UserAndDate>
-                <UserName>{_comment.userName}</UserName>
-                <CommentDate>{_comment.createtime}</CommentDate>
-              </UserAndDate>
-              <CommentText>{_comment.text}</CommentText>
-            </CommentTextBox>
-          ))}
-        </MovieComments>
-        {/* <LikeButton onClick={onSubmitLike}>Like</LikeButton> */}
-      </CommentContainer>
+      {loading ? (
+        <Loading />
+      ) : (
+        <CommentContainer>
+          <WhatDoyouThink>What do you think of this movie?</WhatDoyouThink>
+          <CommentForm>
+            <CommentInput
+              value={comment}
+              onChange={onChange}
+              placeholder="Comment"
+              required
+              ref={textRef}
+              onInput={handleResizeHeight}
+              maxLength={1000}
+            />
+            <CommentSubmitButton onClick={onSubmitComment}>Add</CommentSubmitButton>
+          </CommentForm>
+          <MovieComments>
+            {detailMovieComments.map((_comment) => (
+              <CommentTextBox key={_comment.id}>
+                <UserAndDate>
+                  <UserName>{_comment.userName}</UserName>
+                  <CommentDate>{_comment.createtime}</CommentDate>
+                </UserAndDate>
+                <CommentText>{_comment.text}</CommentText>
+              </CommentTextBox>
+            ))}
+          </MovieComments>
+          {/* <LikeButton onClick={onSubmitLike}>Like</LikeButton> */}
+        </CommentContainer>
+      )}
     </>
   );
 }
@@ -144,7 +169,7 @@ export default Detail;
 
 const MovieDetailContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 150vh;
   min-width: ${window.innerWidth - 1}px;
   min-height: ${window.innerHeight - 1}px;
   display: flex;
