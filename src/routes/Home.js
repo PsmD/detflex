@@ -127,7 +127,6 @@ function Home() {
               upcomingMovies.slice(0, 10).map((upMovie) => (
                 <SwiperSlide key={upMovie.id}>
                   <MovieCard
-                    key={upMovie.id}
                     id={upMovie.id}
                     title={upMovie.title}
                     poster_path={`${IMAGE_BASE_URL}original${upMovie.poster_path}`}
@@ -151,7 +150,6 @@ function Home() {
               popularMovies.slice(0, 10).map((popMovie) => (
                 <SwiperSlide key={popMovie.id}>
                   <MovieCard
-                    key={popMovie.id}
                     id={popMovie.id}
                     title={popMovie.title}
                     poster_path={`${IMAGE_BASE_URL}original${popMovie.poster_path}`}
@@ -175,7 +173,6 @@ function Home() {
               topRatingMovies.slice(0, 10).map((topMovie) => (
                 <SwiperSlide key={topMovie.id}>
                   <MovieCard
-                    key={topMovie.id}
                     id={topMovie.id}
                     title={topMovie.title}
                     poster_path={`${IMAGE_BASE_URL}original${topMovie.poster_path}`}
