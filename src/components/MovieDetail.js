@@ -1,7 +1,28 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Navigation, Pagination, Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import CastCard from "./CastCard";
+import { IMAGE_BASE_URL } from "../api";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-function MovieDetail({ id, backdrop_path, poster_path, title, runtime, vote_average, genres, overview }) {
+function MovieDetail({
+  backdrop_path,
+  poster_path,
+  title,
+  runtime,
+  vote_average,
+  genres,
+  overview,
+  cast,
+  cast_id,
+  character,
+  name,
+  order,
+  profile_path,
+}) {
   return (
     <>
       <MovieBg bgimg={backdrop_path} />
@@ -26,6 +47,25 @@ function MovieDetail({ id, backdrop_path, poster_path, title, runtime, vote_aver
             </MovieTextboxSummary>
           </MovieTextboxList>
         </MovieTextbox>
+        <CastSwiper
+          modules={[Navigation]}
+          spaceBetween={0}
+          slidesPerView={5}
+          navigation={{ clickable: true }}
+          loop={true}
+        >
+          {cast &&
+            cast.slice(0, 10).map((_cast) => (
+              <SwiperSlide key={_cast.cast_id}>
+                <CastCard
+                  name={_cast.name}
+                  profile_path={`${IMAGE_BASE_URL}original${_cast.profile_path}`}
+                  order={_cast.order}
+                  character={_cast.character}
+                />
+              </SwiperSlide>
+            ))}
+        </CastSwiper>
       </MovieShow>
     </>
   );
@@ -49,7 +89,7 @@ const MovieBg = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 150vh;
   min-width: ${window.innerWidth - 1}px;
   min-height: ${window.innerHeight - 1}px;
   filter: brightness(40%);
@@ -96,4 +136,11 @@ const MovieTextboxSummary = styled.p`
   color: whitesmoke;
   font-weight: 300;
   font-size: 14px;
+`;
+
+const CastSwiper = styled(Swiper)`
+  position: absolute;
+  top: 150%;
+  left: 25%;
+  z-index: 9;
 `;
