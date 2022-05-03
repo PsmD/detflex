@@ -122,12 +122,13 @@ function Detail() {
             vote_average={detail.vote_average}
             genres={detail.genres}
             overview={detail.overview}
+            release_date={detail.release_date}
             cast={cast}
             cast_id={cast.cast_id}
             character={cast.character}
             name={cast.name}
             order={cast.order}
-            profile_path={cast.profile_path}
+            profile_path={`${IMAGE_BASE_URL}original${cast.profile_path}`}
           />
         )}
       </MovieDetailContainer>
@@ -169,7 +170,7 @@ export default Detail;
 
 const MovieDetailContainer = styled.div`
   width: 100%;
-  height: 150vh;
+  height: 100vh;
   min-width: ${window.innerWidth - 1}px;
   min-height: ${window.innerHeight - 1}px;
   display: flex;
