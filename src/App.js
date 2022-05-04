@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
@@ -19,7 +19,8 @@ function App() {
           <Route path={`/movie/:movieId`} element={<Detail />} />
           <Route path={`/search/:searchText`} element={<Search />} />
           <Route path={"/my_page"} element={<MyPage />} />
-          <Route path={"*"} element={<NotFound />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </Router>
     </RecoilRoot>
