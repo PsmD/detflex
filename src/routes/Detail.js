@@ -39,7 +39,6 @@ function Detail() {
       .then((res) => {
         console.log(res.data);
         setCast(res.data.cast);
-        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -89,6 +88,7 @@ function Detail() {
   const MovieQuery = query(detailMovieIdRef, where("detailMovieId", "==", movieId), orderBy("createdAt", "desc"));
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     onSnapshot(MovieQuery, (snapshot) => {
       const commentArray = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -132,37 +132,33 @@ function Detail() {
           />
         )}
       </MovieDetailContainer>
-      {loading ? (
-        <Loading />
-      ) : (
-        <CommentContainer>
-          <WhatDoyouThink>What do you think of this movie?</WhatDoyouThink>
-          <CommentForm>
-            <CommentInput
-              value={comment}
-              onChange={onChange}
-              placeholder="Comment"
-              required
-              ref={textRef}
-              onInput={handleResizeHeight}
-              maxLength={1000}
-            />
-            <CommentSubmitButton onClick={onSubmitComment}>Add</CommentSubmitButton>
-          </CommentForm>
-          <MovieComments>
-            {detailMovieComments.map((_comment) => (
-              <CommentTextBox key={_comment.id}>
-                <UserAndDate>
-                  <UserName>{_comment.userName}</UserName>
-                  <CommentDate>{_comment.createtime}</CommentDate>
-                </UserAndDate>
-                <CommentText>{_comment.text}</CommentText>
-              </CommentTextBox>
-            ))}
-          </MovieComments>
-          {/* <LikeButton onClick={onSubmitLike}>Like</LikeButton> */}
-        </CommentContainer>
-      )}
+      <CommentContainer>
+        <WhatDoyouThink>What do you think of this movie?</WhatDoyouThink>
+        <CommentForm>
+          <CommentInput
+            value={comment}
+            onChange={onChange}
+            placeholder="Comment"
+            required
+            ref={textRef}
+            onInput={handleResizeHeight}
+            maxLength={1000}
+          />
+          <CommentSubmitButton onClick={onSubmitComment}>Add</CommentSubmitButton>
+        </CommentForm>
+        <MovieComments>
+          {detailMovieComments.map((_comment) => (
+            <CommentTextBox key={_comment.id}>
+              <UserAndDate>
+                <UserName>{_comment.userName}</UserName>
+                <CommentDate>{_comment.createtime}</CommentDate>
+              </UserAndDate>
+              <CommentText>{_comment.text}</CommentText>
+            </CommentTextBox>
+          ))}
+        </MovieComments>
+        {/* <LikeButton onClick={onSubmitLike}>Like</LikeButton> */}
+      </CommentContainer>
     </>
   );
 }
