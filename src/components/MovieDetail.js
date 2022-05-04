@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Navigation } from "swiper";
+import { Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CastCard from "./CastCard";
 import { IMAGE_BASE_URL } from "../api";
+import image_regular from "../img/image_regular.svg";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 function MovieDetail({
   backdrop_path,
@@ -18,11 +18,6 @@ function MovieDetail({
   overview,
   release_date,
   cast,
-  cast_id,
-  character,
-  name,
-  order,
-  profile_path,
 }) {
   return (
     <>
@@ -30,7 +25,7 @@ function MovieDetail({
       <MovieBg bgimg={backdrop_path} />
       <MovieContainer>
         <MovieDetailWraper>
-          <MovieImg src={poster_path} />
+          <MovieImg poster_path={poster_path} />
           <MovieTextbox>
             <MovieTitleAndYear>
               {title}&nbsp;
@@ -46,20 +41,14 @@ function MovieDetail({
             </MovieInfo>
             <MovieDetailInfoBox>
               <MovieVoteAndRuntime>
-                <MovieRating>Rating: {vote_average}&nbsp;&nbsp;</MovieRating>
-                <MovieRuntime>Runtime: {runtime}&nbsp;min</MovieRuntime>
+                <MovieRating>Rating: {vote_average ? vote_average : "No rating"}&nbsp;&nbsp;</MovieRating>
+                <MovieRuntime>Runtime: {runtime ? runtime + " " + "min" : "Unknown"}</MovieRuntime>
               </MovieVoteAndRuntime>
               <MovieTextboxSummary>
                 <h4>Summary: </h4>
-                {overview.length > 160 ? `${overview.slice(0, 160)}...` : overview}
+                {overview.length > 260 ? `${overview.slice(0, 260)}...` : overview}
               </MovieTextboxSummary>
-              <CastSwiper
-                modules={[Navigation]}
-                spaceBetween={0}
-                slidesPerView={5}
-                navigation={{ clickable: true }}
-                loop={true}
-              >
+              <CastSwiper modules={[Scrollbar]} spaceBetween={20} scrollbar={{ draggable: true }} slidesPerView={4}>
                 {cast &&
                   cast.map((_cast) => (
                     <SwiperSlide key={_cast.cast_id}>
@@ -134,8 +123,12 @@ const MovieDetailWraper = styled.div`
   justify-content: center;
 `;
 
-const MovieImg = styled.img`
-  height: 70vh;
+const MovieImg = styled.div`
+  background-image: url(${(props) => props.poster_path});
+  background-size: cover;
+  background-position: center center;
+  height: 75vh;
+  width: 25vw;
   margin-right: 5vw;
 `;
 
@@ -148,6 +141,8 @@ const MovieTextbox = styled.div`
 const MovieTitleAndYear = styled.div`
   font-weight: bold;
   font-size: 28px;
+  margin-bottom: 0.5vh;
+  width: 45vw;
 `;
 
 const MovieYear = styled.span`
@@ -191,6 +186,7 @@ const MovieRuntime = styled.li``;
 const MovieTextboxSummary = styled.p`
   margin-bottom: 10vh;
   margin-top: 3vh;
+  width: 40vw;
   color: whitesmoke;
   font-weight: 300;
   font-size: 14px;
@@ -198,8 +194,15 @@ const MovieTextboxSummary = styled.p`
 
 const CastSwiper = styled(Swiper)`
   display: flex;
-  width: 45vw;
-  height: 35vh;
+  width: 40vw;
+  height: 41vh;
   z-index: 9;
   margin-bottom: 10vh;
+  position: absolute;
+  top: 50%;
+
+  .swiper-scrollbar-drag {
+    background-color: #c9c9c9;
+    height: 1vh;
+  }
 `;
