@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import MovieCard from "../components/MovieCard";
 import Loading from "../components/Loading";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
@@ -11,6 +11,7 @@ const pagesPerList = 10;
 
 function MovieMenu() {
   const { menu } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState();
@@ -111,11 +112,13 @@ function MovieMenu() {
   }, [menu]);
 
   useEffect(() => {
-    setLoading(true);
-    window.scrollTo(0, 0);
-    getMovies();
-    return;
-  }, [getMovies, currentPage]);
+    if (menu !== "now_playing" && menu !== "top_rated" && menu !== "popular" && menu !== "upcoming") {
+      navigate("/404", { replace: true });
+    } else {
+      getMovies();
+      window.scrollTo(0, 0);
+    }
+  }, [getMovies, currentPage, menu, navigate]);
 
   return (
     <Container>
