@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useContext, useRef } from "react";
 import MovieDetail from "../components/MovieDetail";
 import Loading from "../components/Loading";
@@ -12,6 +12,7 @@ import { currentTime } from "../atom/Date";
 
 function Detail() {
   const { movieId } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState([]);
   const [cast, setCast] = useState([]);
@@ -29,7 +30,10 @@ function Detail() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response) {
+          console.log(err.response.status);
+          navigate("/404", { replace: true });
+        }
       });
   }, [movieId]);
 
