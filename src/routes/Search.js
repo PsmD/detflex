@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import Loading from "../components/Loading";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import MovieCard from "../components/MovieCard";
 import styled from "styled-components";
@@ -10,6 +10,7 @@ const pagesPerList = 10;
 
 function Search() {
   const { searchText } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState();
@@ -23,6 +24,9 @@ function Search() {
         `${BASE_PATH}/search/movie?query=${searchText}&api_key=${API_KEY}&page=${currentPage}&include_adult=false&sort_by=popularity.desc`
       )
       .then((res) => {
+        if (res.data.results.length === 0) {
+          navigate(`/nosearch/${searchText}`, { replace: true });
+        }
         setMovies(res.data.results);
         setTotalPages(res.data.total_pages);
         setLoading(false);
@@ -79,10 +83,8 @@ function Search() {
   const isFirstPage = currentPage === 1;
 
   useEffect(() => {
-    setLoading(true);
     getMovies();
     window.scrollTo(0, 0);
-    return;
   }, [getMovies, currentPage]);
 
   return (

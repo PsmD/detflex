@@ -7,6 +7,7 @@ import MovieMenu from "./routes/MovieMenu";
 import Search from "./routes/Search";
 import NotFound from "./routes/NotFound";
 import MyPage from "./routes/Mypage";
+import NoSearch from "./routes/NoSearch";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path={`/search/:searchText`} element={<Search />} />
           <Route path={"/my_page"} element={<MyPage />} />
           <Route path="/404" element={<NotFound />} />
+          <Route path="/nosearch/:searchText" element={<NoSearch />} />
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
       </Router>
