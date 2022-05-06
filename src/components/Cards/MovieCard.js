@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import image_regular from "../img/image_regular.svg";
+import image_regular from "../../img/image_regular.svg";
 
 function MovieCard({ id, title, poster_path, year, vote_average }) {
   return (
