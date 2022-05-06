@@ -2,9 +2,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CastCard from "./CastCard";
+import CastCard from "./Cards/CastCard";
 import { IMAGE_BASE_URL } from "../api";
-import image_regular from "../img/image_regular.svg";
 import "swiper/css";
 import "swiper/css/scrollbar";
 
