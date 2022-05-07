@@ -138,6 +138,7 @@ function Detail() {
         handleResizeHeight={handleResizeHeight}
         onSubmitComment={onSubmitComment}
         detailMovieComments={detailMovieComments}
+        currentUser={currentUser}
       />
     </>
   );
@@ -145,7 +146,7 @@ function Detail() {
 export default Detail;
 
 const MovieDetailContainer = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   min-width: ${window.innerWidth - 1}px;
   min-height: ${window.innerHeight - 1}px;
