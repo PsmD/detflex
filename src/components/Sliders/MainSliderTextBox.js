@@ -56,6 +56,6 @@ const Overview = styled.div`
   margin-top: 20px;
   font-size: 20px;
   color: #e9e9e9;
-  text-shadow: 3px 3px #4e4e4e;
+  text-shadow: 2px 2px #4e4e4e;
   cursor: text;
 `;
