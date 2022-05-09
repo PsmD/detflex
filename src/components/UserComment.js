@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { dbService } from "../AboutFirebase/fbase";
-// import { dbService } from "../AboutFirebase/fbase";
 
 const UserComment = ({
   comment,
@@ -13,15 +12,16 @@ const UserComment = ({
   handleResizeHeight,
   onSubmitComment,
   detailMovieComments,
-  currentUser,
+  user,
 }) => {
   const [select, setSelect] = useState(false);
   const [eachSelect, setEachSelect] = useState();
-  // const [newComment, setNewComment] = useState(comment);
-  // const [edit, setEdit] = useState(false);
-  // const [eachEdit, setEachEdit] = useState();
+  const [newComment, setNewComment] = useState(comment);
+  const [edit, setEdit] = useState(false);
+  const [eachEdit, setEachEdit] = useState();
 
   const openSelect = (id) => {
+    console.log(user.user);
     setEachSelect(id);
     setSelect(true);
   };
@@ -38,28 +38,35 @@ const UserComment = ({
     }
   };
 
-  const reportComent = (id) => {
-    alert("Report completed. Thank you");
+  const reportComent = () => {
+    const yes = window.confirm("Are you sure you want to report this comment?");
+    if (yes) {
+      alert("Report completed. Thank you");
+      window.location.reload();
+    }
   };
 
-  // const openEdit = (id) => {
-  //   setEachEdit(id);
-  //   setEdit(true);
-  // };
+  const openEdit = (id) => {
+    setEachEdit(id);
+    setEdit(true);
+    setSelect(false);
+  };
 
-  // const editComment = async (id) => {
-  //   const commentRef = doc(dbService, "comments", id);
-  //   await updateDoc(commentRef, {
-  //     text: newComment,
-  //   });
-  // };
+  const editComment = async (event, id) => {
+    event.preventDefault();
+    const commentRef = doc(dbService, "comments", id);
+    await updateDoc(commentRef, {
+      text: newComment,
+    });
+    setEdit(false);
+  };
 
-  // const onEditChange = (event) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setNewComment(value);
-  // };
+  const onEditChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewComment(value);
+  };
 
   return (
     <CommentContainer>
@@ -95,15 +102,21 @@ const UserComment = ({
                 <FontAwesomeIcon icon={faEllipsisVertical} size="lg" />
               </CommentController>
             </CommentTopBox>
-            {select && eachSelect === _comment.id ? (
+            {user.user && select && eachSelect === _comment.id ? (
               <>
                 <SelectOverlay onClick={closeSelect} />
-                <Select currentUser={currentUser.user.uid} creatorId={_comment.creatorId}>
+                <Select user={user.user.uid} creatorId={_comment.creatorId}>
                   <CloseButton onClick={closeSelect}>&times;</CloseButton>
                   <Options>
-                    {currentUser.user.uid === _comment.creatorId ? (
+                    {user.user && user.user.uid === _comment.creatorId ? (
                       <>
-                        <EditButton>Edit</EditButton>
+                        <EditButton
+                          onClick={() => {
+                            openEdit(_comment.id);
+                          }}
+                        >
+                          Edit
+                        </EditButton>
                         <DeleteButton
                           onClick={() => {
                             deleteComent(_comment.id);
@@ -118,8 +131,38 @@ const UserComment = ({
                   </Options>
                 </Select>
               </>
-            ) : null}
-            <CommentText>{_comment.text}</CommentText>
+            ) : (
+              select &&
+              eachSelect === _comment.id && (
+                <>
+                  <SelectOverlay onClick={closeSelect} />
+                  <Select>
+                    <CloseButton onClick={closeSelect}>&times;</CloseButton>
+                    <Options>
+                      <Report onClick={reportComent}>Report</Report>
+                    </Options>
+                  </Select>
+                </>
+              )
+            )}
+
+            {edit && eachEdit === _comment.id ? (
+              <EditCommentForm>
+                <EditCommentInput
+                  value={newComment}
+                  onChange={onEditChange}
+                  placeholder="Edit Comment"
+                  required
+                  ref={textRef}
+                  onInput={handleResizeHeight}
+                  maxLength={1000}
+                  autoFocus
+                />
+                <EditCommentSubmitButton onClick={editComment}>Edit</EditCommentSubmitButton>
+              </EditCommentForm>
+            ) : (
+              <CommentText>{_comment.text}</CommentText>
+            )}
           </CommentTextBox>
         ))}
       </MovieComments>
@@ -240,15 +283,15 @@ const Select = styled.div`
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25),
     0 0 5px -4px rgba(0, 0, 0, 0.025);
-  width: ${(props) => (props.currentUser === props.creatorId ? "6vw" : "5.5vw")};
-  height: ${(props) => (props.currentUser === props.creatorId ? "9vh" : "8vh")};
+  width: ${(props) => (props.user === props.creatorId ? "6vw" : "5.5vw")};
+  height: ${(props) => (props.user === props.creatorId ? "9vh" : "8vh")};
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
   font-size: 12px;
   position: absolute;
-  right: ${(props) => (props.currentUser === props.creatorId ? "19.3vw" : "19.8vw")};
+  right: ${(props) => (props.user === props.creatorId ? "19.3vw" : "19.8vw")};
   z-index: 15;
 `;
 
@@ -280,5 +323,9 @@ const Report = styled.li`
   cursor: pointer;
   width: fit-content;
 `;
+
+const EditCommentForm = styled.form``;
+const EditCommentInput = styled.textarea``;
+const EditCommentSubmitButton = styled.button``;
 
 // const LikeButton = styled.button``;
