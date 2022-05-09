@@ -20,7 +20,7 @@ function Detail() {
   const [comment, setComment] = useState("");
   const [like, setLike] = useState(false);
   const [detailMovieComments, setDetailMovieComments] = useState([]);
-  const currentUser = useContext(UserContext);
+  const user = useContext(UserContext);
 
   const getMovie = useCallback(async () => {
     await axios
@@ -52,15 +52,15 @@ function Detail() {
 
   const onSubmitLike = async (event) => {
     event.preventDefault();
-    if (currentUser) {
+    if (user) {
       await addDoc(collection(dbService, "likes"), {
         createtime: currentTime,
         createdAt: Date.now(),
-        creatorId: currentUser.user.uid,
+        creatorId: user.user.uid,
         detailMovieId: movieId,
       });
       setLike(true);
-      console.log(currentUser);
+      console.log(user);
     } else {
       await alert("fail");
     }
@@ -70,15 +70,15 @@ function Detail() {
     event.preventDefault();
     await addDoc(collection(dbService, "comments"), {
       text: comment,
-      userName: currentUser.user.displayName,
+      userName: user.user.displayName,
       createtime: currentTime,
       createdAt: Date.now(),
-      creatorId: currentUser.user.uid,
+      creatorId: user.user.uid,
       detailMovieId: movieId,
     });
     setComment("");
     textRef.current.style.height = "auto";
-    console.log(currentUser);
+    console.log(user);
   };
 
   const onChange = (event) => {
@@ -138,7 +138,7 @@ function Detail() {
         handleResizeHeight={handleResizeHeight}
         onSubmitComment={onSubmitComment}
         detailMovieComments={detailMovieComments}
-        currentUser={currentUser}
+        user={user}
       />
     </>
   );
