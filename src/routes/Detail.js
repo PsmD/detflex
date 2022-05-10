@@ -9,7 +9,7 @@ import { dbService } from "../AboutFirebase/fbase";
 import { addDoc, onSnapshot, collection, query, where, orderBy } from "firebase/firestore";
 import { UserContext } from "../AboutFirebase/UseAuth";
 import { currentTime } from "../atom/Date";
-import UserComment from "../components/UserComment";
+import Comment from "../components/Comments/Comment";
 
 function Detail() {
   const { movieId } = useParams();
@@ -66,8 +66,7 @@ function Detail() {
     }
   };
 
-  const onSubmitComment = async (event) => {
-    event.preventDefault();
+  const onSubmitComment = async () => {
     await addDoc(collection(dbService, "comments"), {
       text: comment,
       userName: user.user.displayName,
@@ -131,7 +130,7 @@ function Detail() {
           />
         )}
       </MovieDetailContainer>
-      <UserComment
+      <Comment
         comment={comment}
         onChange={onChange}
         textRef={textRef}
