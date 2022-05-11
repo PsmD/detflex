@@ -24,90 +24,100 @@ function MovieComments({
 }) {
   return (
     <>
-      {detailMovieComments.map((_comment) => (
-        <CommentTextBox key={_comment.id}>
-          <CommentTopBox>
-            <UserAndDate>
-              <UserName>{_comment.userName}</UserName>
-              <CommentDate>{_comment.createtime}</CommentDate>
-            </UserAndDate>
-            <CommentController
-              onClick={() => {
-                openSelect(_comment.id);
-                console.log(eachSelectId, _comment.id);
-              }}
-            >
-              <FontAwesomeIcon icon={faEllipsisVertical} size="lg" />
-            </CommentController>
-          </CommentTopBox>
-          {user.user && select && eachSelectId === _comment.id ? (
-            <>
-              <SelectOverlay onClick={closeSelect} />
-              <Select user={user.user.uid} creatorId={_comment.creatorId}>
-                <CloseButton onClick={closeSelect}>&times;</CloseButton>
-                <Options>
-                  {user.user && user.user.uid === _comment.creatorId ? (
-                    <>
-                      <EditButton
-                        onClick={() => {
-                          openEdit(_comment.id);
-                        }}
-                      >
-                        Edit
-                      </EditButton>
-                      <DeleteButton
-                        onClick={() => {
-                          deleteComent(_comment.id);
-                        }}
-                      >
-                        Delete
-                      </DeleteButton>
-                    </>
-                  ) : (
-                    <Report onClick={reportComent}>Report</Report>
-                  )}
-                </Options>
-              </Select>
-            </>
-          ) : (
-            select &&
-            eachSelectId === _comment.id && (
+      {detailMovieComments.length > 0 ? (
+        detailMovieComments.map((_comment) => (
+          <CommentTextBox key={_comment.id}>
+            <CommentTopBox>
+              <UserAndDate>
+                <UserName>{_comment.userName}</UserName>
+                <CommentDate>{_comment.createtime}</CommentDate>
+                {_comment.editBoolean === true ? <EditdeText>(Edited)</EditdeText> : null}
+              </UserAndDate>
+              <CommentController
+                onClick={() => {
+                  openSelect(_comment.id);
+                  console.log(eachSelectId, _comment.id);
+                }}
+              >
+                <FontAwesomeIcon icon={faEllipsisVertical} size="lg" />
+              </CommentController>
+            </CommentTopBox>
+            {user.user && select && eachSelectId === _comment.id ? (
               <>
                 <SelectOverlay onClick={closeSelect} />
-                <Select>
+                <Select user={user.user.uid} creatorId={_comment.creatorId}>
                   <CloseButton onClick={closeSelect}>&times;</CloseButton>
                   <Options>
-                    <Report onClick={reportComent}>Report</Report>
+                    {user.user && user.user.uid === _comment.creatorId ? (
+                      <>
+                        <EditButton
+                          onClick={() => {
+                            openEdit(_comment.id);
+                          }}
+                        >
+                          Edit
+                        </EditButton>
+                        <DeleteButton
+                          onClick={() => {
+                            deleteComent(_comment.id);
+                          }}
+                        >
+                          Delete
+                        </DeleteButton>
+                      </>
+                    ) : (
+                      <Report onClick={reportComent}>Report</Report>
+                    )}
                   </Options>
                 </Select>
               </>
-            )
-          )}
+            ) : (
+              select &&
+              eachSelectId === _comment.id && (
+                <>
+                  <SelectOverlay onClick={closeSelect} />
+                  <Select>
+                    <CloseButton onClick={closeSelect}>&times;</CloseButton>
+                    <Options>
+                      <Report onClick={reportComent}>Report</Report>
+                    </Options>
+                  </Select>
+                </>
+              )
+            )}
 
-          {edit && eachEdit === _comment.id ? (
-            <EditCommentForm>
-              <EditCommentInput
-                value={newComment}
-                onChange={onEditChange}
-                placeholder="Edit Comment"
-                required
-                ref={textRef}
-                onInput={handleResizeHeight}
-                maxLength={1000}
-                autoFocus
-              />
-              <EditButtons>
-                <EditCloseButton onClick={closeEdit}>Close</EditCloseButton>
-                <EditCommentSubmitButton prevComment={prevComment} newComment={newComment} onClick={editComment}>
-                  Edit
-                </EditCommentSubmitButton>
-              </EditButtons>
-            </EditCommentForm>
-          ) : (
-            <CommentText>{_comment.text}</CommentText>
-          )}
-        </CommentTextBox>
-      ))}
+            {edit && eachEdit === _comment.id ? (
+              <EditCommentForm>
+                <EditCommentInput
+                  value={newComment}
+                  onChange={onEditChange}
+                  placeholder="Edit Comment"
+                  required
+                  ref={textRef}
+                  onInput={handleResizeHeight}
+                  maxLength={1000}
+                  autoFocus
+                  onFocus={function (e) {
+                    var val = e.target.value;
+                    e.target.value = "";
+                    e.target.value = val;
+                  }}
+                />
+                <EditButtons>
+                  <EditCloseButton onClick={closeEdit}>Close</EditCloseButton>
+                  <EditCommentSubmitButton prevComment={prevComment} newComment={newComment} onClick={editComment}>
+                    Edit
+                  </EditCommentSubmitButton>
+                </EditButtons>
+              </EditCommentForm>
+            ) : (
+              <CommentText>{_comment.text}</CommentText>
+            )}
+          </CommentTextBox>
+        ))
+      ) : (
+        <NoMovieCommentText>No comments yet. Why don't you leave the first comment?</NoMovieCommentText>
+      )}
     </>
   );
 }
@@ -143,6 +153,15 @@ const CommentDate = styled.div`
   margin-bottom: 1.4vh;
   font-size: 12px;
   color: #a6a6a6;
+  margin-right: 0.2vw;
+`;
+
+const EditdeText = styled.div`
+  font-size: 12px;
+  color: #a6a6a6;
+  margin-bottom: 1.4vh;
+  display: flex;
+  align-items: center;
 `;
 
 const CommentController = styled.span`
@@ -261,4 +280,14 @@ const EditCommentSubmitButton = styled.div`
     props.newComment.length === 0 || props.prevComment === props.newComment ? "#E9E9E9" : "#8572FF"};
   color: ${(props) => (props.newComment.length === 0 || props.prevComment === props.newComment ? "black" : "white")};
   cursor: pointer;
+`;
+
+const NoMovieCommentText = styled.div`
+  display: flex;
+  justify-content: center;
+  color: #656565;
+  width: 50vw;
+  margin-bottom: 5vh;
+  padding-bottom: 5vh;
+  border-bottom: 1px solid #dbdbdb;
 `;
