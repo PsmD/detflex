@@ -7,10 +7,10 @@ import { authService } from "../AboutFirebase/fbase";
 import styled from "styled-components";
 
 function SignUp({ state, closeModal, scrollY }) {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [userNameText, setUserNameText] = useState("");
+  const [emailText, setEmailText] = useState("");
+  const [passwordText, setPasswordText] = useState("");
+  const [confirmPasswordText, setConfirmPasswordText] = useState("");
   const [userNameError, setUserNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -21,43 +21,51 @@ function SignUp({ state, closeModal, scrollY }) {
       target: { name, value },
     } = event;
     if (name === "userName") {
-      setUserName(value);
+      setUserNameText(value);
     } else if (name === "email") {
-      setEmail(value);
+      setEmailText(value);
     } else if (name === "password") {
-      setPassword(value);
+      setPasswordText(value);
     } else if (name === "confirmPassword") {
-      setConfirmPassword(value);
+      setConfirmPasswordText(value);
     }
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await createUserWithEmailAndPassword(authService, email, password).then(() => {
+      if (userNameText.length === 0) {
+        throw new Error("auth/invalid-display-name");
+      } else if (passwordText !== confirmPasswordText) {
+        throw new Error("auth/password-mismatch");
+      }
+      await createUserWithEmailAndPassword(authService, emailText, passwordText).then(() => {
         updateProfile(authService.currentUser, {
-          displayName: userName,
+          displayName: userNameText,
         }).then(() => {
           window.location.reload();
         });
       });
     } catch (error) {
+      console.log(error.message);
       setUserNameError("");
       setEmailError("");
       setPasswordError("");
       setConfirmPasswordError("");
-      if (userName.length === 0) {
+      if (error.message === "auth/invalid-display-name") {
         setUserNameError("Please write your user name");
-      } else if (password.length < 6) {
+      } else if (error.code === "auth/weak-password") {
         setPasswordError("Please write a password of at least 6 characters");
       } else if (error.code === "auth/email-already-in-use") {
         setEmailError("Email is already in use");
       } else if (error.code === "auth/invalid-email") {
         setEmailError("Please write it in the correct email format");
-      } else if (email.length === 0) {
+      } else if (error.code === "auth/missing-email") {
         setEmailError("Please write your email address");
-      } else if (password !== confirmPassword) {
+      } else if (error.message === "auth/password-mismatch") {
         setConfirmPasswordError("Passwords do not match.");
+      } else if (error.code === "auth/internal-error") {
+        setUserNameError("Please fill out all the information");
       }
     }
   };
@@ -92,7 +100,7 @@ function SignUp({ state, closeModal, scrollY }) {
               name="userName"
               type="text"
               required
-              value={userName}
+              value={userNameText}
               onChange={onChange}
               placeholder="Enter your user name"
             ></UserNameInput>
@@ -105,7 +113,7 @@ function SignUp({ state, closeModal, scrollY }) {
               name="email"
               type="email"
               required
-              value={email}
+              value={emailText}
               onChange={onChange}
               placeholder="Enter email"
             ></EmailInput>
@@ -119,7 +127,7 @@ function SignUp({ state, closeModal, scrollY }) {
               type="password"
               placeholder="Password"
               required
-              value={password}
+              value={passwordText}
               onChange={onChange}
             ></PasswordInput>
           </Password>
@@ -132,7 +140,7 @@ function SignUp({ state, closeModal, scrollY }) {
               type="password"
               required
               placeholder="Confirm password"
-              value={confirmPassword}
+              value={confirmPasswordText}
               onChange={onChange}
             ></ConfirmPasswordInput>
           </ConfirmPassword>
