@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Scrollbar } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CastCard from "./Cards/CastCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { IMAGE_BASE_URL } from "../api";
 import "swiper/css";
 import "swiper/css/scrollbar";
@@ -17,6 +19,7 @@ function MovieDetail({
   overview,
   release_date,
   cast,
+  onSubmitLike,
 }) {
   return (
     <>
@@ -42,6 +45,9 @@ function MovieDetail({
               <MovieVoteAndRuntime>
                 <MovieRating>Rating: {vote_average ? vote_average : "No rating"}&nbsp;&nbsp;</MovieRating>
                 <MovieRuntime>Runtime: {runtime ? runtime + " " + "min" : "Unknown"}</MovieRuntime>
+                <LikeButton onClick={onSubmitLike}>
+                  <FontAwesomeIcon icon={faHeart} size="lg" />
+                </LikeButton>
               </MovieVoteAndRuntime>
               <MovieTextboxSummary>
                 <h4>Summary: </h4>
@@ -181,6 +187,12 @@ const MovieRating = styled.li`
 `;
 
 const MovieRuntime = styled.li``;
+
+const LikeButton = styled.li`
+  margin-left: 10px;
+  cursor: pointer;
+  color: red;
+`;
 
 const MovieTextboxSummary = styled.p`
   margin-bottom: 10vh;
