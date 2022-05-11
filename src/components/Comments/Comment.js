@@ -4,10 +4,19 @@ import MovieComments from "./MovieComments";
 import { doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { dbService } from "../../AboutFirebase/fbase";
 
-const Comment = ({ comment, onChange, textRef, handleResizeHeight, onSubmitComment, detailMovieComments, user }) => {
+const Comment = ({
+  comment,
+  onChange,
+  textRef,
+  handleResizeHeight,
+  onSubmitComment,
+  detailMovieComments,
+  user,
+  time,
+}) => {
   const [select, setSelect] = useState(false);
   const [eachSelectId, setEachSelectId] = useState("");
-  const [newComment, setNewComment] = useState();
+  const [newComment, setNewComment] = useState("");
   const [edit, setEdit] = useState(false);
   const [eachEdit, setEachEdit] = useState("");
   const [prevComment, setPrevComment] = useState("");
@@ -46,6 +55,7 @@ const Comment = ({ comment, onChange, textRef, handleResizeHeight, onSubmitComme
     setEachEdit(id);
     setEdit(true);
     setSelect(false);
+    textRef.current.style.height = textRef.current.scrollHeight + "px";
   };
 
   const closeEdit = () => {
@@ -55,6 +65,8 @@ const Comment = ({ comment, onChange, textRef, handleResizeHeight, onSubmitComme
   const editComment = async () => {
     await updateDoc(doc(dbService, "comments", eachSelectId), {
       text: newComment,
+      createtime: time.format("YYYY.MM.DD HH:mm"),
+      editBoolean: true,
     });
     setEdit(false);
   };
@@ -69,20 +81,25 @@ const Comment = ({ comment, onChange, textRef, handleResizeHeight, onSubmitComme
   return (
     <CommentContainer>
       <WhatDoyouThink>What do you think of this movie?</WhatDoyouThink>
-      <CommentForm>
-        <CommentInput
-          value={comment}
-          onChange={onChange}
-          placeholder="Comment"
-          required
-          ref={textRef}
-          onInput={handleResizeHeight}
-          maxLength={1000}
-        />
-        <CommentSubmitButton comment={comment} onClick={onSubmitComment}>
-          Add
-        </CommentSubmitButton>
-      </CommentForm>
+
+      {user.user ? (
+        <CommentForm>
+          <CommentInput
+            value={comment}
+            onChange={onChange}
+            placeholder="Comment"
+            required
+            ref={textRef}
+            onInput={handleResizeHeight}
+            maxLength={1000}
+          />
+          <CommentSubmitButton comment={comment} onClick={onSubmitComment}>
+            Add
+          </CommentSubmitButton>
+        </CommentForm>
+      ) : (
+        <NoCommentForm>Sign in is required for comment writing</NoCommentForm>
+      )}
       <MovieComments
         detailMovieComments={detailMovieComments}
         openSelect={openSelect}
@@ -157,6 +174,11 @@ const CommentSubmitButton = styled.div`
     props.comment.length === 0
       ? "none"
       : "0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25),0 0 5px -4px rgba(0, 0, 0, 0.025);"};
+`;
+
+const NoCommentForm = styled.div`
+  color: #656565;
+  margin-bottom: 10vh;
 `;
 
 // const LikeButton = styled.button``;
