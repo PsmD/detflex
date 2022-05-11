@@ -8,8 +8,8 @@ import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 import { dbService } from "../AboutFirebase/fbase";
 import { addDoc, onSnapshot, collection, query, where, orderBy } from "firebase/firestore";
 import { UserContext } from "../AboutFirebase/UseAuth";
-import { currentTime } from "../atom/Date";
 import Comment from "../components/Comments/Comment";
+import moment from "moment";
 
 function Detail() {
   const { movieId } = useParams();
@@ -21,6 +21,7 @@ function Detail() {
   const [like, setLike] = useState(false);
   const [detailMovieComments, setDetailMovieComments] = useState([]);
   const user = useContext(UserContext);
+  const [time, setTime] = useState(moment());
 
   const getMovie = useCallback(async () => {
     await axios
@@ -50,17 +51,16 @@ function Detail() {
       });
   };
 
-  const onSubmitLike = async (event) => {
-    event.preventDefault();
-    if (user) {
+  const onSubmitLike = async () => {
+    if (user.user) {
       await addDoc(collection(dbService, "likes"), {
-        createtime: currentTime,
-        createdAt: Date.now(),
+        createtime: time.format("YYYY.MM.DD HH:mm"),
+        createdAt: time.format("YYYYMMDDHHmmss"),
         creatorId: user.user.uid,
         detailMovieId: movieId,
+        likeBoolean: true,
       });
       setLike(true);
-      console.log(user);
     } else {
       await alert("fail");
     }
@@ -70,15 +70,21 @@ function Detail() {
     await addDoc(collection(dbService, "comments"), {
       text: comment,
       userName: user.user.displayName,
-      createtime: currentTime,
-      createdAt: Date.now(),
+      createtime: time.format("YYYY.MM.DD HH:mm"),
+      createdAt: time.format("YYYYMMDDHHmmssSSS"),
       creatorId: user.user.uid,
       detailMovieId: movieId,
+      editBoolean: false,
     });
     setComment("");
     textRef.current.style.height = "auto";
-    console.log(user);
   };
+
+  const textRef = useRef();
+  const handleResizeHeight = useCallback(() => {
+    textRef.current.style.height = "auto";
+    textRef.current.style.height = textRef.current.scrollHeight + "px";
+  }, []);
 
   const onChange = (event) => {
     const {
@@ -105,10 +111,14 @@ function Detail() {
     getMovieCast();
   }, []);
 
-  const textRef = useRef();
-  const handleResizeHeight = useCallback(() => {
-    textRef.current.style.height = "auto";
-    textRef.current.style.height = textRef.current.scrollHeight + "px";
+  useEffect(() => {
+    let timer = null;
+    timer = setInterval(() => {
+      setTime(moment());
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return (
@@ -127,6 +137,7 @@ function Detail() {
             overview={detail.overview}
             release_date={detail.release_date}
             cast={cast}
+            onSubmitLike={onSubmitLike}
           />
         )}
       </MovieDetailContainer>
@@ -138,6 +149,7 @@ function Detail() {
         onSubmitComment={onSubmitComment}
         detailMovieComments={detailMovieComments}
         user={user}
+        time={time}
       />
     </>
   );
