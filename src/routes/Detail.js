@@ -6,7 +6,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 import { dbService } from "../AboutFirebase/fbase";
-import { addDoc, onSnapshot, collection, query, where, orderBy } from "firebase/firestore";
+import { addDoc, onSnapshot, collection, query, where, orderBy, doc, deleteDoc } from "firebase/firestore";
 import { UserContext } from "../AboutFirebase/UseAuth";
 import Comment from "../components/Comments/Comment";
 import moment from "moment";
@@ -18,7 +18,7 @@ function Detail() {
   const [detail, setDetail] = useState([]);
   const [cast, setCast] = useState([]);
   const [comment, setComment] = useState("");
-  const [like, setLike] = useState(false);
+  const [detailMovieLikes, setDetailMovieLikes] = useState([]);
   const [detailMovieComments, setDetailMovieComments] = useState([]);
   const user = useContext(UserContext);
   const [time, setTime] = useState(moment());
@@ -51,8 +51,34 @@ function Detail() {
       });
   };
 
+  const getComments = async () => {
+    const detailMovieIdRef = collection(dbService, "comments");
+    const MovieQuery = query(detailMovieIdRef, where("detailMovieId", "==", movieId), orderBy("createdAt", "desc"));
+    await onSnapshot(MovieQuery, (snapshot) => {
+      const commentArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(commentArray);
+      setDetailMovieComments(commentArray);
+    });
+  };
+
+  const getLikes = async () => {
+    const detailMovieLikeIdRef = collection(dbService, "likes");
+    const MovieLikeQuery = query(detailMovieLikeIdRef, where("detailMovieId", "==", movieId));
+    await onSnapshot(MovieLikeQuery, (snapshot) => {
+      const likeArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(likeArray);
+      setDetailMovieLikes(likeArray);
+    });
+  };
+
   const onSubmitLike = async () => {
-    if (user.user) {
+    if (user.user && user.user.uid === detailMovieLikes.creatorId) {
       await addDoc(collection(dbService, "likes"), {
         createtime: time.format("YYYY.MM.DD HH:mm"),
         createdAt: time.format("YYYYMMDDHHmmss"),
@@ -60,9 +86,17 @@ function Detail() {
         detailMovieId: movieId,
         likeBoolean: true,
       });
-      setLike(true);
-    } else {
+    } else if (!user.user && user.user.uid !== detailMovieLikes.creatorId) {
       await alert("fail");
+    } else if (detailMovieLikes.likeBoolean === true) {
+      const deleteLike = async (id) => {
+        const doIt = window.confirm("Are you sure you want to delete this comment?");
+        const likeDoc = doc(dbService, "likes", id);
+        if (doIt) {
+          await deleteDoc(likeDoc);
+          console.log(deleteLike);
+        }
+      };
     }
   };
 
@@ -93,22 +127,12 @@ function Detail() {
     setComment(value);
   };
 
-  const detailMovieIdRef = collection(dbService, "comments");
-
-  const MovieQuery = query(detailMovieIdRef, where("detailMovieId", "==", movieId), orderBy("createdAt", "desc"));
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    onSnapshot(MovieQuery, (snapshot) => {
-      const commentArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log(commentArray);
-      setDetailMovieComments(commentArray);
-    });
+    getComments();
     getMovie();
     getMovieCast();
+    getLikes();
   }, []);
 
   useEffect(() => {
@@ -138,6 +162,7 @@ function Detail() {
             release_date={detail.release_date}
             cast={cast}
             onSubmitLike={onSubmitLike}
+            detailMovieLikes={detailMovieLikes}
           />
         )}
       </MovieDetailContainer>
