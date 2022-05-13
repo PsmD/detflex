@@ -20,6 +20,7 @@ function MovieDetail({
   release_date,
   cast,
   onSubmitLike,
+  detailMovieLikes,
 }) {
   return (
     <>
@@ -47,6 +48,7 @@ function MovieDetail({
                 <MovieRuntime>Runtime: {runtime ? runtime + " " + "min" : "Unknown"}</MovieRuntime>
                 <LikeButton onClick={onSubmitLike}>
                   <FontAwesomeIcon icon={faHeart} size="lg" />
+                  {detailMovieLikes.length}
                 </LikeButton>
               </MovieVoteAndRuntime>
               <MovieTextboxSummary>
