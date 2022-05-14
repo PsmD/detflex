@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import MovieComments from "./MovieComments";
-import { doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc, getDoc, addDoc, collection } from "firebase/firestore";
 import { dbService } from "../../AboutFirebase/fbase";
 
 const Comment = ({
@@ -9,10 +9,11 @@ const Comment = ({
   onChange,
   textRef,
   handleResizeHeight,
-  onSubmitComment,
   detailMovieComments,
   user,
   time,
+  movieId,
+  setComment,
 }) => {
   const [select, setSelect] = useState(false);
   const [eachSelectId, setEachSelectId] = useState("");
@@ -28,6 +29,20 @@ const Comment = ({
 
   const closeSelect = () => {
     setSelect(false);
+  };
+
+  const onSubmitComment = async () => {
+    await addDoc(collection(dbService, "comments"), {
+      text: comment,
+      userName: user.user.displayName,
+      createtime: time.format("YYYY.MM.DD HH:mm"),
+      createdAt: time.format("YYYYMMDDHHmmssSSS"),
+      creatorId: user.user.uid,
+      detailMovieId: movieId,
+      editBoolean: false,
+    });
+    setComment("");
+    textRef.current.style.height = "auto";
   };
 
   const deleteComent = async (id) => {

@@ -23,7 +23,7 @@ function Detail() {
   const user = useContext(UserContext);
   const [time, setTime] = useState(moment());
 
-  const getMovie = useCallback(async () => {
+  const getDetailMovie = useCallback(async () => {
     await axios
       .get(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`)
       .then((res) => {
@@ -100,20 +100,6 @@ function Detail() {
     }
   };
 
-  const onSubmitComment = async () => {
-    await addDoc(collection(dbService, "comments"), {
-      text: comment,
-      userName: user.user.displayName,
-      createtime: time.format("YYYY.MM.DD HH:mm"),
-      createdAt: time.format("YYYYMMDDHHmmssSSS"),
-      creatorId: user.user.uid,
-      detailMovieId: movieId,
-      editBoolean: false,
-    });
-    setComment("");
-    textRef.current.style.height = "auto";
-  };
-
   const textRef = useRef();
   const handleResizeHeight = useCallback(() => {
     textRef.current.style.height = "auto";
@@ -130,7 +116,7 @@ function Detail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getComments();
-    getMovie();
+    getDetailMovie();
     getMovieCast();
     getLikes();
   }, []);
@@ -171,10 +157,11 @@ function Detail() {
         onChange={onChange}
         textRef={textRef}
         handleResizeHeight={handleResizeHeight}
-        onSubmitComment={onSubmitComment}
         detailMovieComments={detailMovieComments}
         user={user}
         time={time}
+        movieId={movieId}
+        setComment={setComment}
       />
     </>
   );
