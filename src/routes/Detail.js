@@ -78,7 +78,7 @@ function Detail() {
   };
 
   const onSubmitLike = async () => {
-    if (user.user && user.user.uid === detailMovieLikes.creatorId) {
+    if (user.user) {
       await addDoc(collection(dbService, "likes"), {
         createtime: time.format("YYYY.MM.DD HH:mm"),
         createdAt: time.format("YYYYMMDDHHmmss"),
@@ -86,17 +86,6 @@ function Detail() {
         detailMovieId: movieId,
         likeBoolean: true,
       });
-    } else if (!user.user && user.user.uid !== detailMovieLikes.creatorId) {
-      await alert("fail");
-    } else if (detailMovieLikes.likeBoolean === true) {
-      const deleteLike = async (id) => {
-        const doIt = window.confirm("Are you sure you want to delete this comment?");
-        const likeDoc = doc(dbService, "likes", id);
-        if (doIt) {
-          await deleteDoc(likeDoc);
-          console.log(deleteLike);
-        }
-      };
     }
   };
 
