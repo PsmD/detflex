@@ -135,7 +135,6 @@ const Comment = ({
         prevComment={prevComment}
         editComment={editComment}
       />
-      {/* <LikeButton onClick={onSubmitLike}>Like</LikeButton> */}
     </CommentContainer>
   );
 };
@@ -195,5 +194,3 @@ const NoCommentForm = styled.div`
   color: #656565;
   margin-bottom: 10vh;
 `;
-
-// const LikeButton = styled.button``;
