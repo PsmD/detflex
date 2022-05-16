@@ -20,6 +20,7 @@ function Detail() {
   const [comment, setComment] = useState("");
   const [detailMovieLikes, setDetailMovieLikes] = useState([]);
   const [detailMovieComments, setDetailMovieComments] = useState([]);
+  const [userLike, setUserLike] = useState();
   const user = useContext(UserContext);
   const [time, setTime] = useState(moment());
 
@@ -67,6 +68,15 @@ function Detail() {
   const getLikes = async () => {
     const detailMovieLikeIdRef = collection(dbService, "likes");
     const MovieLikeQuery = query(detailMovieLikeIdRef, where("detailMovieId", "==", movieId));
+    const userLikeQuery = query(detailMovieLikeIdRef, where("creatorId", "==", user.user.uid));
+    await onSnapshot(userLikeQuery, (snapshot) => {
+      const userLikeArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(userLikeArray);
+      setUserLike(userLikeArray);
+    });
     await onSnapshot(MovieLikeQuery, (snapshot) => {
       const likeArray = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -75,10 +85,11 @@ function Detail() {
       console.log(likeArray);
       setDetailMovieLikes(likeArray);
     });
+    console.log(userLike.indexof());
   };
 
-  const onSubmitLike = async () => {
-    if (user.user) {
+  const onSubmitLike = async (id) => {
+    if (user.user && userLike.length === 0) {
       await addDoc(collection(dbService, "likes"), {
         createtime: time.format("YYYY.MM.DD HH:mm"),
         createdAt: time.format("YYYYMMDDHHmmss"),
@@ -86,6 +97,8 @@ function Detail() {
         detailMovieId: movieId,
         likeBoolean: true,
       });
+    } else {
+      await deleteDoc(doc(dbService, "likes", id));
     }
   };
 
