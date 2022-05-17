@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./globalStyles.css";
-import UserContext from "./AboutFirebase/UseAuth";
+import UseAuth from "./AboutFirebase/UseAuth";
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserContext>
+    <UseAuth>
       <App />
-    </UserContext>
+    </UseAuth>
   </React.StrictMode>,
   document.getElementById("root")
 );

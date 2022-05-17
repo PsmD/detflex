@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService } from "./fbase";
 
@@ -31,7 +31,7 @@ const UseAuth = ({ children }) => {
     return () => {
       subscribe();
     };
-  }, [authService]);
+  }, []);
 
   return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };
