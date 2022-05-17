@@ -20,15 +20,14 @@ function Detail() {
   const [comment, setComment] = useState("");
   const [detailMovieLikes, setDetailMovieLikes] = useState([]);
   const [detailMovieComments, setDetailMovieComments] = useState([]);
-  const [userLike, setUserLike] = useState();
   const user = useContext(UserContext);
   const [time, setTime] = useState(moment());
+  const userLikeObject = detailMovieLikes.find((userLikeObject) => userLikeObject.creatorId === user.user.uid);
 
-  const getDetailMovie = useCallback(async () => {
+  const getDetailMovie = async () => {
     await axios
       .get(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`)
       .then((res) => {
-        console.log(res.data);
         setDetail(res.data);
         setLoading(false);
       })
@@ -38,18 +37,12 @@ function Detail() {
           navigate("/404", { replace: true });
         }
       });
-  }, [movieId]);
+  };
 
   const getMovieCast = async () => {
-    await axios
-      .get(`${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}`)
-      .then((res) => {
-        console.log(res.data);
-        setCast(res.data.cast);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    await axios.get(`${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}`).then((res) => {
+      setCast(res.data.cast);
+    });
   };
 
   const getComments = async () => {
@@ -60,7 +53,6 @@ function Detail() {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log(commentArray);
       setDetailMovieComments(commentArray);
     });
   };
@@ -68,37 +60,27 @@ function Detail() {
   const getLikes = async () => {
     const detailMovieLikeIdRef = collection(dbService, "likes");
     const MovieLikeQuery = query(detailMovieLikeIdRef, where("detailMovieId", "==", movieId));
-    const userLikeQuery = query(detailMovieLikeIdRef, where("creatorId", "==", user.user.uid));
-    await onSnapshot(userLikeQuery, (snapshot) => {
-      const userLikeArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log(userLikeArray);
-      setUserLike(userLikeArray);
-    });
     await onSnapshot(MovieLikeQuery, (snapshot) => {
       const likeArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      console.log(likeArray);
       setDetailMovieLikes(likeArray);
     });
-    console.log(userLike.indexof());
   };
 
-  const onSubmitLike = async (id) => {
-    if (user.user && userLike.length === 0) {
+  const onSubmitLike = async () => {
+    if (user.user && !userLikeObject) {
       await addDoc(collection(dbService, "likes"), {
         createtime: time.format("YYYY.MM.DD HH:mm"),
         createdAt: time.format("YYYYMMDDHHmmss"),
         creatorId: user.user.uid,
         detailMovieId: movieId,
-        likeBoolean: true,
       });
-    } else {
-      await deleteDoc(doc(dbService, "likes", id));
+    } else if (userLikeObject) {
+      await deleteDoc(doc(dbService, "likes", userLikeObject.id));
+    } else if (!user.user) {
+      alert("Please sign in");
     }
   };
 
@@ -116,21 +98,21 @@ function Detail() {
   };
 
   useEffect(() => {
+    let timer = null;
+    timer = setInterval(() => {
+      setTime(moment());
+    }, 3000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
     getComments();
     getDetailMovie();
     getMovieCast();
     getLikes();
-  }, []);
-
-  useEffect(() => {
-    let timer = null;
-    timer = setInterval(() => {
-      setTime(moment());
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
   }, []);
 
   return (
@@ -151,6 +133,7 @@ function Detail() {
             cast={cast}
             onSubmitLike={onSubmitLike}
             detailMovieLikes={detailMovieLikes}
+            userLikeObject={userLikeObject}
           />
         )}
       </MovieDetailContainer>

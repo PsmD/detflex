@@ -21,6 +21,7 @@ function MovieDetail({
   cast,
   onSubmitLike,
   detailMovieLikes,
+  userLikeObject,
 }) {
   return (
     <>
@@ -46,10 +47,10 @@ function MovieDetail({
               <MovieVoteAndRuntime>
                 <MovieRating>Rating: {vote_average ? vote_average : "No rating"}&nbsp;&nbsp;</MovieRating>
                 <MovieRuntime>Runtime: {runtime ? runtime + " " + "min" : "Unknown"}</MovieRuntime>
-                <LikeButton onClick={onSubmitLike}>
+                <LikeButton userLikeObject={userLikeObject} onClick={onSubmitLike}>
                   <FontAwesomeIcon icon={faHeart} size="lg" />
-                  {detailMovieLikes.length}
                 </LikeButton>
+                <LikeLength>{detailMovieLikes.length}</LikeLength>
               </MovieVoteAndRuntime>
               <MovieTextboxSummary>
                 <h4>Summary: </h4>
@@ -191,9 +192,13 @@ const MovieRating = styled.li`
 const MovieRuntime = styled.li``;
 
 const LikeButton = styled.li`
-  margin-left: 10px;
+  margin-left: 1vw;
   cursor: pointer;
-  color: red;
+  color: ${(props) => (props.userLikeObject ? "red" : "#B2B1B1")};
+`;
+
+const LikeLength = styled.li`
+  margin-left: 0.3vw;
 `;
 
 const MovieTextboxSummary = styled.p`
