@@ -94,10 +94,10 @@ const MovieBg = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  min-width: ${window.innerWidth - 1}px;
-  min-height: ${window.innerHeight - 1}px;
+  min-width: ${window.innerWidth}px;
+  min-height: ${window.innerHeight}px;
   background-image: url(${(props) => props.bgimg});
   background-size: cover;
   background-position: center center;
@@ -107,10 +107,10 @@ const MovieBgWraper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  min-width: ${window.innerWidth - 1}px;
-  min-height: ${window.innerHeight - 1}px;
+  min-width: ${window.innerWidth}px;
+  min-height: ${window.innerHeight}px;
   background-color: black;
   opacity: 50%;
   z-index: 3;
@@ -118,7 +118,7 @@ const MovieBgWraper = styled.div`
 
 const MovieContainer = styled.div`
   z-index: 8;
-  min-width: 100%;
+  min-width: 100vw;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -202,7 +202,7 @@ const LikeLength = styled.li`
 `;
 
 const MovieTextboxSummary = styled.p`
-  margin-bottom: 10vh;
+  margin-bottom: 5vh;
   margin-top: 3vh;
   width: 40vw;
   color: whitesmoke;
@@ -215,9 +215,6 @@ const CastSwiper = styled(Swiper)`
   width: 40vw;
   height: 41vh;
   z-index: 9;
-  margin-bottom: 10vh;
-  position: absolute;
-  top: 50%;
 
   .swiper-scrollbar-drag {
     background-color: #c9c9c9;
