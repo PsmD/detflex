@@ -22,7 +22,8 @@ function Detail() {
   const [detailMovieComments, setDetailMovieComments] = useState([]);
   const user = useContext(UserContext);
   const [time, setTime] = useState(moment());
-  const userLikeObject = detailMovieLikes.find((userLikeObject) => userLikeObject.creatorId === user.user.uid);
+  const userLikeObject =
+    user.user && detailMovieLikes.find((userLikeObject) => userLikeObject.creatorId === user.user.uid);
 
   const getDetailMovie = async () => {
     await axios
@@ -156,8 +157,8 @@ export default Detail;
 const MovieDetailContainer = styled.div`
   width: 100vw;
   height: 100vh;
-  min-width: ${window.innerWidth - 1}px;
-  min-height: ${window.innerHeight - 1}px;
+  min-width: ${window.innerWidth}px;
+  min-height: ${window.innerHeight}px;
   display: flex;
   flex-direction: column;
   padding: 0;
