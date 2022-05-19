@@ -101,7 +101,7 @@ function MovieComments({
           </CommentTextBox>
         ))
       ) : (
-        <NoMovieCommentText>No comments yet. Why don't you leave the first comment?</NoMovieCommentText>
+        <NoMovieCommentText>No comments yet.</NoMovieCommentText>
       )}
     </>
   );
