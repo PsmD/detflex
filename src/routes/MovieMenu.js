@@ -127,8 +127,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: ${window.innerWidth - 1}px;
-  min-height: ${window.innerHeight - 1}px;
+  min-width: ${window.innerWidth}px;
+  min-height: ${window.innerHeight}px;
+  @media ${({ theme }) => theme.device.desktop} {
+    min-width: 80vw;
+  }
 `;
 
 const Movies = styled.div`
@@ -138,4 +141,10 @@ const Movies = styled.div`
   grid-gap: 5px;
   width: 90%;
   margin-top: 15vh;
+  @media ${({ theme }) => theme.device.tablet} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media ${({ theme }) => theme.device.mobile} {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
