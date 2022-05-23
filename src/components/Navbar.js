@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MovieMenu_obj } from "../atom/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { authService } from "../AboutFirebase/fbase";
 import { useContext } from "react";
 import { UserContext } from "../AboutFirebase/UseAuth";
@@ -114,6 +114,9 @@ function Navbar() {
               </Link>
             </form>
           </div>
+          <BarsButton>
+            <FontAwesomeIcon icon={faBars} size="lg" />
+          </BarsButton>
         </SignSearchBar>
       </Container>
       {changeModal === "signIn" && <SignIn state={openModal} closeModal={closeModal} scrollY={scrollY} />}
@@ -127,14 +130,17 @@ export default Navbar;
 const Container = styled(motion.div)`
   display: flex;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   height: 8vh;
   padding: 0px 30px;
   justify-content: space-between;
   background-color: rgb(255, 239, 239);
   z-index: 10;
-  min-width: ${window.innerWidth - 1}px;
+  min-width: ${window.innerWidth}px;
   min-height: 50px;
+  @media ${({ theme }) => theme.device.tablet} {
+    min-width: 100vw;
+  }
 `;
 
 const WebName = styled.div`
@@ -153,6 +159,9 @@ const MenuItems = styled.div`
   align-content: center;
   text-shadow: 2px 2px #c7cdd4;
   margin-left: 11vw;
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const Item = styled.div`
@@ -186,6 +195,9 @@ const Signs = styled.div`
   margin-right: 10px;
   margin-top: 5px;
   text-shadow: 1px 1px #c7cdd4;
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;
 
 const Sign__In = styled.span`
@@ -234,13 +246,28 @@ const Input = styled.input`
   height: 30px;
   margin-right: 10px;
   text-align: center;
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 35vw;
+  }
 `;
 
 const SearchButton = styled.button`
   border: none;
   cursor: pointer;
   &:hover {
-    background-color: rgb(255, 239, 239);
     transform: scale(1.1);
+  }
+`;
+
+const BarsButton = styled.div`
+  cursor: pointer;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+  display: none;
+  @media ${({ theme }) => theme.device.tablet} {
+    display: inline;
+    margin-left: 13vw;
   }
 `;
