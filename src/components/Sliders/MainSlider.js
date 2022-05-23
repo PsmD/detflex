@@ -47,8 +47,8 @@ const MainSwiper = styled(Swiper)`
   position: relative;
   display: flex;
   width: 100vw;
-  min-width: ${window.innerWidth - 1}px;
-  min-height: ${(window.innerHeight / 10) * 9 - 1}px;
+  min-width: ${window.innerWidth}px;
+  min-height: ${(window.innerHeight / 10) * 9}px;
   height: 92vh;
 
   @keyframes text-fade-in {
