@@ -98,4 +98,7 @@ const Container = styled.div`
   margin: 0;
   display: flex;
   flex-direction: column;
+  @media ${({ theme }) => theme.device.desktop} {
+    width: 80%;
+  }
 `;
