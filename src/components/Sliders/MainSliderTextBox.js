@@ -35,6 +35,9 @@ const NowPlaying = styled.div`
   &:hover {
     transform: translateY(-3px);
   }
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 40px;
+  }
 `;
 
 const Title = styled.div`
@@ -49,6 +52,9 @@ const Title = styled.div`
   &:hover {
     transform: translateY(-3px);
   }
+  @media ${({ theme }) => theme.device.tablet} {
+    font-size: 30px;
+  }
 `;
 
 const Overview = styled.div`
@@ -58,4 +64,7 @@ const Overview = styled.div`
   color: #e9e9e9;
   text-shadow: 2px 2px #4e4e4e;
   cursor: text;
+  @media ${({ theme }) => theme.device.tablet} {
+    display: none;
+  }
 `;

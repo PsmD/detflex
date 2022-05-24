@@ -50,6 +50,10 @@ const MainSwiper = styled(Swiper)`
   min-width: ${window.innerWidth}px;
   min-height: ${(window.innerHeight / 10) * 9}px;
   height: 92vh;
+  @media ${({ theme }) => theme.device.tablet} {
+    min-width: 100vw;
+    min-height: 92vh;
+  }
 
   @keyframes text-fade-in {
     from {
@@ -110,6 +114,9 @@ const MainSwiper = styled(Swiper)`
     border-radius: 50%;
     transition: 0.4s;
     font-weight: bold;
+    @media ${({ theme }) => theme.device.tablet} {
+      display: none;
+    }
   }
 
   .swiper-button-next {
