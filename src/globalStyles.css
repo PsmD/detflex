@@ -10,10 +10,7 @@ body {
   font-family: "Work Sans", sans-serif;
   background-color: #f5f6ff;
   height: 100%;
-}
-
-::-webkit-scrollbar {
-  display: none;
+  overflow-x: hidden;
 }
 
 a {
