@@ -16,7 +16,6 @@ function MainSlider({ nowPlayingMovies }) {
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
-      allowTouchMove={false}
       loop={true}
       autoplay={{ delay: 7000, disableOnInteraction: false, pauseOnMouseEnter: true }}
     >

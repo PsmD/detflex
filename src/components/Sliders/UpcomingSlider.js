@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import { IMAGE_BASE_URL } from "../../api";
 import { Navigation } from "swiper";
 import MovieCard from "../Cards/MovieCard";
@@ -8,17 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-function UpcomingSlider({ upcomingMovies }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+function UpcomingSlider({ upcomingMovies, windowWidth }) {
   return (
     <>
       <UpcomingTitle>
@@ -27,7 +16,7 @@ function UpcomingSlider({ upcomingMovies }) {
       <UpcomingSwiper
         modules={[Navigation]}
         spaceBetween={0}
-        slidesPerView={windowWidth > "768" ? 5 : 3}
+        slidesPerView={windowWidth > 768 ? 5 : 2}
         navigation={{ clickable: true }}
         loop={true}
       >
