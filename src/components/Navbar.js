@@ -15,6 +15,7 @@ function Navbar() {
   const [openModal, setOpenModal] = useState(false);
   const [changeModal, setChangeModal] = useState("signIn");
   const [searchText, setSearchText] = useState(null);
+
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
   const location = useLocation();
@@ -137,16 +138,17 @@ const Container = styled(motion.div)`
   background-color: rgb(255, 239, 239);
   z-index: 10;
   min-width: ${window.innerWidth}px;
-  min-height: 50px;
+  min-height: 8vh;
   @media ${({ theme }) => theme.device.tablet} {
     min-width: 100vw;
+    min-height: 50px;
   }
 `;
 
 const WebName = styled.div`
   position: relative;
-  font-size: 20px;
   top: 20%;
+  font-size: 20px;
   text-shadow: 2px 2px #c7cdd4;
   transition: all 0.4s ease;
   &:hover {
