@@ -15,6 +15,7 @@ function Home() {
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatingMovies, setTopRatingMovies] = useState([]);
   const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const nowPlayingGetMovies = async () => {
     await axios
@@ -66,11 +67,22 @@ function Home() {
       });
   };
 
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
   useEffect(() => {
     nowPlayingGetMovies();
     upcomingGetMovies();
     popularGetMovies();
     topRatingGetMovies();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -80,9 +92,9 @@ function Home() {
       ) : (
         <>
           <MainSlider nowPlayingMovies={nowPlayingMovies} />
-          <UpcomingSlider upcomingMovies={upcomingMovies} />
-          <PopularSlider popularMovies={popularMovies} />
-          <TopRatingSlider topRatingMovies={topRatingMovies} />
+          <UpcomingSlider windowWidth={windowWidth} upcomingMovies={upcomingMovies} />
+          <PopularSlider windowWidth={windowWidth} popularMovies={popularMovies} />
+          <TopRatingSlider windowWidth={windowWidth} topRatingMovies={topRatingMovies} />
         </>
       )}
     </Container>
@@ -92,13 +104,12 @@ function Home() {
 export default Home;
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100%;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   @media ${({ theme }) => theme.device.desktop} {
-    width: 80%;
   }
 `;
