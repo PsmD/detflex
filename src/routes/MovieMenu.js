@@ -141,10 +141,15 @@ const Movies = styled.div`
   grid-gap: 5px;
   width: 90%;
   margin-top: 15vh;
-  @media ${({ theme }) => theme.device.tablet} {
+  @media screen and (max-width: 800px) {
     grid-template-columns: repeat(3, 1fr);
   }
-  @media ${({ theme }) => theme.device.mobile} {
+
+  @media screen and (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${({ theme }) => theme.device.mobile} {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
