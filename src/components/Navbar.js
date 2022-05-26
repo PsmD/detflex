@@ -15,7 +15,7 @@ function Navbar() {
   const [openModal, setOpenModal] = useState(false);
   const [changeModal, setChangeModal] = useState("signIn");
   const [searchText, setSearchText] = useState(null);
-
+  const [navSelect, setNavSelect] = useState(false);
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
   const location = useLocation();
@@ -39,6 +39,14 @@ function Navbar() {
   const closeModal = () => {
     setOpenModal(false);
     document.body.style.overflow = "unset";
+  };
+
+  const openNavSelect = () => {
+    setNavSelect(true);
+  };
+
+  const closeNavSelect = () => {
+    setNavSelect(false);
   };
 
   const navVariants = {
@@ -105,20 +113,33 @@ function Navbar() {
               <Sign__Out onClick={signOut}>Sign Out</Sign__Out>
             </Signs>
           )}
-          <div>
+          <SearchSection>
             <form>
               <Input type="text" value={searchText} onChange={searchClick} placeholder="Search!"></Input>
-              <Link to={`/search/${searchText}`}>
-                <SearchButton>
-                  <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
-                </SearchButton>
-              </Link>
             </form>
-          </div>
-          <BarsButton>
+            <Link to={`/search/${searchText}`}>
+              <SearchButton>
+                <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+              </SearchButton>
+            </Link>
+          </SearchSection>
+          <BarsButton onClick={navSelect ? closeNavSelect : openNavSelect}>
             <FontAwesomeIcon icon={faBars} size="lg" />
           </BarsButton>
         </SignSearchBar>
+        {navSelect ? (
+          <NavSelectContainer>
+            {MovieMenu_obj.map(({ title, path }) => {
+              return (
+                <NavSelectItem>
+                  <NavSelectItemLink>
+                    <Link to={`/page/${path}`}>{title}</Link>
+                  </NavSelectItemLink>
+                </NavSelectItem>
+              );
+            })}
+          </NavSelectContainer>
+        ) : null}
       </Container>
       {changeModal === "signIn" && <SignIn state={openModal} closeModal={closeModal} scrollY={scrollY} />}
       {changeModal === "signUp" && <SignUp state={openModal} closeModal={closeModal} scrollY={scrollY} />}
@@ -242,6 +263,12 @@ const Sign__Out = styled.span`
   }
 `;
 
+const SearchSection = styled.div`
+  display: flex;
+  height: 50px;
+  align-items: center;
+`;
+
 const Input = styled.input`
   border: 1px solid black;
   border-radius: 20px;
@@ -253,8 +280,7 @@ const Input = styled.input`
   }
 `;
 
-const SearchButton = styled.button`
-  border: none;
+const SearchButton = styled.div`
   cursor: pointer;
   &:hover {
     transform: scale(1.1);
@@ -273,3 +299,43 @@ const BarsButton = styled.div`
     margin-left: 13vw;
   }
 `;
+
+const NavSelectContainer = styled.div`
+  position: absolute;
+  right: 15px;
+  top: 50px;
+  width: 120px;
+  height: 120px;
+  background-color: rgb(255, 239, 239);
+  border-radius: 0 0 0 10px;
+
+  @keyframes navSelect-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  animation-name: navSelect-fade-in;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+`;
+
+const NavSelectItem = styled.div`
+  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+`;
+const NavSelectItemLink = styled.div``;
