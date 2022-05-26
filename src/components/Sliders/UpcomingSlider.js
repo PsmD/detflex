@@ -24,7 +24,7 @@ function UpcomingSlider({ upcomingMovies, windowWidth }) {
           upcomingMovies.slice(0, 10).map((upMovie) => (
             <SwiperSlide key={upMovie.id}>
               <MovieCard
-                id={upMovie.id}
+                movieId={upMovie.id}
                 title={upMovie.title}
                 poster_path={`${IMAGE_BASE_URL}original${upMovie.poster_path}`}
                 year={upMovie.release_date}

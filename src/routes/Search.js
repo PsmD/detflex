@@ -53,7 +53,7 @@ function Search() {
           {movies.map((movie) => (
             <MovieCard
               key={movie.id}
-              id={movie.id}
+              movieId={movie.id}
               title={movie.title}
               poster_path={`${IMAGE_BASE_URL}original${movie.poster_path}`}
               year={movie.release_date}

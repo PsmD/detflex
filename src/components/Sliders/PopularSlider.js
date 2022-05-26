@@ -24,7 +24,7 @@ function PopularSlider({ popularMovies, windowWidth }) {
           popularMovies.slice(0, 10).map((popMovie) => (
             <SwiperSlide key={popMovie.id}>
               <MovieCard
-                id={popMovie.id}
+                movieId={popMovie.id}
                 title={popMovie.title}
                 poster_path={`${IMAGE_BASE_URL}original${popMovie.poster_path}`}
                 year={popMovie.release_date}

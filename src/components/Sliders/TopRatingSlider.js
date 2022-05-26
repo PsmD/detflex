@@ -24,7 +24,7 @@ function TopRatingSlider({ topRatingMovies, windowWidth }) {
           topRatingMovies.slice(0, 10).map((topMovie) => (
             <SwiperSlide key={topMovie.id}>
               <MovieCard
-                id={topMovie.id}
+                movieId={topMovie.id}
                 title={topMovie.title}
                 poster_path={`${IMAGE_BASE_URL}original${topMovie.poster_path}`}
                 year={topMovie.release_date}
