@@ -38,12 +38,10 @@ const Movie = styled.div`
   background-repeat: no-repeat;
   background-size: 10%;
   background-position: center 35%;
-  min-width: 209px;
-  min-height: 393px;
+  width: 209px;
+  height: 393px;
   margin-bottom: 5vh;
   border-style: none;
-  height: 60vh;
-  width: 15vw;
   transition: all 0.4s ease;
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3),
     0 -6px 16px -6px rgba(0, 0, 0, 0.025);
@@ -83,5 +81,3 @@ const MovieRating = styled.span`
   font-size: 12px;
   margin-bottom: 10px;
 `;
-
-const Dff = styled.div``;
