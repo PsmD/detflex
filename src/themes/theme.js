@@ -1,13 +1,13 @@
 const deviceSizes = {
-  mobile: "490px",
-  tablet: "768px",
+  smaller: "500px",
+  small: "900px",
   laptop: "1530px",
   desktop: "1900px",
 };
 
 const device = {
-  mobile: `screen and (max-width: ${deviceSizes.mobile})`,
-  tablet: `screen and (max-width: ${deviceSizes.tablet})`,
+  smaller: `screen and (max-width: ${deviceSizes.smaller})`,
+  small: `screen and (max-width: ${deviceSizes.small})`,
   laptop: `screen and (min-width: ${deviceSizes.laptop})`,
   desktop: `screen and (min-width: ${deviceSizes.desktop})`,
 };
