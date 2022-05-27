@@ -153,14 +153,13 @@ const Container = styled(motion.div)`
   display: flex;
   position: fixed;
   width: 100vw;
-  height: 8vh;
+  height: 50px;
   padding: 0px 30px;
   justify-content: space-between;
   background-color: rgb(255, 239, 239);
   z-index: 10;
   min-width: ${window.innerWidth}px;
-  min-height: 8vh;
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     min-width: 100vw;
     min-height: 50px;
   }
@@ -182,7 +181,7 @@ const MenuItems = styled.div`
   align-content: center;
   text-shadow: 2px 2px #c7cdd4;
   margin-left: 11vw;
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     display: none;
   }
 `;
@@ -218,7 +217,7 @@ const Signs = styled.div`
   margin-right: 10px;
   margin-top: 5px;
   text-shadow: 1px 1px #c7cdd4;
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     display: none;
   }
 `;
@@ -275,13 +274,14 @@ const Input = styled.input`
   height: 30px;
   margin-right: 10px;
   text-align: center;
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     width: 35vw;
   }
 `;
 
 const SearchButton = styled.div`
   cursor: pointer;
+  transition: all 0.4s ease;
   &:hover {
     transform: scale(1.1);
   }
@@ -294,13 +294,14 @@ const BarsButton = styled.div`
     transform: translateY(-2px);
   }
   display: none;
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     display: inline;
-    margin-left: 13vw;
+    margin-left: 15vw;
   }
 `;
 
 const NavSelectContainer = styled.div`
+  display: none;
   position: absolute;
   right: 15px;
   top: 50px;
@@ -323,8 +324,8 @@ const NavSelectContainer = styled.div`
   animation-name: navSelect-fade-in;
   animation-duration: 0.3s;
   animation-fill-mode: both;
-  @media screen and (min-width: 768px) {
-    display: none;
+  @media ${({ theme }) => theme.device.small} {
+    display: block;
   }
 `;
 
