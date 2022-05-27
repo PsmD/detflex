@@ -31,18 +31,18 @@ const CastImg = styled.div`
   background-image: url(${(props) => props.profile_path});
   background-size: cover;
   background-position: center center;
-  width: 10vw;
-  height: 25vh;
+  width: 140px;
+  height: 165px;
 `;
 const CastTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 12vh;
-  margin-top: 0.5vh;
+  height: 79px;
+  margin-top: 4px;
 `;
 const CastCharacter = styled.div`
   font-size: 13px;
-  margin-bottom: 0.5vh;
+  margin-bottom: 4px;
 `;
 const CastName = styled.div`
   font-size: 14px;

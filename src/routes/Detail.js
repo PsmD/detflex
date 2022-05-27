@@ -155,14 +155,28 @@ function Detail() {
 export default Detail;
 
 const MovieDetailContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  min-width: ${window.innerWidth}px;
-  min-height: ${window.innerHeight}px;
+  width: ${window.innerWidth}px;
+  height: ${window.innerHeight}px;
   display: flex;
   flex-direction: column;
   padding: 0;
   margin: 0;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 1300px) {
+    width: 1150px;
+  }
+
+  @media ${({ theme }) => theme.device.small} {
+    width: 850px;
+  }
+
+  @media screen and (max-width: 750px) {
+    width: 600px;
+  }
+
+  @media ${({ theme }) => theme.device.smaller} {
+    width: 450px;
+  }
 `;
