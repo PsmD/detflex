@@ -129,8 +129,8 @@ const Container = styled.div`
   align-items: center;
   min-width: ${window.innerWidth}px;
   min-height: ${window.innerHeight}px;
-  @media ${({ theme }) => theme.device.desktop} {
-    min-width: 80vw;
+  @media screen and (max-width: 1300px) {
+    align-items: start;
   }
 `;
 
@@ -139,17 +139,27 @@ const Movies = styled.div`
   place-items: center;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
-  width: 90%;
-  margin-top: 15vh;
-  @media screen and (max-width: 800px) {
+  width: ${(window.innerWidth / 10) * 9}px;
+  margin-top: 120px;
+
+  @media screen and (max-width: 1300px) {
+    width: 1200px;
+
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media ${({ theme }) => theme.device.small} {
+    width: 800px;
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 750px) {
+    width: 650px;
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media ${({ theme }) => theme.device.mobile} {
+  @media ${({ theme }) => theme.device.smaller} {
+    width: 450px;
     grid-template-columns: repeat(1, 1fr);
   }
 `;
