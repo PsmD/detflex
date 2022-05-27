@@ -16,7 +16,7 @@ function UpcomingSlider({ upcomingMovies, windowWidth }) {
       <UpcomingSwiper
         modules={[Navigation]}
         spaceBetween={0}
-        slidesPerView={windowWidth > 768 ? 5 : 2}
+        slidesPerView={windowWidth > 1300 ? 5 : windowWidth > 900 ? 4 : windowWidth > 750 ? 3 : 2}
         navigation={{ clickable: true }}
         loop={true}
       >
@@ -40,11 +40,11 @@ function UpcomingSlider({ upcomingMovies, windowWidth }) {
 export default UpcomingSlider;
 
 const UpcomingTitle = styled.div`
-  margin: 15vh 0 5vh;
+  margin: 95px 0 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh;
+  height: 65px;
   font-size: 50px;
   font-family: "Work Sans", sans-serif;
   text-shadow: 4px 4px #c7cdd4;
@@ -57,9 +57,25 @@ const UpcomingTitle = styled.div`
 `;
 
 const UpcomingSwiper = styled(Swiper)`
-  width: 90vw;
-  height: 100%;
+  width: ${(window.innerWidth / 10) * 9}px;
+  height: 420px;
   background-color: #eff3f7;
+
+  @media screen and (max-width: 1300px) {
+    width: 1150px;
+  }
+
+  @media ${({ theme }) => theme.device.small} {
+    width: 850px;
+  }
+
+  @media screen and (max-width: 750px) {
+    width: 600px;
+  }
+
+  @media ${({ theme }) => theme.device.smaller} {
+    width: 450px;
+  }
 
   .swiper-slide {
     display: flex;
@@ -77,7 +93,7 @@ const UpcomingSwiper = styled(Swiper)`
     color: rgba(159, 159, 159, 0.7);
     transition: 0.4s;
     font-weight: bold;
-    margin-top: -10vh;
+    margin-top: -50px;
   }
 
   .swiper-button-next:hover,

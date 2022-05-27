@@ -42,16 +42,15 @@ function MainSlider({ nowPlayingMovies }) {
 export default MainSlider;
 
 const MainSwiper = styled(Swiper)`
-  margin-top: 8vh;
+  margin-top: 50px;
   position: relative;
   display: flex;
-  width: 100vw;
-  min-width: ${window.innerWidth}px;
-  min-height: ${(window.innerHeight / 10) * 9}px;
-  height: 92vh;
-  @media ${({ theme }) => theme.device.tablet} {
-    min-width: 100vw;
-    min-height: 92vh;
+  width: ${window.innerWidth}px;
+  height: ${window.innerHeight - 50}px;
+  @media ${({ theme }) => theme.device.small} {
+    width: 100vw;
+    height: 90vh;
+    min-height: 300px;
   }
 
   @keyframes text-fade-in {
@@ -113,7 +112,7 @@ const MainSwiper = styled(Swiper)`
     border-radius: 50%;
     transition: 0.4s;
     font-weight: bold;
-    @media ${({ theme }) => theme.device.tablet} {
+    @media ${({ theme }) => theme.device.small} {
       display: none;
     }
   }

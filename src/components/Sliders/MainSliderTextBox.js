@@ -35,13 +35,13 @@ const NowPlaying = styled.div`
   &:hover {
     transform: translateY(-3px);
   }
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     font-size: 40px;
   }
 `;
 
 const Title = styled.div`
-  margin-top: 10vh;
+  margin-top: 65px;
   font-size: 50px;
   font-weight: bold;
   color: #e9e9e9;
@@ -52,19 +52,19 @@ const Title = styled.div`
   &:hover {
     transform: translateY(-3px);
   }
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     font-size: 30px;
   }
 `;
 
 const Overview = styled.div`
-  width: 70%;
+  width: 290px;
   margin-top: 20px;
   font-size: 20px;
   color: #e9e9e9;
   text-shadow: 2px 2px #4e4e4e;
   cursor: text;
-  @media ${({ theme }) => theme.device.tablet} {
+  @media ${({ theme }) => theme.device.small} {
     display: none;
   }
 `;
