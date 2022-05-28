@@ -64,6 +64,12 @@ function Navbar() {
     window.location.reload();
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search/${searchText}`);
+    }
+  };
+
   useEffect(() => {
     setSearchText("");
   }, [location.pathname]);
@@ -115,30 +121,38 @@ function Navbar() {
           )}
           <SearchSection>
             <form>
-              <Input type="text" value={searchText} onChange={searchClick} placeholder="Search!"></Input>
+              <Input
+                onKeyPress={handleKeyPress}
+                type="text"
+                value={searchText}
+                onChange={searchClick}
+                placeholder="Search!"
+              ></Input>
             </form>
             <Link to={`/search/${searchText}`}>
               <SearchButton>
                 <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
               </SearchButton>
             </Link>
+            <BarsButton onClick={openNavSelect}>
+              <FontAwesomeIcon icon={faBars} size="lg" />
+            </BarsButton>
           </SearchSection>
-          <BarsButton onClick={navSelect ? closeNavSelect : openNavSelect}>
-            <FontAwesomeIcon icon={faBars} size="lg" />
-          </BarsButton>
         </SignSearchBar>
         {navSelect ? (
-          <NavSelectContainer>
-            {MovieMenu_obj.map(({ title, path }) => {
-              return (
-                <NavSelectItem>
-                  <NavSelectItemLink>
-                    <Link to={`/page/${path}`}>{title}</Link>
-                  </NavSelectItemLink>
-                </NavSelectItem>
-              );
-            })}
-          </NavSelectContainer>
+          <NavSelectOverlay onClick={closeNavSelect}>
+            <NavSelectContainer>
+              {MovieMenu_obj.map(({ title, path }) => {
+                return (
+                  <NavSelectItem>
+                    <NavSelectItemLink>
+                      <Link to={`/page/${path}`}>{title}</Link>
+                    </NavSelectItemLink>
+                  </NavSelectItem>
+                );
+              })}
+            </NavSelectContainer>
+          </NavSelectOverlay>
         ) : null}
       </Container>
       {changeModal === "signIn" && <SignIn state={openModal} closeModal={closeModal} scrollY={scrollY} />}
@@ -158,11 +172,6 @@ const Container = styled(motion.div)`
   justify-content: space-between;
   background-color: rgb(255, 239, 239);
   z-index: 10;
-  min-width: ${window.innerWidth}px;
-  @media ${({ theme }) => theme.device.small} {
-    min-width: 100vw;
-    min-height: 50px;
-  }
 `;
 
 const WebName = styled.div`
@@ -174,6 +183,9 @@ const WebName = styled.div`
   &:hover {
     transform: translateY(-3px);
   }
+  @media screen and (max-width: 1200px) {
+    margin-right: 20px;
+  }
 `;
 
 const MenuItems = styled.div`
@@ -181,7 +193,7 @@ const MenuItems = styled.div`
   align-content: center;
   text-shadow: 2px 2px #c7cdd4;
   margin-left: 11vw;
-  @media ${({ theme }) => theme.device.small} {
+  @media screen and (max-width: 1200px) {
     display: none;
   }
 `;
@@ -217,7 +229,7 @@ const Signs = styled.div`
   margin-right: 10px;
   margin-top: 5px;
   text-shadow: 1px 1px #c7cdd4;
-  @media ${({ theme }) => theme.device.small} {
+  @media screen and (max-width: 1200px) {
     display: none;
   }
 `;
@@ -274,8 +286,8 @@ const Input = styled.input`
   height: 30px;
   margin-right: 10px;
   text-align: center;
-  @media ${({ theme }) => theme.device.small} {
-    width: 35vw;
+  @media screen and (max-width: 1200px) {
+    width: 40vw;
   }
 `;
 
@@ -294,10 +306,23 @@ const BarsButton = styled.div`
     transform: translateY(-2px);
   }
   display: none;
-  @media ${({ theme }) => theme.device.small} {
+  @media screen and (max-width: 1200px) {
     display: inline;
-    margin-left: 15vw;
+    margin-left: 20vw;
   }
+  @media screen and (max-width: 500px) {
+    margin-left: 10vw;
+  }
+`;
+
+const NavSelectOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 14;
 `;
 
 const NavSelectContainer = styled.div`
@@ -309,6 +334,7 @@ const NavSelectContainer = styled.div`
   height: 120px;
   background-color: rgb(255, 239, 239);
   border-radius: 0 0 0 10px;
+  z-index: 15;
 
   @keyframes navSelect-fade-in {
     from {
@@ -324,7 +350,7 @@ const NavSelectContainer = styled.div`
   animation-name: navSelect-fade-in;
   animation-duration: 0.3s;
   animation-fill-mode: both;
-  @media ${({ theme }) => theme.device.small} {
+  @media screen and (max-width: 1200px) {
     display: block;
   }
 `;
