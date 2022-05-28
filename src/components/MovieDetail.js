@@ -22,6 +22,7 @@ function MovieDetail({
   onSubmitLike,
   detailMovieLikes,
   userLikeObject,
+  windowWidth,
 }) {
   return (
     <>
@@ -52,10 +53,15 @@ function MovieDetail({
               <LikeLength>{detailMovieLikes.length}</LikeLength>
             </MovieVoteAndRuntime>
             <MovieTextboxSummary>
-              <h4>Summary: </h4>
+              <SummaryText>Summary:</SummaryText>
               {overview.length > 260 ? `${overview.slice(0, 260)}...` : overview}
             </MovieTextboxSummary>
-            <CastSwiper modules={[Scrollbar]} spaceBetween={20} scrollbar={{ draggable: true }} slidesPerView={4}>
+            <CastSwiper
+              modules={[Scrollbar]}
+              spaceBetween={20}
+              scrollbar={{ draggable: true }}
+              slidesPerView={windowWidth > 1100 ? 4 : 3}
+            >
               {cast &&
                 cast.map((_cast) => (
                   <SwiperSlide key={_cast.cast_id}>
@@ -93,12 +99,17 @@ const MovieBg = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  height: ${window.innerHeight}px;
+  height: 100vh;
+  min-height: 606px;
   background-image: url(${(props) => props.bgimg});
   background-size: cover;
   background-position: center center;
   @media screen and (max-width: 1300px) {
-    height: 100%;
+    width: 100vw;
+  }
+  @media screen and (max-width: 820px) {
+    height: 150vh;
+    min-height: 984px;
   }
 `;
 
@@ -107,24 +118,32 @@ const MovieBgWraper = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  height: ${window.innerHeight}px;
+  height: 100vh;
+  min-height: 606px;
   background-color: black;
   opacity: 50%;
   z-index: 3;
+  @media screen and (max-width: 820px) {
+    height: 150vh;
+    min-height: 984px;
+  }
 `;
 
 const MovieContainer = styled.div`
   z-index: 8;
   width: 100vw;
-  height: ${window.innerHeight}px;
+  height: 100vh;
+  min-height: 606px;
   display: flex;
   justify-content: center;
   margin-top: 100px;
   color: white;
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 820px) {
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: start;
+    height: 150vh;
+    min-height: 984px;
   }
 `;
 
@@ -135,15 +154,24 @@ const MovieImg = styled.div`
   height: 492px;
   width: 350px;
   margin-right: 90px;
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1100px) {
     height: 392px;
     width: 250px;
+    margin-right: 10px;
+  }
+  @media screen and (max-width: 820px) {
+    margin: 0 0 10px 0;
+    height: 340px;
+    width: 220px;
   }
 `;
 
 const MovieTextbox = styled.div`
   width: 500px;
   height: 303px;
+  @media screen and (max-width: 1100px) {
+    width: 350px;
+  }
 `;
 
 const MovieTitleAndYear = styled.div`
@@ -151,8 +179,14 @@ const MovieTitleAndYear = styled.div`
   font-size: 28px;
   margin-bottom: 3px;
   width: 628px;
-  @media screen and (max-width: 900px) {
-    width: 100vw;
+  @media screen and (max-width: 1100px) {
+    font-size: 20px;
+    width: 400px;
+  }
+  @media screen and (max-width: 820px) {
+    font-size: 18px;
+    width: 350px;
+    text-align: center;
   }
 `;
 
@@ -163,45 +197,68 @@ const MovieYear = styled.span`
 const MovieInfo = styled.div`
   display: flex;
   width: 977px;
+  @media screen and (max-width: 1100px) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: 820px) {
+    width: 350px;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 5px;
+  }
 `;
 
 const MovieReleaseDate = styled.span`
   margin-right: 14px;
 `;
 
-const MovieGenres = styled.ul`
+const MovieGenres = styled.div`
   display: flex;
+  @media screen and (max-width: 820px) {
+    justify-content: center;
+  }
 `;
 
-const MovieGenresItem = styled.li`
-  list-style: none;
-`;
+const MovieGenresItem = styled.span``;
 
 const MovieDetailInfoBox = styled.div`
   font-size: 16px;
   margin-top: 13px;
+  @media screen and (max-width: 1100px) {
+    font-size: 13px;
+  }
 `;
 
-const MovieVoteAndRuntime = styled.ul`
+const MovieVoteAndRuntime = styled.div`
   width: 698px;
-  list-style: none;
   display: flex;
+  @media screen and (max-width: 820px) {
+    width: 350px;
+    justify-content: center;
+    margin-top: 5px;
+  }
 `;
 
-const MovieRating = styled.li`
+const MovieRating = styled.div`
   margin-right: 7px;
 `;
 
-const MovieRuntime = styled.li``;
+const MovieRuntime = styled.div``;
 
-const LikeButton = styled.li`
+const LikeButton = styled.div`
   margin-left: 14px;
   cursor: pointer;
   color: ${(props) => (props.userLikeObject ? "red" : "#B2B1B1")};
 `;
 
-const LikeLength = styled.li`
+const LikeLength = styled.div`
   margin-left: 5px;
+`;
+
+const SummaryText = styled.h4`
+  @media screen and (max-width: 820px) {
+    margin-right: 15px;
+  }
 `;
 
 const MovieTextboxSummary = styled.p`
@@ -211,6 +268,14 @@ const MovieTextboxSummary = styled.p`
   color: whitesmoke;
   font-weight: 300;
   font-size: 14px;
+  @media screen and (max-width: 1100px) {
+    font-size: 12px;
+    width: 400px;
+  }
+  @media screen and (max-width: 820px) {
+    width: 350px;
+    text-align: center;
+  }
 `;
 
 const CastSwiper = styled(Swiper)`
@@ -218,6 +283,15 @@ const CastSwiper = styled(Swiper)`
   width: 558px;
   height: 270px;
   z-index: 9;
+
+  @media screen and (max-width: 1100px) {
+    width: 420px;
+  }
+
+  @media screen and (max-width: 820px) {
+    width: 300px;
+    height: 250px;
+  }
 
   .swiper-scrollbar-drag {
     background-color: #c9c9c9;

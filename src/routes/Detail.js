@@ -20,6 +20,7 @@ function Detail() {
   const [comment, setComment] = useState("");
   const [detailMovieLikes, setDetailMovieLikes] = useState([]);
   const [detailMovieComments, setDetailMovieComments] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const user = useContext(UserContext);
   const [time, setTime] = useState(moment());
   const userLikeObject =
@@ -98,6 +99,10 @@ function Detail() {
     setComment(value);
   };
 
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
   useEffect(() => {
     let timer = null;
     timer = setInterval(() => {
@@ -116,9 +121,16 @@ function Detail() {
     getLikes();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <MovieDetailContainer>
+      <MovieDetailContainer windowWidth={windowWidth}>
         {loading ? (
           <Loading />
         ) : (
@@ -135,6 +147,7 @@ function Detail() {
             onSubmitLike={onSubmitLike}
             detailMovieLikes={detailMovieLikes}
             userLikeObject={userLikeObject}
+            windowWidth={windowWidth}
           />
         )}
       </MovieDetailContainer>
@@ -155,28 +168,19 @@ function Detail() {
 export default Detail;
 
 const MovieDetailContainer = styled.div`
-  width: ${window.innerWidth}px;
-  height: ${window.innerHeight}px;
+  width: 100vw;
+  height: 100vh;
+  min-height: 606px;
   display: flex;
   flex-direction: column;
   padding: 0;
   margin: 0;
   justify-content: center;
   align-items: center;
+  transition: all 0.1s linear;
 
-  @media screen and (max-width: 1300px) {
-    width: 1150px;
-  }
-
-  @media ${({ theme }) => theme.device.small} {
-    width: 850px;
-  }
-
-  @media screen and (max-width: 750px) {
-    width: 600px;
-  }
-
-  @media ${({ theme }) => theme.device.smaller} {
-    width: 450px;
+  @media screen and (max-width: 820px) {
+    height: 150vh;
+    min-height: 984px;
   }
 `;

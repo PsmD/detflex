@@ -33,6 +33,10 @@ const CastImg = styled.div`
   background-position: center center;
   width: 140px;
   height: 165px;
+  @media screen and (max-width: 820px) {
+    width: 100px;
+    height: 115px;
+  }
 `;
 const CastTextBox = styled.div`
   display: flex;
@@ -43,8 +47,14 @@ const CastTextBox = styled.div`
 const CastCharacter = styled.div`
   font-size: 13px;
   margin-bottom: 4px;
+  @media screen and (max-width: 820px) {
+    font-size: 12px;
+  }
 `;
 const CastName = styled.div`
   font-size: 14px;
   font-weight: bold;
+  @media screen and (max-width: 820px) {
+    font-size: 13px;
+  }
 `;
