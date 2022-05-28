@@ -114,6 +114,9 @@ const CommentTextBox = styled.div`
   margin-bottom: 5vh;
   padding-bottom: 5vh;
   border-bottom: 1px solid #dbdbdb;
+  @media ${({ theme }) => theme.device.small} {
+    width: 70vw;
+  }
 `;
 
 const CommentTopBox = styled.div`
@@ -174,8 +177,8 @@ const Select = styled.div`
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25),
     0 0 5px -4px rgba(0, 0, 0, 0.025);
-  width: ${(props) => (props.user === props.creatorId ? "6vw" : "5.5vw")};
-  height: ${(props) => (props.user === props.creatorId ? "9vh" : "8vh")};
+  width: ${(props) => (props.user === props.creatorId ? "83.7px" : "76.7px")};
+  height: ${(props) => (props.user === props.creatorId ? "54.5px" : "48.5px")};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -184,6 +187,9 @@ const Select = styled.div`
   position: absolute;
   right: ${(props) => (props.user === props.creatorId ? "19.3vw" : "19.8vw")};
   z-index: 15;
+  @media ${({ theme }) => theme.device.small} {
+    right: 15vw;
+  }
 `;
 
 const CloseButton = styled.span`
@@ -196,7 +202,7 @@ const CloseButton = styled.span`
 
 const Options = styled.ul`
   list-style: none;
-  margin-left: 0.6vw;
+  margin-left: 8.37px;
 `;
 
 const EditButton = styled.li`

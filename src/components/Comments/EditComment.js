@@ -57,6 +57,9 @@ const EditCommentInput = styled.textarea`
   border-radius: 7px;
   border-color: #dbdbdb;
   padding: 5px;
+  @media ${({ theme }) => theme.device.small} {
+    width: 70vw;
+  }
 `;
 
 const EditButtons = styled.div`
@@ -67,8 +70,8 @@ const EditButtons = styled.div`
 `;
 
 const EditCloseButton = styled.div`
-  width: 3.5vw;
-  height: 5vh;
+  width: 49px;
+  height: 30px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -79,8 +82,8 @@ const EditCloseButton = styled.div`
 `;
 
 const EditCommentSubmitButton = styled.div`
-  width: 3vw;
-  height: 5vh;
+  width: 42px;
+  height: 30px;
   border-radius: 5px;
   border: none;
   display: flex;

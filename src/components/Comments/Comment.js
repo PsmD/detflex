@@ -148,17 +148,26 @@ const CommentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border: 2px solid #dbdbdb;
+  transition: all 0.1s ease;
+
+  @media ${({ theme }) => theme.device.small} {
+    margin: 0;
+    width: 100vw;
+  }
 `;
 
 const WhatDoyouThink = styled.div`
-  margin-bottom: 7vh;
-  font-size: 30px;
+  margin-bottom: 43px;
+  font-size: 2.1vw;
   font-weight: bold;
   text-shadow: 3px 3px #c9c9c9;
+  @media ${({ theme }) => theme.device.small} {
+    font-size: 3.1vw;
+  }
 `;
 
 const CommentForm = styled.form`
-  margin-bottom: 10vh;
+  margin-bottom: 60px;
   display: flex;
   flex-direction: column;
 `;
@@ -168,12 +177,15 @@ const CommentInput = styled.textarea`
   border-radius: 7px;
   border-color: #dbdbdb;
   padding: 5px;
+  @media ${({ theme }) => theme.device.small} {
+    width: 70vw;
+  }
 `;
 
 const CommentSubmitButton = styled.div`
-  width: 3vw;
-  height: 5vh;
-  margin-top: 2vh;
+  width: 42px;
+  height: 30px;
+  margin-top: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,5 +204,5 @@ const CommentSubmitButton = styled.div`
 
 const NoCommentForm = styled.div`
   color: #656565;
-  margin-bottom: 10vh;
+  margin-bottom: 60px;
 `;
