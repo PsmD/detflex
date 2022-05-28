@@ -15,7 +15,9 @@ function Pagination({
     let lastPaginationNumber = Math.ceil(currentPage / pagesPerList) * pagesPerList;
     let firstPaginationNumber = lastPaginationNumber - 9;
 
-    if (totalPages === 1) return;
+    if (totalPages === 1) {
+      firstPaginationNumber = 1;
+    }
     if (totalPages < currentPage) {
       currentPage = totalPages;
     }
@@ -87,7 +89,7 @@ export default Pagination;
 const Footer = styled.ul`
   display: flex;
   list-style: none;
-  width: 700px;
+  width: 100vw;
   color: #262626;
   justify-content: center;
   margin-bottom: 60px;
@@ -97,21 +99,8 @@ const Footer = styled.ul`
   font-size: 17px;
   text-shadow: 2px 2px #c7cdd4;
 
-  @media screen and (max-width: 1300px) {
-    width: 1150px;
-  }
-
-  @media ${({ theme }) => theme.device.small} {
-    width: 850px;
-  }
-
-  @media screen and (max-width: 750px) {
-    width: 600px;
-  }
-
   @media ${({ theme }) => theme.device.smaller} {
-    width: 450px;
-    font-size: 16px;
+    font-size: 15px;
   }
 `;
 
@@ -119,20 +108,12 @@ const Nums = styled.li`
   pointer-events: ${(props) => props.lN == props.currentPage && "none"};
   font-weight: ${(props) => props.lN == props.currentPage && "bold"};
   zoom: ${(props) => props.lN == props.currentPage && "1.3"};
-  margin: 0 12px;
+  margin: 0 0.8vw;
   margin-bottom: ${(props) => props.lN == props.currentPage && "7px"};
   cursor: pointer;
   transition: all 0.4s ease;
   &:hover {
     transform: translateY(-3px);
-  }
-
-  @media screen and (max-width: 750px) {
-    margin: 0 5px;
-  }
-
-  @media ${({ theme }) => theme.device.smaller} {
-    margin: 0 3px;
   }
 `;
 
@@ -142,12 +123,9 @@ const First = styled.li`
   text-shadow: ${({ disabled }) => disabled && "2px 2px #E4E4E4"};
   cursor: pointer;
   transition: all 0.4s ease;
-  margin-right: 12px;
+  margin-right: 0.8vw;
   &:hover {
     transform: translateY(-3px);
-  }
-  @media ${({ theme }) => theme.device.smaller} {
-    margin-right: 5px;
   }
 `;
 
@@ -168,12 +146,9 @@ const Next = styled.li`
   text-shadow: ${({ disabled }) => disabled && "2px 2px #E4E4E4"};
   cursor: pointer;
   transition: all 0.4s ease;
-  margin-right: 12px;
+  margin-right: 0.8vw;
   &:hover {
     transform: translateY(-3px);
-  }
-  @media ${({ theme }) => theme.device.smaller} {
-    margin-right: 5px;
   }
 `;
 

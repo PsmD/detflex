@@ -82,8 +82,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: ${window.innerWidth - 1}px;
-  min-height: ${window.innerHeight - 1}px;
+  width: 100vw;
+  transition: all 0.1s ease;
 `;
 
 const Movies = styled.div`
@@ -91,6 +91,22 @@ const Movies = styled.div`
   place-items: center;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
-  width: 90%;
-  margin-top: 24vh;
+  width: 90vw;
+  margin-top: 120px;
+
+  @media screen and (max-width: 1220px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media screen and (max-width: 950px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 730px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;

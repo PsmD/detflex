@@ -127,11 +127,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: ${window.innerWidth}px;
-  min-height: ${window.innerHeight}px;
-  @media screen and (max-width: 1300px) {
-    align-items: start;
-  }
+  width: 100vw;
+  transition: all 0.1s ease;
 `;
 
 const Movies = styled.div`
@@ -139,27 +136,22 @@ const Movies = styled.div`
   place-items: center;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
-  width: ${(window.innerWidth / 10) * 9}px;
+  width: 90vw;
   margin-top: 120px;
 
-  @media screen and (max-width: 1300px) {
-    width: 1200px;
-
+  @media screen and (max-width: 1220px) {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  @media ${({ theme }) => theme.device.small} {
-    width: 800px;
+  @media screen and (max-width: 950px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media screen and (max-width: 750px) {
-    width: 650px;
+  @media screen and (max-width: 730px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media ${({ theme }) => theme.device.smaller} {
-    width: 450px;
+  @media screen and (max-width: 480px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;
