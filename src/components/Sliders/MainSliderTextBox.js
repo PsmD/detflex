@@ -26,7 +26,7 @@ export default MainSliderTextBox;
 
 const NowPlaying = styled.div`
   margin-top: 10px;
-  font-size: 60px;
+  font-size: 4.3vw;
   font-weight: bolder;
   color: #e9e9e9;
   text-shadow: 3px 3px #4e4e4e;
@@ -36,24 +36,23 @@ const NowPlaying = styled.div`
     transform: translateY(-3px);
   }
   @media ${({ theme }) => theme.device.small} {
-    font-size: 40px;
+    font-size: 5.5vw;
   }
 `;
 
 const Title = styled.div`
   margin-top: 65px;
-  font-size: 50px;
+  font-size: 3.58vw;
   font-weight: bold;
   color: #e9e9e9;
-  line-height: 50px;
+  line-height: 4.5vw;
   text-shadow: 3px 3px #4e4e4e;
   transition: all 0.4s ease;
-
   &:hover {
     transform: translateY(-3px);
   }
   @media ${({ theme }) => theme.device.small} {
-    font-size: 30px;
+    font-size: 4.5vw;
   }
 `;
 

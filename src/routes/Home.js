@@ -106,10 +106,9 @@ export default Home;
 const Container = styled.div`
   width: 100vw;
   height: 100%;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
+
   @media ${({ theme }) => theme.device.desktop} {
   }
 `;

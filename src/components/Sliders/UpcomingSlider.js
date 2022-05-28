@@ -16,7 +16,9 @@ function UpcomingSlider({ upcomingMovies, windowWidth }) {
       <UpcomingSwiper
         modules={[Navigation]}
         spaceBetween={0}
-        slidesPerView={windowWidth > 1300 ? 5 : windowWidth > 900 ? 4 : windowWidth > 750 ? 3 : 2}
+        slidesPerView={
+          windowWidth > 1200 ? 5 : windowWidth > 950 ? 4 : windowWidth > 720 ? 3 : windowWidth > 490 ? 2 : 1
+        }
         navigation={{ clickable: true }}
         loop={true}
       >
@@ -57,25 +59,10 @@ const UpcomingTitle = styled.div`
 `;
 
 const UpcomingSwiper = styled(Swiper)`
-  width: ${(window.innerWidth / 10) * 9}px;
+  width: 90vw;
   height: 420px;
   background-color: #eff3f7;
-
-  @media screen and (max-width: 1300px) {
-    width: 1150px;
-  }
-
-  @media ${({ theme }) => theme.device.small} {
-    width: 850px;
-  }
-
-  @media screen and (max-width: 750px) {
-    width: 600px;
-  }
-
-  @media ${({ theme }) => theme.device.smaller} {
-    width: 450px;
-  }
+  transition: all 0.3s ease;
 
   .swiper-slide {
     display: flex;

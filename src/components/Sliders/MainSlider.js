@@ -45,12 +45,13 @@ const MainSwiper = styled(Swiper)`
   margin-top: 50px;
   position: relative;
   display: flex;
-  width: ${window.innerWidth}px;
-  height: ${window.innerHeight - 50}px;
+  width: 100vw;
+  height: calc(100vh - 50px);
+  min-height: 500px;
+
   @media ${({ theme }) => theme.device.small} {
-    width: 100vw;
-    height: 90vh;
-    min-height: 300px;
+    min-height: 400px;
+    max-height: 450px;
   }
 
   @keyframes text-fade-in {
