@@ -160,7 +160,7 @@ const MovieImg = styled.div`
     margin-right: 10px;
   }
   @media screen and (max-width: 820px) {
-    margin: 0 0 10px 0;
+    margin: 30px 0 10px 0;
     height: 340px;
     width: 220px;
   }
