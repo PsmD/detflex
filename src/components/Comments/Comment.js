@@ -176,7 +176,8 @@ const CommentInput = styled.textarea`
   resize: none;
   border-radius: 7px;
   border-color: #dbdbdb;
-  padding: 5px;
+  padding: 6px;
+  overflow: hidden;
   @media ${({ theme }) => theme.device.small} {
     width: 70vw;
   }
