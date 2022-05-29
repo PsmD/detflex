@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import MovieCard from "../components/Cards/MovieCard";
 import Loading from "../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,7 +18,7 @@ function MovieMenu() {
   const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(10);
   const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
-  const getMovies = useCallback(async () => {
+  const getMovies = async () => {
     if (menu === "now_playing") {
       await axios
         .get(
@@ -74,7 +74,7 @@ function MovieMenu() {
         });
       setLoading(false);
     }
-  }, [menu, currentPage]);
+  };
 
   useEffect(() => {
     setCurrentPage(1);
@@ -87,7 +87,7 @@ function MovieMenu() {
       getMovies();
       window.scrollTo(0, 0);
     }
-  }, [getMovies, currentPage, menu, navigate]);
+  }, [currentPage, menu, navigate]);
 
   return (
     <Container>
