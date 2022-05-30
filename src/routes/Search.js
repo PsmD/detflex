@@ -37,7 +37,7 @@ function Search() {
       .catch((err) => {
         console.log(err);
       });
-  }, [searchText, currentPage]);
+  }, [searchText, currentPage, navigate]);
 
   useEffect(() => {
     getMovies();
@@ -93,19 +93,15 @@ const Movies = styled.div`
   grid-gap: 5px;
   width: 90vw;
   margin-top: 120px;
-
   @media screen and (max-width: 1220px) {
     grid-template-columns: repeat(4, 1fr);
   }
-
   @media screen and (max-width: 950px) {
     grid-template-columns: repeat(3, 1fr);
   }
-
   @media screen and (max-width: 730px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
   @media screen and (max-width: 480px) {
     grid-template-columns: repeat(1, 1fr);
   }
