@@ -89,7 +89,7 @@ export default Pagination;
 const Footer = styled.ul`
   display: flex;
   list-style: none;
-  width: 100vw;
+  width: 100%;
   color: #262626;
   justify-content: center;
   margin-bottom: 60px;

@@ -168,7 +168,7 @@ function Detail() {
 export default Detail;
 
 const MovieDetailContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   min-height: 606px;
   display: flex;

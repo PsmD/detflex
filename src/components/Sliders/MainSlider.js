@@ -45,7 +45,7 @@ const MainSwiper = styled(Swiper)`
   margin-top: 50px;
   position: relative;
   display: flex;
-  width: 100vw;
+  width: 100%;
   height: calc(100vh - 50px);
   min-height: 500px;
 

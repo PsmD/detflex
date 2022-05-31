@@ -59,7 +59,7 @@ const PopularTitle = styled.div`
 `;
 
 const PopularSwiper = styled(Swiper)`
-  width: 90vw;
+  width: 90%;
   height: 420px;
   background-color: #eff3f7;
   transition: all 0.3s ease;

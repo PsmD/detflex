@@ -60,7 +60,7 @@ const TopRatingTitle = styled.div`
 `;
 
 const TopRatingSwiper = styled(Swiper)`
-  width: 90vw;
+  width: 90%;
   height: 420px;
   background-color: #eff3f7;
   margin-bottom: 70px;

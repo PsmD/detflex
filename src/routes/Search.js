@@ -82,7 +82,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   transition: all 0.1s ease;
 `;
 
@@ -91,7 +91,7 @@ const Movies = styled.div`
   place-items: center;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 5px;
-  width: 90vw;
+  width: 90%;
   margin-top: 120px;
   @media screen and (max-width: 1220px) {
     grid-template-columns: repeat(4, 1fr);

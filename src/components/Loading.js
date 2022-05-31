@@ -11,7 +11,7 @@ function Loading() {
 export default Loading;
 
 const Loader = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;

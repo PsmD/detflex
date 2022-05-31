@@ -98,15 +98,13 @@ const MovieBg = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   min-height: 606px;
   background-image: url(${(props) => props.bgimg});
   background-size: cover;
   background-position: center center;
-  @media screen and (max-width: 1300px) {
-    width: 100vw;
-  }
+
   @media screen and (max-width: 820px) {
     height: 150vh;
     min-height: 984px;
@@ -117,7 +115,7 @@ const MovieBgWraper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   min-height: 606px;
   background-color: black;
@@ -131,7 +129,7 @@ const MovieBgWraper = styled.div`
 
 const MovieContainer = styled.div`
   z-index: 8;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   min-height: 606px;
   display: flex;
