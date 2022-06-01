@@ -111,8 +111,8 @@ export default MovieComments;
 
 const CommentTextBox = styled.div`
   width: 50vw;
-  margin-bottom: 5vh;
-  padding-bottom: 5vh;
+  margin-bottom: 1.894em;
+  padding-bottom: 1.894em;
   border-bottom: 1px solid #dbdbdb;
   @media ${({ theme }) => theme.device.small} {
     width: 70vw;
@@ -131,23 +131,23 @@ const UserAndDate = styled.div`
 
 const UserName = styled.div`
   margin-right: 0.5vw;
-  font-size: 13px;
+  font-size: 0.813em;
   text-shadow: 1px 1px #dbdbdb;
 `;
 
 const CommentDate = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1.4vh;
-  font-size: 12px;
+  margin-bottom: 0.53em;
+  font-size: 0.75em;
   color: #a6a6a6;
-  margin-right: 0.2vw;
+  margin-right: 0.175em;
 `;
 
 const EditdeText = styled.div`
-  font-size: 12px;
+  font-size: 0.75em;
   color: #a6a6a6;
-  margin-bottom: 1.4vh;
+  margin-bottom: 0.53em;
   display: flex;
   align-items: center;
 `;
@@ -155,12 +155,12 @@ const EditdeText = styled.div`
 const CommentController = styled.span`
   color: #a6a6a6;
   cursor: pointer;
-  width: 2vw;
-  height: 4vh;
+  width: 1.75em;
+  height: 1.5em;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 1vw;
+  border-radius: 0.875em;
 `;
 
 const SelectOverlay = styled.div`
@@ -182,8 +182,8 @@ const Select = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 5px;
-  font-size: 12px;
+  border-radius: 0.313em;
+  font-size: 0.75em;
   position: absolute;
   right: ${(props) => (props.user === props.creatorId ? "19.3vw" : "19.8vw")};
   z-index: 15;
@@ -194,19 +194,19 @@ const Select = styled.div`
 
 const CloseButton = styled.span`
   position: absolute;
-  top: 0.5vh;
-  right: 0.5vw;
-  font-size: 16px;
+  top: 0.188em;
+  right: 0.438em;
+  font-size: 1em;
   cursor: pointer;
 `;
 
 const Options = styled.ul`
   list-style: none;
-  margin-left: 8.37px;
+  margin-left: 0.523em;
 `;
 
 const EditButton = styled.li`
-  margin-bottom: 1vh;
+  margin-bottom: 0.375em;
   cursor: pointer;
   width: fit-content;
 `;
@@ -226,7 +226,7 @@ const NoMovieCommentText = styled.div`
   justify-content: center;
   color: #656565;
   width: 50vw;
-  margin-bottom: 5vh;
-  padding-bottom: 5vh;
+  margin-bottom: 1.875em;
+  padding-bottom: 1.875em;
   border-bottom: 1px solid #dbdbdb;
 `;

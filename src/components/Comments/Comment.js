@@ -96,7 +96,6 @@ const Comment = ({
   return (
     <CommentContainer>
       <WhatDoyouThink>What do you think of this movie?</WhatDoyouThink>
-
       {user.user ? (
         <CommentForm>
           <CommentInput
@@ -144,15 +143,17 @@ export default Comment;
 const CommentContainer = styled.div`
   display: flex;
   margin: 0 20vw;
-  padding: 5vh 5vw 0;
+  padding: 1.875em 4.375em 0;
   flex-direction: column;
   align-items: center;
-  border: 2px solid #dbdbdb;
   transition: all 0.1s ease;
 
   @media ${({ theme }) => theme.device.small} {
     margin: 0;
     width: 100vw;
+  }
+
+  @media ${({ theme }) => theme.device.desktop} {
   }
 `;
 
@@ -167,16 +168,16 @@ const WhatDoyouThink = styled.div`
 `;
 
 const CommentForm = styled.form`
-  margin-bottom: 60px;
+  margin-bottom: 3.75em;
   display: flex;
   flex-direction: column;
 `;
 const CommentInput = styled.textarea`
   width: 50vw;
   resize: none;
-  border-radius: 7px;
+  border-radius: 0.438em;
   border-color: #dbdbdb;
-  padding: 6px;
+  padding: 0.375em;
   overflow: hidden;
   @media ${({ theme }) => theme.device.small} {
     width: 70vw;
@@ -184,14 +185,14 @@ const CommentInput = styled.textarea`
 `;
 
 const CommentSubmitButton = styled.div`
-  width: 42px;
-  height: 30px;
-  margin-top: 13px;
+  width: 2.625em;
+  height: 1.875em;
+  margin-top: 0.813em;
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: end;
-  border-radius: 5px;
+  border-radius: 0.313em;
   border: none;
   pointer-events: ${(props) => props.comment.length === 0 && "none"};
   background-color: ${(props) => (props.comment.length === 0 ? "#E9E9E9" : "#8572FF")};
@@ -205,5 +206,5 @@ const CommentSubmitButton = styled.div`
 
 const NoCommentForm = styled.div`
   color: #656565;
-  margin-bottom: 60px;
+  margin-bottom: 3.75em;
 `;

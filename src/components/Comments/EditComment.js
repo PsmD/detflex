@@ -54,9 +54,9 @@ const EditCommentForm = styled.form`
 const EditCommentInput = styled.textarea`
   width: 48vw;
   resize: none;
-  border-radius: 7px;
+  border-radius: 0.438em;
   border-color: #dbdbdb;
-  padding: 6px;
+  padding: 0.375em;
   overflow: hidden;
   @media ${({ theme }) => theme.device.small} {
     width: 70vw;
@@ -65,27 +65,27 @@ const EditCommentInput = styled.textarea`
 
 const EditButtons = styled.div`
   align-self: end;
-  margin-top: 2vh;
-  margin-right: 2vw;
+  margin-top: 0.75em;
+  margin-right: 1.75em;
   display: flex;
 `;
 
 const EditCloseButton = styled.div`
-  width: 49px;
-  height: 30px;
-  border-radius: 5px;
+  width: 3.063em;
+  height: 1.875em;
+  border-radius: 0.313em;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 1vw;
+  margin-right: 0.875em;
   cursor: pointer;
   background-color: #e9e9e9;
 `;
 
 const EditCommentSubmitButton = styled.div`
-  width: 42px;
-  height: 30px;
-  border-radius: 5px;
+  width: 2.625em;
+  height: 1.875em;
+  border-radius: 0.313em;
   border: none;
   display: flex;
   justify-content: center;
@@ -98,7 +98,7 @@ const EditCommentSubmitButton = styled.div`
 `;
 
 const CommentText = styled.div`
-  margin-top: 2vh;
-  font-size: 12px;
+  margin-top: 0.75em;
+  font-size: 0.75em;
   text-shadow: 1px 1px #dbdbdb;
 `;
