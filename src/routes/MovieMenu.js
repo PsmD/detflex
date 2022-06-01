@@ -139,6 +139,10 @@ const Movies = styled.div`
   width: 90%;
   margin-top: 120px;
 
+  @media ${({ theme }) => theme.device.desktop} {
+    width: 60%;
+  }
+
   @media screen and (max-width: 1220px) {
     grid-template-columns: repeat(4, 1fr);
   }
