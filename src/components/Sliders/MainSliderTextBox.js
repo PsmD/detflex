@@ -25,8 +25,8 @@ MainSliderTextBox.propTypes = {
 export default MainSliderTextBox;
 
 const NowPlaying = styled.div`
-  margin-top: 10px;
-  font-size: 4.3vw;
+  margin-top: 0.625em;
+  font-size: 4.125em;
   font-weight: bolder;
   color: #e9e9e9;
   text-shadow: 3px 3px #4e4e4e;
@@ -35,31 +35,25 @@ const NowPlaying = styled.div`
   &:hover {
     transform: translateY(-3px);
   }
-  @media ${({ theme }) => theme.device.small} {
-    font-size: 5.5vw;
-  }
 `;
 
 const Title = styled.div`
-  margin-top: 65px;
-  font-size: 3.58vw;
+  margin-top: 1.063em;
+  font-size: 3.438em;
   font-weight: bold;
   color: #e9e9e9;
-  line-height: 4.5vw;
+  line-height: 1.213em;
   text-shadow: 3px 3px #4e4e4e;
   transition: all 0.4s ease;
   &:hover {
     transform: translateY(-3px);
   }
-  @media ${({ theme }) => theme.device.small} {
-    font-size: 4.5vw;
-  }
 `;
 
 const Overview = styled.div`
-  width: 290px;
-  margin-top: 20px;
-  font-size: 20px;
+  width: 18.125em;
+  margin-top: 1.25em;
+  font-size: 1.25em;
   color: #e9e9e9;
   text-shadow: 2px 2px #4e4e4e;
   cursor: text;

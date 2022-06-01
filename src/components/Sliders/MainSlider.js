@@ -49,9 +49,14 @@ const MainSwiper = styled(Swiper)`
   height: calc(100vh - 50px);
   min-height: 500px;
 
+  @media ${({ theme }) => theme.device.desktop} {
+    font-size: 22px;
+  }
+
   @media ${({ theme }) => theme.device.small} {
     min-height: 400px;
     max-height: 450px;
+    font-size: 10px;
   }
 
   @keyframes text-fade-in {

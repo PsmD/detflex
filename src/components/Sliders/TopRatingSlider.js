@@ -66,6 +66,10 @@ const TopRatingSwiper = styled(Swiper)`
   margin-bottom: 70px;
   transition: all 0.3s ease;
 
+  @media ${({ theme }) => theme.device.desktop} {
+    width: 60%;
+  }
+
   .swiper-slide {
     display: flex;
     justify-content: center;

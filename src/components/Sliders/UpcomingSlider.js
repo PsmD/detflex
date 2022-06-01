@@ -64,6 +64,10 @@ const UpcomingSwiper = styled(Swiper)`
   background-color: #eff3f7;
   transition: all 0.3s ease;
 
+  @media ${({ theme }) => theme.device.desktop} {
+    width: 60%;
+  }
+
   .swiper-slide {
     display: flex;
     justify-content: center;
