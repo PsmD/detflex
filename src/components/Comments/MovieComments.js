@@ -130,7 +130,7 @@ const UserAndDate = styled.div`
 `;
 
 const UserName = styled.div`
-  margin-right: 0.5vw;
+  margin-right: 0.438em;
   font-size: 0.813em;
   text-shadow: 1px 1px #dbdbdb;
 `;
@@ -177,8 +177,8 @@ const Select = styled.div`
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25), 0 2px 2px 0 rgba(50, 50, 93, 0.25),
     0 0 5px -4px rgba(0, 0, 0, 0.025);
-  width: ${(props) => (props.user === props.creatorId ? "83.7px" : "76.7px")};
-  height: ${(props) => (props.user === props.creatorId ? "54.5px" : "48.5px")};
+  width: ${(props) => (props.user === props.creatorId ? "5.231em" : "4.794em")};
+  height: ${(props) => (props.user === props.creatorId ? "3.406em" : "3.031em")};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -187,6 +187,23 @@ const Select = styled.div`
   position: absolute;
   right: ${(props) => (props.user === props.creatorId ? "19.3vw" : "19.8vw")};
   z-index: 15;
+
+  @media ${({ theme }) => theme.device.desktop} {
+    right: 21vw;
+  }
+
+  @media screen and (max-width: 1900px) {
+    right: 21.5vw;
+  }
+
+  @media screen and (max-width: 1600px) {
+    right: 20.5vw;
+  }
+
+  @media screen and (max-width: 1000px) {
+    right: 19.5vw;
+  }
+
   @media ${({ theme }) => theme.device.small} {
     right: 15vw;
   }

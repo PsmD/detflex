@@ -154,6 +154,7 @@ const CommentContainer = styled.div`
   }
 
   @media ${({ theme }) => theme.device.desktop} {
+    font-size: 22px;
   }
 `;
 
@@ -179,6 +180,7 @@ const CommentInput = styled.textarea`
   border-color: #dbdbdb;
   padding: 0.375em;
   overflow: hidden;
+  font-size: 0.8333em;
   @media ${({ theme }) => theme.device.small} {
     width: 70vw;
   }
