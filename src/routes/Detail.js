@@ -179,6 +179,15 @@ const MovieDetailContainer = styled.div`
   align-items: center;
   transition: all 0.1s linear;
 
+  @media screen and (max-width: 1900px) {
+    max-height: 800px;
+  }
+
+  @media ${({ theme }) => theme.device.desktop} {
+    min-height: 1100px;
+    max-height: 2000px;
+  }
+
   @media screen and (max-width: 820px) {
     height: 150vh;
     min-height: 1100px;

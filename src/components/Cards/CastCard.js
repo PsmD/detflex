@@ -33,6 +33,12 @@ const CastImg = styled.div`
   background-position: center center;
   width: 140px;
   height: 165px;
+
+  @media ${({ theme }) => theme.device.desktop} {
+    width: 190px;
+    height: 260px;
+  }
+
   @media screen and (max-width: 820px) {
     width: 100px;
     height: 115px;
@@ -43,10 +49,19 @@ const CastTextBox = styled.div`
   flex-direction: column;
   height: 79px;
   margin-top: 4px;
+  
+  @media ${({ theme }) => theme.device.desktop} {
+    height: 135px;
+  }
 `;
 const CastCharacter = styled.div`
   font-size: 13px;
   margin-bottom: 4px;
+
+  @media ${({ theme }) => theme.device.desktop} {
+    font-size: 19px;
+  }
+
   @media screen and (max-width: 820px) {
     font-size: 12px;
   }
@@ -54,6 +69,11 @@ const CastCharacter = styled.div`
 const CastName = styled.div`
   font-size: 14px;
   font-weight: bold;
+
+  @media ${({ theme }) => theme.device.desktop} {
+    font-size: 21px;
+  }
+
   @media screen and (max-width: 820px) {
     font-size: 13px;
   }

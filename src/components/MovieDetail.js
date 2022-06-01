@@ -54,7 +54,7 @@ function MovieDetail({
             </MovieVoteAndRuntime>
             <MovieTextboxSummary>
               <SummaryText>Summary:</SummaryText>
-              {overview.length > 260 ? `${overview.slice(0, 260)}...` : overview}
+              {!overview ? "Unknown" : overview.length > 260 ? `${overview.slice(0, 260)}...` : overview}
             </MovieTextboxSummary>
             <CastSwiper
               modules={[Scrollbar]}
@@ -105,6 +105,14 @@ const MovieBg = styled.div`
   background-size: cover;
   background-position: center center;
 
+  @media screen and (max-width: 1900px) {
+    max-height: 800px;
+  }
+  @media ${({ theme }) => theme.device.desktop} {
+    min-height: 1100px;
+    max-height: 2000px;
+  }
+
   @media screen and (max-width: 820px) {
     height: 150vh;
     min-height: 1100px;
@@ -121,6 +129,18 @@ const MovieBgWraper = styled.div`
   background-color: black;
   opacity: 50%;
   z-index: 3;
+
+
+
+  @media screen and (max-width: 1900px) {
+    max-height: 800px;
+  }
+
+  @media ${({ theme }) => theme.device.desktop} {
+    min-height: 1100px;
+    max-height: 2000px;
+  }
+
   @media screen and (max-width: 820px) {
     height: 150vh;
     min-height: 1100px;
@@ -134,12 +154,18 @@ const MovieContainer = styled.div`
   min-height: 37.875em;
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 6.25em;
   color: white;
 
-  @media screen and (max-width: 1100px) {
-    font-size: 15px;
+  @media screen and (max-width: 1900px) {
+    max-height: 800px;
   }
+
+  @media ${({ theme }) => theme.device.desktop} {
+    font-size: 25px;
+    max-height: 2000px;
+  }
+
   @media screen and (max-width: 820px) {
     flex-direction: column;
     align-items: center;
@@ -174,7 +200,7 @@ const MovieTitleAndYear = styled.div`
   font-weight: bold;
   font-size: 1.75em;
   margin-bottom: 0.188em;
-  width: 25em;
+  width: 20em;
 
   @media screen and (max-width: 820px) {
     width: 430px;
@@ -189,7 +215,7 @@ const MovieYear = styled.span`
 
 const MovieInfo = styled.div`
   display: flex;
-  width: 43em;
+  width: 35em;
 
   @media screen and (max-width: 820px) {
     width: 430px;
@@ -270,6 +296,8 @@ const CastSwiper = styled(Swiper)`
   z-index: 9;
 
   @media screen and (max-width: 1100px) {
+   width: 430px;
+   margin-right: 90px;
   }
 
   @media screen and (max-width: 820px) {
