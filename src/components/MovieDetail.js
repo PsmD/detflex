@@ -100,14 +100,14 @@ const MovieBg = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  min-height: 606px;
+  min-height: 37.875em;
   background-image: url(${(props) => props.bgimg});
   background-size: cover;
   background-position: center center;
 
   @media screen and (max-width: 820px) {
     height: 150vh;
-    min-height: 984px;
+    min-height: 1100px;
   }
 `;
 
@@ -117,13 +117,13 @@ const MovieBgWraper = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  min-height: 606px;
+  min-height: 37.875em;
   background-color: black;
   opacity: 50%;
   z-index: 3;
   @media screen and (max-width: 820px) {
     height: 150vh;
-    min-height: 984px;
+    min-height: 1100px;
   }
 `;
 
@@ -131,17 +131,22 @@ const MovieContainer = styled.div`
   z-index: 8;
   width: 100%;
   height: 100vh;
-  min-height: 606px;
+  min-height: 37.875em;
   display: flex;
   justify-content: center;
   margin-top: 100px;
   color: white;
+
+  @media screen and (max-width: 1100px) {
+    font-size: 15px;
+  }
   @media screen and (max-width: 820px) {
     flex-direction: column;
     align-items: center;
     justify-content: start;
     height: 150vh;
-    min-height: 984px;
+    min-height: 1100px;
+    font-size: 14px;
   }
 `;
 
@@ -149,42 +154,32 @@ const MovieImg = styled.div`
   background-image: url(${(props) => props.poster_path});
   background-size: cover;
   background-position: center center;
-  height: 492px;
-  width: 350px;
-  margin-right: 90px;
+  height: 30.75em;
+  width: 21.875em;
+  margin-right: 5.625em;
   @media screen and (max-width: 1100px) {
-    height: 392px;
-    width: 250px;
     margin-right: 10px;
   }
   @media screen and (max-width: 820px) {
     margin: 30px 0 10px 0;
-    height: 340px;
-    width: 220px;
   }
 `;
 
 const MovieTextbox = styled.div`
-  width: 500px;
-  height: 303px;
-  @media screen and (max-width: 1100px) {
-    width: 350px;
-  }
+  width: 31.25em;
+  height: 18.938em;
 `;
 
 const MovieTitleAndYear = styled.div`
   font-weight: bold;
-  font-size: 28px;
-  margin-bottom: 3px;
-  width: 628px;
-  @media screen and (max-width: 1100px) {
-    font-size: 20px;
-    width: 400px;
-  }
+  font-size: 1.75em;
+  margin-bottom: 0.188em;
+  width: 25em;
+
   @media screen and (max-width: 820px) {
-    font-size: 18px;
-    width: 350px;
+    width: 430px;
     text-align: center;
+    margin-bottom: 10px;
   }
 `;
 
@@ -194,12 +189,10 @@ const MovieYear = styled.span`
 
 const MovieInfo = styled.div`
   display: flex;
-  width: 977px;
-  @media screen and (max-width: 1100px) {
-    font-size: 12px;
-  }
+  width: 43em;
+
   @media screen and (max-width: 820px) {
-    width: 350px;
+    width: 430px;
     flex-direction: column;
     text-align: center;
     margin-top: 5px;
@@ -207,7 +200,7 @@ const MovieInfo = styled.div`
 `;
 
 const MovieReleaseDate = styled.span`
-  margin-right: 14px;
+  margin-right: 0.875em;
 `;
 
 const MovieGenres = styled.div`
@@ -220,37 +213,34 @@ const MovieGenres = styled.div`
 const MovieGenresItem = styled.span``;
 
 const MovieDetailInfoBox = styled.div`
-  font-size: 16px;
-  margin-top: 13px;
-  @media screen and (max-width: 1100px) {
-    font-size: 13px;
-  }
+  font-size: 1em;
+  margin-top: 0.813em;
 `;
 
 const MovieVoteAndRuntime = styled.div`
-  width: 698px;
+  width: 43.625em;
   display: flex;
   @media screen and (max-width: 820px) {
-    width: 350px;
+    width: 430px;
     justify-content: center;
     margin-top: 5px;
   }
 `;
 
 const MovieRating = styled.div`
-  margin-right: 7px;
+  margin-right: 0.438em;
 `;
 
 const MovieRuntime = styled.div``;
 
 const LikeButton = styled.div`
-  margin-left: 14px;
+  margin-left: 0.875em;
   cursor: pointer;
   color: ${(props) => (props.userLikeObject ? "red" : "#B2B1B1")};
 `;
 
 const LikeLength = styled.div`
-  margin-left: 5px;
+  margin-left: 0.313em;
 `;
 
 const SummaryText = styled.h4`
@@ -260,35 +250,30 @@ const SummaryText = styled.h4`
 `;
 
 const MovieTextboxSummary = styled.p`
-  margin-bottom: 30px;
-  margin-top: 18px;
-  width: 558px;
+  margin-bottom: 1.875em;
+  margin-top: 1.125em;
+  width: 34.875em;
   color: whitesmoke;
   font-weight: 300;
-  font-size: 14px;
-  @media screen and (max-width: 1100px) {
-    font-size: 12px;
-    width: 400px;
-  }
+  font-size: 0.875em;
+
   @media screen and (max-width: 820px) {
-    width: 350px;
+    width: 430px;
     text-align: center;
   }
 `;
 
 const CastSwiper = styled(Swiper)`
   display: flex;
-  width: 558px;
-  height: 270px;
+  width: 34.875em;
+  height: 16.875em;
   z-index: 9;
 
   @media screen and (max-width: 1100px) {
-    width: 420px;
   }
 
   @media screen and (max-width: 820px) {
-    width: 300px;
-    height: 250px;
+    width: 430px;
   }
 
   .swiper-scrollbar-drag {

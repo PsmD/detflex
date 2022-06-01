@@ -181,6 +181,6 @@ const MovieDetailContainer = styled.div`
 
   @media screen and (max-width: 820px) {
     height: 150vh;
-    min-height: 984px;
+    min-height: 1100px;
   }
 `;
