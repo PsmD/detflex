@@ -138,7 +138,7 @@ const UserName = styled.div`
 const CommentDate = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0.53em;
+  margin-bottom: 0.41em;
   font-size: 0.75em;
   color: #a6a6a6;
   margin-right: 0.175em;
@@ -147,7 +147,7 @@ const CommentDate = styled.div`
 const EditdeText = styled.div`
   font-size: 0.75em;
   color: #a6a6a6;
-  margin-bottom: 0.53em;
+  margin-bottom: 0.41em;
   display: flex;
   align-items: center;
 `;
