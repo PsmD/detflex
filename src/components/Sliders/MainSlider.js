@@ -47,7 +47,7 @@ const MainSwiper = styled(Swiper)`
   display: flex;
   width: 100%;
   height: calc(100vh - 50px);
-  min-height: 500px;
+  min-height: 550px;
 
   @media ${({ theme }) => theme.device.desktop} {
     font-size: 22px;
@@ -58,8 +58,8 @@ const MainSwiper = styled(Swiper)`
   }
 
   @media ${({ theme }) => theme.device.small} {
-    min-height: 400px;
-    max-height: 450px;
+    min-height: 450px;
+    max-height: 500px;
     font-size: 10px;
   }
 
