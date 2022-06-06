@@ -7,6 +7,7 @@ import { faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { authService } from "../AboutFirebase/fbase";
 import { useContext } from "react";
 import { UserContext } from "../AboutFirebase/UseAuth";
+import SignLoad from "./Loaders/SignLoad";
 import SignIn from "../modals/SignIn";
 import SignUp from "../modals/SignUp";
 import styled from "styled-components";
@@ -20,7 +21,7 @@ function Navbar() {
   const { scrollY } = useViewportScroll();
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, SignsLoading } = useContext(UserContext);
 
   const searchClick = (event) => {
     setSearchText(event.target.value);
@@ -102,7 +103,9 @@ function Navbar() {
           })}
         </MenuItems>
         <SignSearchBar>
-          {!user ? (
+          {SignsLoading ? (
+            <SignLoad />
+          ) : !user ? (
             <Signs>
               <Sign__In name={"signIn"} onClick={modalOpen}>
                 Sign In
@@ -183,7 +186,7 @@ const WebName = styled.div`
   &:hover {
     transform: translateY(-3px);
   }
-  @media screen and (max-width: 1200px) {
+  @media ${({ theme }) => theme.device.navSmall} {
     margin-right: 20px;
   }
 `;
@@ -193,7 +196,7 @@ const MenuItems = styled.div`
   align-content: center;
   text-shadow: 2px 2px #c7cdd4;
   margin-left: 11vw;
-  @media screen and (max-width: 1200px) {
+  @media ${({ theme }) => theme.device.navSmall} {
     display: none;
   }
 `;
@@ -229,7 +232,7 @@ const Signs = styled.div`
   margin-right: 10px;
   margin-top: 5px;
   text-shadow: 1px 1px #c7cdd4;
-  @media screen and (max-width: 1200px) {
+  @media ${({ theme }) => theme.device.navSmall} {
     display: none;
   }
 `;
@@ -286,7 +289,7 @@ const Input = styled.input`
   height: 30px;
   margin-right: 10px;
   text-align: center;
-  @media screen and (max-width: 1200px) {
+  @media ${({ theme }) => theme.device.navSmall} {
     width: 40vw;
   }
 `;
@@ -306,11 +309,11 @@ const BarsButton = styled.div`
     transform: translateY(-2px);
   }
   display: none;
-  @media screen and (max-width: 1200px) {
+  @media ${({ theme }) => theme.device.navSmall} {
     display: inline;
     margin-left: 20vw;
   }
-  @media screen and (max-width: 500px) {
+  @media ${({ theme }) => theme.device.smaller} {
     margin-left: 10vw;
   }
 `;
@@ -350,7 +353,7 @@ const NavSelectContainer = styled.div`
   animation-name: navSelect-fade-in;
   animation-duration: 0.3s;
   animation-fill-mode: both;
-  @media screen and (max-width: 1200px) {
+  @media ${({ theme }) => theme.device.navSmall} {
     display: block;
   }
 `;

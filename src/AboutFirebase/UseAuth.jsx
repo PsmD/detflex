@@ -9,6 +9,7 @@ export const defaultHeaders = {
 };
 
 const UseAuth = ({ children }) => {
+  const [SignsLoading, setSignsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -27,13 +28,14 @@ const UseAuth = ({ children }) => {
         delete defaultHeaders.Authorizations;
         setUser(null);
       }
+      setSignsLoading(false);
     });
     return () => {
       subscribe();
     };
   }, []);
 
-  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, setUser, SignsLoading }}>{children}</UserContext.Provider>;
 };
 
 export default UseAuth;
