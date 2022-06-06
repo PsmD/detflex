@@ -58,7 +58,7 @@ const EditCommentInput = styled.textarea`
   border-color: #dbdbdb;
   padding: 0.375em;
   overflow: hidden;
-  @media ${({ theme }) => theme.device.small} {
+  @media ${({ theme }) => theme.device.navSmall} {
     width: 70vw;
   }
 `;

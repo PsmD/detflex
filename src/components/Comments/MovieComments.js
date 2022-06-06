@@ -114,7 +114,7 @@ const CommentTextBox = styled.div`
   margin-bottom: 1.894em;
   padding-bottom: 1.894em;
   border-bottom: 1px solid #dbdbdb;
-  @media ${({ theme }) => theme.device.small} {
+  @media ${({ theme }) => theme.device.navSmall} {
     width: 70vw;
   }
 `;
@@ -200,8 +200,8 @@ const Select = styled.div`
     right: 20.5vw;
   }
 
-  @media screen and (max-width: 1000px) {
-    right: 19.5vw;
+  @media ${({ theme }) => theme.device.navSmall} {
+    right: 8.5vw;
   }
 
   @media ${({ theme }) => theme.device.small} {
