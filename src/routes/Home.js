@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Loading from "../components/Loading";
+import Loading from "../components/Loaders/Loading";
 import axios from "axios";
 import MainSlider from "../components/Sliders/MainSlider";
 import PopularSlider from "../components/Sliders/PopularSlider";
@@ -108,7 +108,4 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-
-  @media ${({ theme }) => theme.device.desktop} {
-  }
 `;
