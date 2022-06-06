@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import MovieComments from "./MovieComments";
+import CommentsLoad from "../../components/Loaders/CommentsLoad";
 import { doc, updateDoc, deleteDoc, getDoc, addDoc, collection } from "firebase/firestore";
 import { dbService } from "../../AboutFirebase/fbase";
 
@@ -14,6 +15,7 @@ const Comment = ({
   time,
   movieId,
   setComment,
+  commentsLoading,
 }) => {
   const [select, setSelect] = useState(false);
   const [eachSelectId, setEachSelectId] = useState("");
@@ -96,7 +98,9 @@ const Comment = ({
   return (
     <CommentContainer>
       <WhatDoyouThink>What do you think of this movie?</WhatDoyouThink>
-      {user.user ? (
+      {commentsLoading ? (
+        <CommentsLoad />
+      ) : user.user ? (
         <CommentForm>
           <CommentInput
             value={comment}
@@ -114,26 +118,29 @@ const Comment = ({
       ) : (
         <NoCommentForm>Sign in is required for comment writing</NoCommentForm>
       )}
-      <MovieComments
-        detailMovieComments={detailMovieComments}
-        openSelect={openSelect}
-        eachSelectId={eachSelectId}
-        user={user}
-        select={select}
-        closeSelect={closeSelect}
-        openEdit={openEdit}
-        deleteComent={deleteComent}
-        reportComent={reportComent}
-        edit={edit}
-        eachEdit={eachEdit}
-        newComment={newComment}
-        onEditChange={onEditChange}
-        textRef={textRef}
-        handleResizeHeight={handleResizeHeight}
-        closeEdit={closeEdit}
-        prevComment={prevComment}
-        editComment={editComment}
-      />
+      {commentsLoading ? null : (
+        <MovieComments
+          detailMovieComments={detailMovieComments}
+          openSelect={openSelect}
+          eachSelectId={eachSelectId}
+          user={user}
+          select={select}
+          closeSelect={closeSelect}
+          openEdit={openEdit}
+          deleteComent={deleteComent}
+          reportComent={reportComent}
+          edit={edit}
+          eachEdit={eachEdit}
+          newComment={newComment}
+          onEditChange={onEditChange}
+          textRef={textRef}
+          handleResizeHeight={handleResizeHeight}
+          closeEdit={closeEdit}
+          prevComment={prevComment}
+          editComment={editComment}
+          commentsLoading={commentsLoading}
+        />
+      )}
     </CommentContainer>
   );
 };
@@ -148,7 +155,7 @@ const CommentContainer = styled.div`
   align-items: center;
   transition: all 0.1s ease;
 
-  @media ${({ theme }) => theme.device.small} {
+  @media ${({ theme }) => theme.device.navSmall} {
     margin: 0;
     width: 100vw;
   }
@@ -163,7 +170,7 @@ const WhatDoyouThink = styled.div`
   font-size: 2.1vw;
   font-weight: bold;
   text-shadow: 3px 3px #c9c9c9;
-  @media ${({ theme }) => theme.device.small} {
+  @media ${({ theme }) => theme.device.navSmall} {
     font-size: 3.1vw;
   }
 `;
@@ -181,7 +188,7 @@ const CommentInput = styled.textarea`
   padding: 0.375em;
   overflow: hidden;
   font-size: 0.8333em;
-  @media ${({ theme }) => theme.device.small} {
+  @media ${({ theme }) => theme.device.navSmall} {
     width: 70vw;
   }
 `;
