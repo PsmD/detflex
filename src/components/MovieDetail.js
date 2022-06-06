@@ -6,6 +6,7 @@ import CastCard from "./Cards/CastCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { IMAGE_BASE_URL } from "../api";
+import LikeLoad from "./Loaders/LikeLoad";
 import "swiper/css";
 import "swiper/css/scrollbar";
 
@@ -23,6 +24,7 @@ function MovieDetail({
   detailMovieLikes,
   userLikeObject,
   windowWidth,
+  likesLoading,
 }) {
   return (
     <>
@@ -47,10 +49,16 @@ function MovieDetail({
             <MovieVoteAndRuntime>
               <MovieRating>Rating: {vote_average ? vote_average : "No rating"}&nbsp;&nbsp;</MovieRating>
               <MovieRuntime>Runtime: {runtime ? runtime + " " + "min" : "Unknown"}</MovieRuntime>
-              <LikeButton userLikeObject={userLikeObject} onClick={onSubmitLike}>
-                <FontAwesomeIcon icon={faHeart} size="lg" />
-              </LikeButton>
-              <LikeLength>{detailMovieLikes.length}</LikeLength>
+              {likesLoading ? (
+                <LikeLoad />
+              ) : (
+                <>
+                  <LikeButton userLikeObject={userLikeObject} onClick={onSubmitLike}>
+                    <FontAwesomeIcon icon={faHeart} size="lg" />
+                  </LikeButton>
+                  <LikeLength>{detailMovieLikes.length}</LikeLength>
+                </>
+              )}
             </MovieVoteAndRuntime>
             <MovieTextboxSummary>
               <SummaryText>Summary:</SummaryText>
@@ -129,8 +137,6 @@ const MovieBgWraper = styled.div`
   background-color: black;
   opacity: 50%;
   z-index: 3;
-
-
 
   @media screen and (max-width: 1900px) {
     max-height: 800px;
@@ -296,8 +302,8 @@ const CastSwiper = styled(Swiper)`
   z-index: 9;
 
   @media screen and (max-width: 1100px) {
-   width: 430px;
-   margin-right: 90px;
+    width: 430px;
+    margin-right: 90px;
   }
 
   @media screen and (max-width: 820px) {
