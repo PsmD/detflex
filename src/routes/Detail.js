@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback, useContext, useRef } from "react";
 import MovieDetail from "../components/MovieDetail";
-import Loading from "../components/Loading";
+import Loading from "../components/Loaders/Loading";
 import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
@@ -15,6 +15,8 @@ function Detail() {
   const { movieId } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [commentsLoading, setCommentsLoading] = useState(true);
+  const [likesLoading, setLikesLoading] = useState(true);
   const [detail, setDetail] = useState([]);
   const [cast, setCast] = useState([]);
   const [comment, setComment] = useState("");
@@ -56,6 +58,7 @@ function Detail() {
         ...doc.data(),
       }));
       setDetailMovieComments(commentArray);
+      setCommentsLoading(false);
     });
   };
 
@@ -68,6 +71,7 @@ function Detail() {
         ...doc.data(),
       }));
       setDetailMovieLikes(likeArray);
+      setLikesLoading(false);
     });
   };
 
@@ -148,6 +152,7 @@ function Detail() {
             detailMovieLikes={detailMovieLikes}
             userLikeObject={userLikeObject}
             windowWidth={windowWidth}
+            likesLoading={likesLoading}
           />
         )}
       </MovieDetailContainer>
@@ -161,6 +166,7 @@ function Detail() {
         time={time}
         movieId={movieId}
         setComment={setComment}
+        commentsLoading={commentsLoading}
       />
     </>
   );
