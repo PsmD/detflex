@@ -2,11 +2,7 @@ import { useEffect, useState, createContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { authService } from "./fbase";
 
-export const UserContext = createContext(null);
-export const defaultHeaders = {
-  "Content-Type": "application/json",
-  Accept: "application/json",
-};
+export const UserContext = createContext(JSON.parse(localStorage.getItem("user")) || null);
 
 const UseAuth = ({ children }) => {
   const [SignsLoading, setSignsLoading] = useState(true);
@@ -17,23 +13,21 @@ const UseAuth = ({ children }) => {
       console.log("firebaseUser", firebaseUser);
       if (firebaseUser) {
         try {
-          const token = await firebaseUser.getIdToken();
-          defaultHeaders.Authorization = `Bearer ${token}`;
-
           setUser(firebaseUser);
+          localStorage.setItem("user", JSON.stringify(firebaseUser));
         } catch (error) {
           console.log(error);
         }
       } else {
-        delete defaultHeaders.Authorizations;
         setUser(null);
+        localStorage.setItem("user", JSON.stringify(null));
       }
       setSignsLoading(false);
     });
     return () => {
       subscribe();
     };
-  }, []);
+  }, [user]);
 
   return <UserContext.Provider value={{ user, setUser, SignsLoading }}>{children}</UserContext.Provider>;
 };
