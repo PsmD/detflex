@@ -103,6 +103,7 @@ function SignUp({ state, closeModal, scrollY }) {
               value={userNameText}
               onChange={onChange}
               placeholder="Enter your user name"
+              maxLength={10}
             ></UserNameInput>
           </UserName>
           <Email>
@@ -129,6 +130,7 @@ function SignUp({ state, closeModal, scrollY }) {
               required
               value={passwordText}
               onChange={onChange}
+              maxLength={15}
             ></PasswordInput>
           </Password>
           <ConfirmPassword>
@@ -142,6 +144,7 @@ function SignUp({ state, closeModal, scrollY }) {
               placeholder="Confirm password"
               value={confirmPasswordText}
               onChange={onChange}
+              maxLength={15}
             ></ConfirmPasswordInput>
           </ConfirmPassword>
           <SignUpButton type="submit" onClick={onSubmit}>
