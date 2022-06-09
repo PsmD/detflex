@@ -94,7 +94,7 @@ function Navbar() {
         <MenuItems>
           {MovieMenu_obj.map(({ title, path }) => {
             return (
-              <Item>
+              <Item key={title}>
                 <ItemLink>
                   <Link to={`/page/${path}`}>{title}</Link>
                 </ItemLink>
@@ -130,6 +130,7 @@ function Navbar() {
                 value={searchText}
                 onChange={searchClick}
                 placeholder="Search!"
+                maxLength={30}
               ></Input>
             </form>
             <Link to={`/search/${searchText}`}>
