@@ -6,7 +6,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 import { dbService } from "../AboutFirebase/fbase";
-import { addDoc, onSnapshot, collection, query, where, orderBy, doc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, query, where, orderBy, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { UserContext } from "../AboutFirebase/UseAuth";
 import Comment from "../components/Comments/Comment";
 import moment from "moment";
@@ -37,7 +37,6 @@ function Detail() {
       })
       .catch((err) => {
         if (err.response) {
-          console.log(err.response.status);
           navigate("/404", { replace: true });
         }
       });
@@ -52,27 +51,33 @@ function Detail() {
   const getComments = async () => {
     const detailMovieIdRef = collection(dbService, "comments");
     const MovieQuery = query(detailMovieIdRef, where("detailMovieId", "==", movieId), orderBy("createdAt", "desc"));
-    await onSnapshot(MovieQuery, (snapshot) => {
-      const commentArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setDetailMovieComments(commentArray);
-      setCommentsLoading(false);
-    });
+    const commentsData = await getDocs(MovieQuery);
+    setDetailMovieComments(commentsData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setCommentsLoading(false);
   };
 
   const getLikes = async () => {
+    setLikesLoading(true);
     const detailMovieLikeIdRef = collection(dbService, "likes");
     const MovieLikeQuery = query(detailMovieLikeIdRef, where("detailMovieId", "==", movieId));
-    await onSnapshot(MovieLikeQuery, (snapshot) => {
-      const likeArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setDetailMovieLikes(likeArray);
-      setLikesLoading(false);
+    const likesData = await getDocs(MovieLikeQuery);
+    setDetailMovieLikes(likesData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setLikesLoading(false);
+  };
+
+  const onSubmitComment = async () => {
+    await addDoc(collection(dbService, "comments"), {
+      text: comment,
+      userName: user.user.displayName,
+      createtime: time.format("YYYY.MM.DD HH:mm"),
+      createdAt: time.format("YYYYMMDDHHmmssSSS"),
+      creatorId: user.user.uid,
+      detailMovieId: movieId,
+      editBoolean: false,
     });
+    setComment("");
+    getComments();
+    textRef.current.style.height = "auto";
   };
 
   const onSubmitLike = async () => {
@@ -88,6 +93,7 @@ function Detail() {
     } else if (!user.user) {
       alert("Please sign in");
     }
+    getLikes();
   };
 
   const textRef = useRef();
@@ -167,6 +173,9 @@ function Detail() {
         movieId={movieId}
         setComment={setComment}
         commentsLoading={commentsLoading}
+        onSubmitComment={onSubmitComment}
+        getComments={getComments}
+        setCommentsLoading={setCommentsLoading}
       />
     </>
   );

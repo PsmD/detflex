@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
 import MovieComments from "./MovieComments";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRotateRight } from "@fortawesome/free-solid-svg-icons";
 import CommentsLoad from "../../components/Loaders/CommentsLoad";
-import { doc, updateDoc, deleteDoc, getDoc, addDoc, collection } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { dbService } from "../../AboutFirebase/fbase";
 
 const Comment = ({
@@ -13,9 +15,9 @@ const Comment = ({
   detailMovieComments,
   user,
   time,
-  movieId,
-  setComment,
   commentsLoading,
+  onSubmitComment,
+  getComments,
 }) => {
   const [select, setSelect] = useState(false);
   const [eachSelectId, setEachSelectId] = useState("");
@@ -33,26 +35,13 @@ const Comment = ({
     setSelect(false);
   };
 
-  const onSubmitComment = async () => {
-    await addDoc(collection(dbService, "comments"), {
-      text: comment,
-      userName: user.user.displayName,
-      createtime: time.format("YYYY.MM.DD HH:mm"),
-      createdAt: time.format("YYYYMMDDHHmmssSSS"),
-      creatorId: user.user.uid,
-      detailMovieId: movieId,
-      editBoolean: false,
-    });
-    setComment("");
-    textRef.current.style.height = "auto";
-  };
-
   const deleteComent = async (id) => {
     const doIt = window.confirm("Are you sure you want to delete this comment?");
     const commentDoc = doc(dbService, "comments", id);
     if (doIt) {
       await deleteDoc(commentDoc);
     }
+    getComments();
   };
 
   const reportComent = () => {
@@ -86,6 +75,7 @@ const Comment = ({
       editBoolean: true,
     });
     setEdit(false);
+    getComments();
   };
 
   const onEditChange = (event) => {
@@ -93,6 +83,10 @@ const Comment = ({
       target: { value },
     } = event;
     setNewComment(value);
+  };
+
+  const refreshComment = () => {
+    getComments();
   };
 
   return (
@@ -111,9 +105,14 @@ const Comment = ({
             onInput={handleResizeHeight}
             maxLength={1000}
           />
-          <CommentSubmitButton comment={comment} onClick={onSubmitComment}>
-            Add
-          </CommentSubmitButton>
+          <BottomButtons>
+            <RefreshButton onClick={refreshComment}>
+              <FontAwesomeIcon icon={faArrowRotateRight} size="lg" />
+            </RefreshButton>
+            <CommentSubmitButton comment={comment} onClick={onSubmitComment}>
+              Add
+            </CommentSubmitButton>
+          </BottomButtons>
         </CommentForm>
       ) : (
         <NoCommentForm>Sign in is required for comment writing</NoCommentForm>
@@ -193,6 +192,32 @@ const CommentInput = styled.textarea`
   }
 `;
 
+const BottomButtons = styled.div`
+  align-self: end;
+  display: flex;
+`;
+
+const RefreshButton = styled.div`
+  width: 2.625em;
+  height: 1.875em;
+  margin-top: 0.813em;
+  margin-right: 0.4em;
+  cursor: pointer;
+  color: #4b4b4b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.001s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: none;
+  }
+`;
+
 const CommentSubmitButton = styled.div`
   width: 2.625em;
   height: 1.875em;
@@ -200,7 +225,6 @@ const CommentSubmitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  align-self: end;
   border-radius: 0.313em;
   border: none;
   pointer-events: ${(props) => props.comment.length === 0 && "none"};
