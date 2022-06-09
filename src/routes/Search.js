@@ -23,8 +23,8 @@ function Search() {
         `${BASE_PATH}/search/movie?query=${searchText}&api_key=${API_KEY}&page=${currentPage}&include_adult=false&sort_by=popularity.desc`
       )
       .then((res) => {
-        if (res.data.results.length === 0) {
-          navigate(`/nosearch/${searchText}`, { replace: true });
+        if (res.data.results.length === 0 || searchText.length < 2) {
+          navigate(`/nosearch/${searchText}`);
         }
         setMovies(res.data.results);
         if (res.data.total_pages < 500) {
