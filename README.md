@@ -343,6 +343,18 @@
 
 <br>
 
+**_`22/06/09`_**
+
+- **Movie detail page 댓글 구현(v5), Movie detail like(좋아요) 기능 구현(v2)**
+
+  - onSnapShot으로 구현해서 채팅처럼 실시간 업데이트 되던 댓글과 좋아요 기능을 사용자가 제출 버튼을 누르거나, 새로고침 또는 댓글 ADD 버튼 옆의 refresh 아이콘을 누르지 않으면 굳이 업데이트되지 않도록 변경
+
+  - `UseAuth.jsx` 인증 지속 방식 변경
+
+  - 그 외 변경사항으로는 SignUp시에 Username과 Password 글자수 제한이 없던 것을 수정, Navbar map함수에 key가 없던 것을 수정, 영화 검색시에 2글자 이상 작성하지 않으면 다른 주의 텍스트가 나오도록 수정
+
+<br>
+
 ## 📑 Reference
 
 <br>
