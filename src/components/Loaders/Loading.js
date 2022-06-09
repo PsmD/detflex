@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import LodingSpinner from "../../assets/Rolling-1s-197px-gray.gif";
 
 function Loading() {
   return (
     <Loader>
-      <span>Loading...</span>
+      <img src={LodingSpinner} alt="Loading..." width="80px" />
     </Loader>
   );
 }
