@@ -50,11 +50,19 @@ const MainSwiper = styled(Swiper)`
   min-height: 550px;
 
   @media ${({ theme }) => theme.device.desktop} {
-    font-size: 22px;
+    font-size: 20px;
+    width: 80%;
+    height: calc(80vh - 50px);
+    min-height: 900px;
+  }
+
+  @media screen and (max-width: 1900px) {
+    max-height: 900px;
   }
 
   @media screen and (max-width: 1400px) {
     font-size: 12px;
+    max-height: 700px;
   }
 
   @media ${({ theme }) => theme.device.small} {
