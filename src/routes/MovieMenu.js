@@ -32,7 +32,6 @@ function MovieMenu() {
             setTotalPages(500);
           }
         });
-      setLoading(false);
     } else if (menu === "top_rated") {
       await axios
         .get(
@@ -46,7 +45,6 @@ function MovieMenu() {
             setTotalPages(500);
           }
         });
-      setLoading(false);
     } else if (menu === "popular") {
       await axios
         .get(`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${currentPage}`)
@@ -58,7 +56,6 @@ function MovieMenu() {
             setTotalPages(500);
           }
         });
-      setLoading(false);
     } else if (menu === "upcoming") {
       await axios
         .get(
@@ -72,8 +69,8 @@ function MovieMenu() {
             setTotalPages(500);
           }
         });
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
