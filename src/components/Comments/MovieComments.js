@@ -111,7 +111,7 @@ export default MovieComments;
 
 const CommentTextBox = styled.div`
   width: 50vw;
-  margin-bottom: 1.894em;
+  margin-bottom: 4em;
   padding-bottom: 1.894em;
   border-bottom: 1px solid #dbdbdb;
   @media ${({ theme }) => theme.device.navSmall} {
@@ -243,7 +243,7 @@ const NoMovieCommentText = styled.div`
   justify-content: center;
   color: #656565;
   width: 50vw;
-  margin-bottom: 1.875em;
+  margin-bottom: 4em;
   padding-bottom: 1.875em;
   border-bottom: 1px solid #dbdbdb;
 `;
