@@ -71,6 +71,7 @@ const Comment = ({
   const editComment = async () => {
     await updateDoc(doc(dbService, "comments", eachSelectId), {
       text: newComment,
+      userName: user.user.displayName,
       createtime: time.format("YYYY.MM.DD HH:mm"),
       editBoolean: true,
     });
