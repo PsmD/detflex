@@ -1,63 +1,193 @@
 import styled from "styled-components";
 import { UserContext } from "../AboutFirebase/UseAuth";
-import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { dbService } from "../AboutFirebase/fbase";
+import { authService } from "../AboutFirebase/fbase";
+import { updateProfile, updateEmail } from "firebase/auth";
 import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
-import Loading from "../components/Loading";
+import Loading from "../components/Loaders/Loading";
 import axios from "axios";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
-import MovieCard from "../components/Cards/MovieCard";
+import { faHeart, faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
+import UserProfile from "../components/users/UserProfile";
+import UserLikedMovies from "../components/users/UserLikedMovies";
+import UserCommentedMovies from "../components/users/UserCommentedMovies";
 
 function MyPage() {
-  const [likedMovies, setLikedMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const user = useContext(UserContext);
-  const { movieId } = useParams();
   const [userLikeMovies, setUserLikeMovies] = useState([]);
-  const userLikeObject = userLikeMovies.find((userLikeObject) => userLikeObject.creatorId === user.user.uid);
+  const [likedMovies, setLikedMovies] = useState([]);
+  const [userCommentMovies, setUserCommentMovies] = useState([]);
+  const [commentedMovies, setCommentedMovies] = useState([]);
+  const [newEmail, setNewEmail] = useState("");
+  const [editEmailInput, setEditEmailInput] = useState(false);
+  const [newUserName, setNewUserName] = useState("");
+  const [editUserNameInput, setEditUserNameInput] = useState(false);
+  const [moreLikedMovies, setMoreLikedMovies] = useState(false);
+  const [moreCommentedMovies, setMoreCommentedMovies] = useState(false);
 
-  const fetchData = async () => {
+  const onEmailChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewEmail(value);
+  };
+
+  const onUserNameChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewUserName(value);
+  };
+
+  const getLikedMovieId = async () => {
     const LikedQuerydRef = collection(dbService, "likes");
     const LikedQuery = query(LikedQuerydRef, where("creatorId", "==", user.user.uid), orderBy("createdAt", "desc"));
     const LikedSnapShot = await getDocs(LikedQuery);
-    const data = LikedSnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    setUserLikeMovies(data);
-    console.log(userLikeMovies);
+    setUserLikeMovies(LikedSnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     setLoading(false);
   };
 
-  const getLikedMovie = async () => {
-    await axios.get(`${BASE_PATH}/movie/${userLikeMovies.detailMovieId}?api_key=${API_KEY}`).then((res) => {
-      setLikedMovies(res.data);
-      console.log(res.data);
+  const getCommentedMovieId = async () => {
+    const CommentedQuerydRef = collection(dbService, "comments");
+    const CommentedQuery = query(
+      CommentedQuerydRef,
+      where("creatorId", "==", user.user.uid),
+      orderBy("createdAt", "desc")
+    );
+    const CommentedSnapShot = await getDocs(CommentedQuery);
+    setUserCommentMovies(CommentedSnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+
+  const onMoreLikedMovies = () => {
+    if (moreLikedMovies) {
+      setMoreLikedMovies(false);
+    } else {
+      setMoreLikedMovies(true);
+    }
+  };
+
+  const onMoreCommentedMovies = () => {
+    if (moreCommentedMovies) {
+      setMoreCommentedMovies(false);
+    } else {
+      setMoreCommentedMovies(true);
+    }
+  };
+
+  const getLikedMovies = async () => {
+    await userLikeMovies.map((lm) => {
+      axios.get(`${BASE_PATH}/movie/${lm.detailMovieId}?api_key=${API_KEY}`).then((res) => {
+        setLikedMovies((prev) => [...prev, res.data]);
+      });
     });
   };
 
+  const getCommentedMovies = async () => {
+    await userCommentMovies.slice(0, 5).map((cm) => {
+      axios.get(`${BASE_PATH}/movie/${cm.detailMovieId}?api_key=${API_KEY}`).then((res) => {
+        setCommentedMovies((prev) => [...prev, res.data]);
+      });
+    });
+  };
+
+  const openEditEmail = () => {
+    setNewEmail(user.user.email);
+    setEditEmailInput(true);
+  };
+
+  const closeEditEmail = () => {
+    setEditEmailInput(false);
+  };
+
+  const editEamil = async () => {
+    const doIt = window.confirm("Are you sure you want to edit this email?");
+    if (doIt) {
+      await updateEmail(authService.currentUser, newEmail)
+        .then(() => {
+          setEditEmailInput(false);
+        })
+        .catch((error) => {
+          console.log(error.code);
+          if (error.code === "auth/requires-recent-login") {
+            alert("You have not signed out for a long time. Please sign in again");
+          } else if (error.code === "auth/email-already-in-use") {
+            alert("Email is already in use");
+          } else if (error.code === "auth/invalid-email") {
+            alert("Please write it in the correct email format");
+          }
+        });
+    }
+  };
+
+  const openEditUserName = () => {
+    setNewUserName(user.user.displayName);
+    setEditUserNameInput(true);
+  };
+
+  const closeEditUserName = () => {
+    setEditUserNameInput(false);
+  };
+
+  const editUserName = async () => {
+    const doIt = window.confirm("Are you sure you want to edit this user name?");
+    if (doIt) {
+      await updateProfile(authService.currentUser, { displayName: newUserName }).catch((error) => {
+        alert("failed");
+      });
+      setEditUserNameInput(false);
+    }
+  };
+
   useEffect(() => {
-    fetchData();
-    getLikedMovie();
-  }, []);
+    getCommentedMovieId();
+    getLikedMovieId();
+    getLikedMovies();
+    getCommentedMovies();
+  }, [loading, user]);
 
   return (
     <>
-      {loading ? (
+      {!user.user && loading ? (
         <Loading />
       ) : (
         <Container>
-          <div>{user.user.email}</div>
-          <div>{user.user.displayName}</div>
-          <div>{userLikeObject.creatorId}</div>
-          {likedMovies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movieId={movie.id}
-              title={movie.title}
-              poster_path={`${IMAGE_BASE_URL}original${movie.poster_path}`}
-              year={movie.release_date}
-              vote_average={movie.vote_average}
-            />
-          ))}
+          <UserProfile
+            editEmailInput={editEmailInput}
+            user={user}
+            openEditEmail={openEditEmail}
+            newEmail={newEmail}
+            onEmailChange={onEmailChange}
+            closeEditEmail={closeEditEmail}
+            editEamil={editEamil}
+            editUserNameInput={editUserNameInput}
+            openEditUserName={openEditUserName}
+            newUserName={newUserName}
+            onUserNameChange={onUserNameChange}
+            closeEditUserName={closeEditUserName}
+            editUserName={editUserName}
+          />
+          <UserLikedMovies
+            faHeart={faHeart}
+            faAngleUp={faAngleUp}
+            onMoreLikedMovies={onMoreLikedMovies}
+            faAngleDown={faAngleDown}
+            likedMovies={likedMovies}
+            IMAGE_BASE_URL={IMAGE_BASE_URL}
+            moreLikedMovies={moreLikedMovies}
+          />
+
+          <UserCommentedMovies
+            faCommentDots={faCommentDots}
+            moreCommentedMovies={moreCommentedMovies}
+            faAngleUp={faAngleUp}
+            onMoreCommentedMovies={onMoreCommentedMovies}
+            faAngleDown={faAngleDown}
+            commentedMovies={commentedMovies}
+            IMAGE_BASE_URL={IMAGE_BASE_URL}
+          />
         </Container>
       )}
     </>
@@ -65,6 +195,11 @@ function MyPage() {
 }
 export default MyPage;
 
-const Container = styled.div``;
-
-const LikedMoviesBox = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+  width: 100vw;
+`;
