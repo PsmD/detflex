@@ -25,7 +25,7 @@ function EditComment({
             onInput={handleResizeHeight}
             maxLength={1000}
             autoFocus
-            onFocus={function (e) {
+            onFocus={(e) => {
               var val = e.target.value;
               e.target.value = "";
               e.target.value = val;
@@ -90,6 +90,7 @@ const EditCommentSubmitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease;
   pointer-events: ${(props) => (props.newComment.length === 0 || props.prevComment === props.newComment) && "none"};
   background-color: ${(props) =>
     props.newComment.length === 0 || props.prevComment === props.newComment ? "#E9E9E9" : "#8572FF"};

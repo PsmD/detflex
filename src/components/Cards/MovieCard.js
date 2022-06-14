@@ -5,18 +5,16 @@ import image_regular from "../../img/image_regular.svg";
 
 function MovieCard({ movieId, title, poster_path, year, vote_average }) {
   return (
-    <>
-      <Link to={`/movie/${movieId}`}>
-        <Movie>
-          <MovieImg poster_path={poster_path} />
-          <MovieTextBox>
-            <MovieTitle>{title.length > 18 ? `${title.slice(0, 18)}...` : title}</MovieTitle>
-            <MovieYear>{year ? year : "Unknown"}</MovieYear>
-            <MovieRating>Rating: {vote_average} / 10</MovieRating>
-          </MovieTextBox>
-        </Movie>
-      </Link>
-    </>
+    <Link to={`/movie/${movieId}`}>
+      <Movie>
+        <MovieImg poster_path={poster_path} />
+        <MovieTextBox>
+          <MovieTitle>{title.length > 18 ? `${title.slice(0, 18)}...` : title}</MovieTitle>
+          <MovieYear>{year ? year : "Unknown"}</MovieYear>
+          <MovieRating>Rating: {vote_average} / 10</MovieRating>
+        </MovieTextBox>
+      </Movie>
+    </Link>
   );
 }
 
