@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 import theme from "./themes/theme";
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import MovieMenu from "./routes/MovieMenu";
 import Search from "./routes/Search";
 import NotFound from "./routes/NotFound";
