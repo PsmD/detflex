@@ -22,8 +22,8 @@ function MyPage() {
   const [userCommentMovies, setUserCommentMovies] = useState([]);
   const [commentedMovies, setCommentedMovies] = useState([]);
   const [newEmail, setNewEmail] = useState("");
-  const [editEmailInput, setEditEmailInput] = useState(false);
   const [newUserName, setNewUserName] = useState("");
+  const [editEmailInput, setEditEmailInput] = useState(false);
   const [editUserNameInput, setEditUserNameInput] = useState(false);
   const [moreLikedMovies, setMoreLikedMovies] = useState(false);
   const [moreCommentedMovies, setMoreCommentedMovies] = useState(false);
@@ -178,7 +178,6 @@ function MyPage() {
             IMAGE_BASE_URL={IMAGE_BASE_URL}
             moreLikedMovies={moreLikedMovies}
           />
-
           <UserCommentedMovies
             faCommentDots={faCommentDots}
             moreCommentedMovies={moreCommentedMovies}
@@ -200,6 +199,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 120px;
   width: 100vw;
 `;
