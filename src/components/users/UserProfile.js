@@ -110,11 +110,23 @@ const EmailSection = styled.div`
   font-size: 20px;
   justify-content: space-between;
   font-family: "Work Sans", sans-serif;
+  transition: all 0.2s ease;
+
+  @media screen and (max-width: 550px) {
+    width: 450px;
+    font-size: 18px;
+  }
 `;
 
 const EditEmailForm = styled.form`
   font-size: 20px;
   width: 500px;
+  transition: all 0.2s ease;
+
+  @media screen and (max-width: 550px) {
+    width: 450px;
+    font-size: 18px;
+  }
 `;
 
 const EmailEditSection = styled.div`
@@ -193,6 +205,12 @@ const UserNameSection = styled.div`
   font-size: 20px;
   justify-content: space-between;
   font-family: "Work Sans", sans-serif;
+  transition: all 0.2s ease;
+
+  @media screen and (max-width: 550px) {
+    width: 450px;
+    font-size: 18px;
+  }
 `;
 
 const UserNameEditButton = styled.div`
@@ -215,6 +233,12 @@ const UserNameEditButton = styled.div`
 const EditUserNameForm = styled.form`
   font-size: 20px;
   width: 500px;
+  transition: all 0.2s ease;
+
+  @media screen and (max-width: 550px) {
+    width: 450px;
+    font-size: 18px;
+  }
 `;
 
 const UserNameEditSection = styled.div`

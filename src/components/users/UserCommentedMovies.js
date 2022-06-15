@@ -18,9 +18,9 @@ const UserCommentedMovies = ({
           <p />
           <div>
             <FontAwesomeIcon style={{ marginRight: "8px" }} icon={faCommentDots} />
-            List of commented movies
+            Commented movies
           </div>
-          {moreCommentedMovies ? (
+          {commentedMovies.length === 0 ? null : moreCommentedMovies ? (
             <FontAwesomeIcon icon={faAngleUp} style={{ cursor: "pointer" }} onClick={onMoreCommentedMovies} />
           ) : (
             <FontAwesomeIcon icon={faAngleDown} style={{ cursor: "pointer" }} onClick={onMoreCommentedMovies} />
@@ -83,6 +83,18 @@ const CommentedMoviesList = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
   width: 100%;
+
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media screen and (max-width: 750px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 550px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const NoCommentedMovie = styled.div`

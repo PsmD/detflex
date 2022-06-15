@@ -18,9 +18,9 @@ const UserLikedMovies = ({
           <p />
           <div>
             <FontAwesomeIcon style={{ color: "red", marginRight: "8px" }} icon={faHeart} />
-            List of liked movies
+            Liked movies
           </div>
-          {moreLikedMovies ? (
+          {likedMovies.length === 0 ? null : moreLikedMovies ? (
             <FontAwesomeIcon icon={faAngleUp} style={{ cursor: "pointer" }} onClick={onMoreLikedMovies} />
           ) : (
             <FontAwesomeIcon icon={faAngleDown} style={{ cursor: "pointer" }} onClick={onMoreLikedMovies} />
@@ -84,6 +84,18 @@ const LikedMoviesList = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
   width: 100%;
+
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media screen and (max-width: 750px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 550px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const NoLikedMovie = styled.div`
