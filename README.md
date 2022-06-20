@@ -10,7 +10,6 @@
     <img src="https://img.shields.io/badge/React-^17.0.2-blue?logo=React"/>
     <img src="https://img.shields.io/badge/react_dom-^17.0.2-blueviolet?logo=ReactOS"/>
     <img src="https://img.shields.io/badge/react_router_dom-^6.3.0-critical?logo=React Table"/>
-    <img src="https://img.shields.io/badge/Recoil-^0.6.1-green?logo=recoil"/>
     <img src="https://img.shields.io/badge/Framer Motion-^4.1.17-purple?logo=Framer"/>
     <img src="https://img.shields.io/badge/Styled components-^5.3.5-ff69b4?logo=styled-components"/>
     <img src="https://img.shields.io/badge/Swiper-^8.1.0-6332F6?logo=Swiper"/>
@@ -364,6 +363,18 @@
   - Navbar에서 클릭된 상태인 메뉴 텍스트는 강조되게 개선.
 
   - 그 외 사항으로는 유저 닉네임이 수정된 상태에서 전에 본인이 작성한 댓글을 수정해도 전 유저 닉네임이 변경된 닉네임으로 바뀌지 않던 버그 수정.
+
+<br>
+
+**_`22/06/20`_**
+
+- **My page 구현(v2), 검사창 에러 메시지 제거**
+
+  - My page 화면 반응형 웹 디자인
+
+  - 웹 사이트 배포 전 코드 정리
+
+  - 경고성 에러 메시지 제거
 
 <br>
 
