@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MovieCard from "../Cards/MovieCard";
+import MovieCard from "../cards/MovieCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const UserCommentedMovies = ({

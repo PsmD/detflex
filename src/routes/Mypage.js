@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { UserContext } from "../AboutFirebase/UseAuth";
+import { UserContext } from "../aboutFirebase/UseAuth";
 import { useState, useEffect, useContext } from "react";
-import { dbService } from "../AboutFirebase/fbase";
-import { authService } from "../AboutFirebase/fbase";
+import { dbService } from "../aboutFirebase/fbase";
+import { authService } from "../aboutFirebase/fbase";
 import { updateProfile, updateEmail } from "firebase/auth";
 import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
-import Loading from "../components/Loaders/Loading";
+import Loading from "../components/loaders/Loading";
 import axios from "axios";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
 import { faHeart, faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +13,7 @@ import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 import UserProfile from "../components/users/UserProfile";
 import UserLikedMovies from "../components/users/UserLikedMovies";
 import UserCommentedMovies from "../components/users/UserCommentedMovies";
-import MyPageLoad from "../components/Loaders/MyPageLoad";
+import MyPageLoad from "../components/loaders/MyPageLoad";
 
 function MyPage() {
 	const user = useContext(UserContext);
@@ -129,7 +129,6 @@ function MyPage() {
 					setEditEmailInput(false);
 				})
 				.catch((error) => {
-					console.log(error.code);
 					if (error.code === "auth/requires-recent-login") {
 						alert("You have not signed out for a long time. Please sign in again");
 					} else if (error.code === "auth/email-already-in-use") {

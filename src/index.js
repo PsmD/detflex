@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./globalStyles.css";
-import UseAuth from "./AboutFirebase/UseAuth";
+import UseAuth from "./aboutFirebase/UseAuth";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <UseAuth>
-      <App />
-    </UseAuth>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<UseAuth>
+			<App />
+		</UseAuth>
+	</React.StrictMode>,
+	document.getElementById("root"),
 );
