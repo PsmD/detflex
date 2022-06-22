@@ -4,6 +4,14 @@
 
 <br>
 
+![HomeScreen](https://user-images.githubusercontent.com/92723332/175007115-1e99c71a-1663-4a88-a810-b50549517287.png)
+
+<p align='center'>
+    <a href="https://detflex-23384.firebaseapp.com">Demo</a>
+</p>
+
+<br>
+
 ## 🛠 Using
 
 <p align='center'>
@@ -15,6 +23,57 @@
     <img src="https://img.shields.io/badge/Swiper-^8.1.0-6332F6?logo=Swiper"/>
     <img src="https://img.shields.io/badge/Firebase-^9.6.11-yellow?logo=Firebase"/>
 </p>
+
+<br>
+
+## 📁 Pages & Function
+
+<br>
+
+> ### Home
+
+- autoplay(메인 슬라이더만), drag, navigation, pagination으로 이동 가능한 슬라이더 사용 가능(Swiper 사용)
+
+<br>
+
+> ### Detail
+
+- 영화 상세정보(줄거리, 출연진 포함) 열람 가능
+- ❤ 버튼을 눌러 해당 영화를 Liked movies 목록에 추가 가능
+- 하단으로 내려가면 Comments CRUD 가능
+
+<br>
+
+> ### Movies
+
+- Navbar의 Movie menu(Top Rating, Now Playing, Popular, Up comming) 클릭 시 갈 수 있는 페이지로, 한 페이지 당 20개의 영화 카드들을 볼 수 있고, 하단으로 내려가면 있는 pagination으로 더 많은 영화들을 열람 가능(최대 500페이지)
+
+<br>
+
+> ### My page
+
+- 유저의 Email과 User name 변경 가능
+- 유저가 like 버튼을 누른 영화와 comment를 작성한 영화 카드 열람 가능. 초기 화면엔 영화 카드가 5개까지만 보여지는데 우측의 아래 화살표를 클릭하면 모두 확인 가능(화살표는 영화가 6개 이상일때만 보인다.)
+
+<br>
+
+> ### Search
+
+- Navbar 우측의 input에 text를 입력하고 Enter나 돋보기 그림을 클릭하면 갈 수 있는 페이지로, 영화를 검색할 수 있다.
+
+<br>
+
+> ### No search, Not found
+
+- 검색어에 해당하는 영화를 찾지 못하면 `/nosearch` 페이지로 이동하게 된다.
+- 유저가 잘못된 경로로 이동하려고 하면 `/404`로 이동하게 된다.
+
+<br>
+
+> ### Etc
+
+- 모든 페이지에 Media query 처리를 해놓아서 창 크기를 줄인 채로 다른 모든 페이지로 이동 가능
+- Navbar의 Sign in, Sign up 클릭 시 modal 형태로 나오는 창으로 회원가입과 로그인, Google 로그인 가능
 
 <br>
 
@@ -378,10 +437,26 @@
 
 <br>
 
+**_`22/06/22`_**
+
+- **firebase hosting (웹 사이트 배포)**
+
+  - firebase hosting을 이용한 배포, 배포 전 빌드 과정을 거쳐 용량을 축소
+
+<br>
+
 ## 📑 Reference
 
 <br>
 
-- 참고 강의: https://nomadcoders.co/react-for-beginners
+- 참고 강의
 
-- 영화 API 제공 사이트: https://www.themoviedb.org/
+  - https://nomadcoders.co/react-for-beginners
+
+  - https://nomadcoders.co/react-masterclass
+
+  - https://nomadcoders.co/nwitter
+
+- 영화 API 제공 사이트
+
+  - https://www.themoviedb.org/
