@@ -208,13 +208,19 @@ const MovieDetailContainer = styled.div`
 	align-items: center;
 	transition: all 0.1s linear;
 
-	@media screen and (max-width: 1900px) {
-		max-height: 800px;
+	@media screen and (max-width: 2400px) {
+		max-height: 900px;
+		font-size: 20px;
+	}
+
+	@media screen and (max-width: 1920px) {
+		font-size: 16px;
 	}
 
 	@media ${({ theme }) => theme.device.desktop} {
 		min-height: 1100px;
 		max-height: 2000px;
+		font-size: 25px;
 	}
 
 	@media screen and (max-width: 820px) {

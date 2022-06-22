@@ -107,8 +107,8 @@ const MovieBg = styled.div`
 	background-size: cover;
 	background-position: center center;
 
-	@media screen and (max-width: 1900px) {
-		max-height: 800px;
+	@media screen and (max-width: 2400px) {
+		max-height: 900px;
 	}
 	@media ${({ theme }) => theme.device.desktop} {
 		min-height: 1100px;
@@ -132,10 +132,9 @@ const MovieBgWraper = styled.div`
 	opacity: 50%;
 	z-index: 3;
 
-	@media screen and (max-width: 1900px) {
-		max-height: 800px;
+	@media screen and (max-width: 2400px) {
+		max-height: 900px;
 	}
-
 	@media ${({ theme }) => theme.device.desktop} {
 		min-height: 1100px;
 		max-height: 2000px;
@@ -157,13 +156,12 @@ const MovieContainer = styled.div`
 	margin-top: 6.25em;
 	color: white;
 
-	@media screen and (max-width: 1900px) {
-		max-height: 800px;
+	@media ${({ theme }) => theme.device.desktop} {
+		max-height: 2000px;
 	}
 
-	@media ${({ theme }) => theme.device.desktop} {
-		font-size: 25px;
-		max-height: 2000px;
+	@media screen and (max-width: 2400px) {
+		max-height: 900px;
 	}
 
 	@media screen and (max-width: 820px) {

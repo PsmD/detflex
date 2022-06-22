@@ -56,8 +56,9 @@ const MainSwiper = styled(Swiper)`
 		min-height: 900px;
 	}
 
-	@media screen and (max-width: 1900px) {
+	@media screen and (max-width: 2400px) {
 		max-height: 900px;
+		font-size: 16px;
 	}
 
 	@media screen and (max-width: 1490px) {

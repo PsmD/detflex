@@ -191,7 +191,7 @@ const Select = styled.div`
 		right: 21vw;
 	}
 
-	@media screen and (max-width: 1900px) {
+	@media screen and (max-width: 2400px) {
 		right: 21.5vw;
 	}
 
