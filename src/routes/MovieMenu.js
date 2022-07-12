@@ -6,7 +6,7 @@ import axios from "axios";
 import Pagination from "../components/Pagination";
 import styled from "styled-components";
 import { API_KEY, BASE_PATH, IMAGE_BASE_URL } from "../api";
-import { currentday, prevmonthday, nextyearday } from "../atom/Date";
+import { currentday, prevmonthday, nextyearday } from "../utils/Date";
 
 function MovieMenu() {
 	const { menu } = useParams();
@@ -20,57 +20,45 @@ function MovieMenu() {
 
 	const getMovies = async () => {
 		if (menu === "now_playing") {
-			await axios
-				.get(
-					`${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${currentPage}`,
-				)
-				.then((res) => {
-					setMovies(res.data.results);
-					if (res.data.total_pages < 500) {
-						setTotalPages(res.data.total_pages);
-					} else {
-						setTotalPages(500);
-					}
-				});
+			const res = await axios.get(
+				`${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${prevmonthday}&primary_release_date.lte=${currentday}&page=${currentPage}`,
+			);
+			setMovies(res.data.results);
+			if (res.data.total_pages < 500) {
+				setTotalPages(res.data.total_pages);
+			} else {
+				setTotalPages(500);
+			}
 		} else if (menu === "top_rated") {
-			await axios
-				.get(
-					`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=150&page=${currentPage}`,
-				)
-				.then((res) => {
-					setMovies(res.data.results);
-					if (res.data.total_pages < 500) {
-						setTotalPages(res.data.total_pages);
-					} else {
-						setTotalPages(500);
-					}
-				});
+			const res = await axios.get(
+				`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=150&page=${currentPage}`,
+			);
+			setMovies(res.data.results);
+			if (res.data.total_pages < 500) {
+				setTotalPages(res.data.total_pages);
+			} else {
+				setTotalPages(500);
+			}
 		} else if (menu === "popular") {
-			await axios
-				.get(
-					`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${currentPage}`,
-				)
-				.then((res) => {
-					setMovies(res.data.results);
-					if (res.data.total_pages < 500) {
-						setTotalPages(res.data.total_pages);
-					} else {
-						setTotalPages(500);
-					}
-				});
+			const res = await axios.get(
+				`${BASE_PATH}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${currentPage}`,
+			);
+			setMovies(res.data.results);
+			if (res.data.total_pages < 500) {
+				setTotalPages(res.data.total_pages);
+			} else {
+				setTotalPages(500);
+			}
 		} else if (menu === "upcoming") {
-			await axios
-				.get(
-					`${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${currentday}&primary_release_date.lte=${nextyearday}&page=${currentPage}`,
-				)
-				.then((res) => {
-					setMovies(res.data.results);
-					if (res.data.total_pages < 500) {
-						setTotalPages(res.data.total_pages);
-					} else {
-						setTotalPages(500);
-					}
-				});
+			const res = await axios.get(
+				`${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${currentday}&primary_release_date.lte=${nextyearday}&page=${currentPage}`,
+			);
+			setMovies(res.data.results);
+			if (res.data.total_pages < 500) {
+				setTotalPages(res.data.total_pages);
+			} else {
+				setTotalPages(500);
+			}
 		}
 		setLoading(false);
 	};

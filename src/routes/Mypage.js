@@ -84,8 +84,8 @@ function MyPage() {
 		}
 	};
 
-	const getLikedMovies = async () => {
-		await userLikeMovies.forEach((lm) => {
+	const getLikedMovies = () => {
+		userLikeMovies.forEach((lm) => {
 			axios.get(`${BASE_PATH}/movie/${lm.detailMovieId}?api_key=${API_KEY}`).then((res) => {
 				setLikedMovies((prev) => [...prev, res.data]);
 				setLikedMoviesLoading(false);
@@ -98,8 +98,8 @@ function MyPage() {
 		}, 1000);
 	};
 
-	const getCommentedMovies = async () => {
-		await userCommentMovies.forEach((cm) => {
+	const getCommentedMovies = () => {
+		userCommentMovies.forEach((cm) => {
 			axios.get(`${BASE_PATH}/movie/${cm.detailMovieId}?api_key=${API_KEY}`).then((res) => {
 				setCommentedMovies((prev) => [...prev, res.data]);
 				setCommentedMoviesLoading(false);
@@ -124,19 +124,18 @@ function MyPage() {
 	const editEamil = async () => {
 		const doIt = window.confirm("Are you sure you want to edit this email?");
 		if (doIt) {
-			await updateEmail(authService.currentUser, newEmail)
-				.then(() => {
-					setEditEmailInput(false);
-				})
-				.catch((error) => {
-					if (error.code === "auth/requires-recent-login") {
-						alert("You have not signed out for a long time. Please sign in again");
-					} else if (error.code === "auth/email-already-in-use") {
-						alert("Email is already in use");
-					} else if (error.code === "auth/invalid-email") {
-						alert("Please write it in the correct email format");
-					}
-				});
+			try {
+				await updateEmail(authService.currentUser, newEmail);
+				setEditEmailInput(false);
+			} catch (error) {
+				if (error.code === "auth/requires-recent-login") {
+					alert("You have not signed out for a long time. Please sign in again");
+				} else if (error.code === "auth/email-already-in-use") {
+					alert("Email is already in use");
+				} else if (error.code === "auth/invalid-email") {
+					alert("Please write it in the correct email format");
+				}
+			}
 		}
 	};
 
@@ -152,9 +151,11 @@ function MyPage() {
 	const editUserName = async () => {
 		const doIt = window.confirm("Are you sure you want to edit this user name?");
 		if (doIt) {
-			await updateProfile(authService.currentUser, { displayName: newUserName }).catch((error) => {
+			try {
+				await updateProfile(authService.currentUser, { displayName: newUserName });
+			} catch (err) {
 				alert("failed");
-			});
+			}
 			setEditUserNameInput(false);
 		}
 	};

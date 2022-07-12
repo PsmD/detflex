@@ -7,7 +7,7 @@ import TopRatingSlider from "../components/sliders/TopRatingSlider";
 import UpcomingSlider from "../components/sliders/UpcomingSlider";
 import { API_KEY, BASE_PATH } from "../api";
 import styled from "styled-components";
-import { currentday, nextyearday } from "../atom/Date";
+import { currentday, nextyearday } from "../utils/Date";
 
 function Home() {
 	const [loading, setLoading] = useState(true);
@@ -18,53 +18,45 @@ function Home() {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
 	const nowPlayingGetMovies = async () => {
-		await axios
-			.get(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`)
-			.then((res) => {
-				setNowPlayingMovies(res.data.results);
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			const res = await axios.get(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`);
+			setNowPlayingMovies(res.data.results);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const upcomingGetMovies = async () => {
-		await axios
-			.get(
+		try {
+			const res = await axios.get(
 				`${BASE_PATH}/discover/movie?api_key=${API_KEY}&primary_release_date.gte=${currentday}&primary_release_date.lte=${nextyearday}`,
-			)
-			.then((res) => {
-				setUpcomingMovies(res.data.results);
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+			);
+			setUpcomingMovies(res.data.results);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const popularGetMovies = async () => {
-		await axios
-			.get(`${BASE_PATH}/movie/popular?api_key=${API_KEY}`)
-			.then((res) => {
-				setPopularMovies(res.data.results);
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			const res = await axios.get(`${BASE_PATH}/movie/popular?api_key=${API_KEY}`);
+			setPopularMovies(res.data.results);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const topRatingGetMovies = async () => {
-		await axios
-			.get(`${BASE_PATH}/movie/top_rated?api_key=${API_KEY}`)
-			.then((res) => {
-				setTopRatingMovies(res.data.results);
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			const res = await axios.get(`${BASE_PATH}/movie/top_rated?api_key=${API_KEY}`);
+			setTopRatingMovies(res.data.results);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const handleResize = () => {
