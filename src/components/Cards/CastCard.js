@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import image_regular from "../../img/image_regular.svg";
+import image_regular from "../../assets/image_regular.svg";
 
 function CastCard({ name, profile_path, character }) {
 	return (
