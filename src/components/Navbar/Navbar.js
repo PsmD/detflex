@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MovieMenu_obj } from "../../atom/NavMenu";
+import { MovieMenu_obj } from "../../utils/NavMenu";
 import { motion, useAnimation, useViewportScroll } from "framer-motion";
 import { faMagnifyingGlass, faBars } from "@fortawesome/free-solid-svg-icons";
 import { authService } from "../../aboutFirebase/fbase";
