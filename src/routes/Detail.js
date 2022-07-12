@@ -39,23 +39,20 @@ function Detail() {
 		detailMovieLikes.find((userLikeObject) => userLikeObject.creatorId === user.user.uid);
 
 	const getDetailMovie = async () => {
-		await axios
-			.get(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`)
-			.then((res) => {
-				setDetail(res.data);
-				setLoading(false);
-			})
-			.catch((err) => {
-				if (err.response) {
-					navigate("/404", { replace: true });
-				}
-			});
+		try {
+			const res = await axios.get(`${BASE_PATH}/movie/${movieId}?api_key=${API_KEY}`);
+			setDetail(res.data);
+			setLoading(false);
+		} catch (err) {
+			if (err) {
+				navigate("/404", { replace: true });
+			}
+		}
 	};
 
 	const getMovieCast = async () => {
-		await axios.get(`${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}`).then((res) => {
-			setCast(res.data.cast);
-		});
+		const res = await axios.get(`${BASE_PATH}/movie/${movieId}/credits?api_key=${API_KEY}`);
+		setCast(res.data.cast);
 	};
 
 	const getComments = async () => {

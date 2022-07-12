@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../components/loaders/Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -17,27 +17,25 @@ function Search() {
 	const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(10);
 	const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
-	const getMovies = useCallback(async () => {
-		await axios
-			.get(
+	const getMovies = async () => {
+		try {
+			const res = await axios.get(
 				`${BASE_PATH}/search/movie?query=${searchText}&api_key=${API_KEY}&page=${currentPage}&include_adult=false&sort_by=popularity.desc`,
-			)
-			.then((res) => {
-				if (res.data.results.length === 0 || searchText.length < 2) {
-					navigate(`/nosearch/${searchText}`);
-				}
-				setMovies(res.data.results);
-				if (res.data.total_pages < 500) {
-					setTotalPages(res.data.total_pages);
-				} else {
-					setTotalPages(500);
-				}
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [searchText, currentPage, navigate]);
+			);
+			if (res.data.results.length === 0 || searchText.length < 2) {
+				navigate(`/nosearch/${searchText}`);
+			}
+			setMovies(res.data.results);
+			if (res.data.total_pages < 500) {
+				setTotalPages(res.data.total_pages);
+			} else {
+				setTotalPages(500);
+			}
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	useEffect(() => {
 		getMovies();
@@ -45,7 +43,7 @@ function Search() {
 		return () => {
 			setLoading(false);
 		};
-	}, [getMovies, currentPage]);
+	}, [searchText, navigate, currentPage]);
 
 	return (
 		<Container>
