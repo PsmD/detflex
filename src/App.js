@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import theme from "./themes/theme";
-import Home from "./routes/Home";
-import Detail from "./routes/Detail";
+import mediaQuery from "./styles/mediaQuery";
+import Home from "./pages/Home";
+import Detail from "./pages/Detail";
 import Navbar from "./components/navbar/Navbar";
-import MovieMenu from "./routes/MovieMenu";
-import Search from "./routes/Search";
-import NotFound from "./routes/NotFound";
-import MyPage from "./routes/Mypage";
-import NoSearch from "./routes/NoSearch";
+import MovieMenu from "./pages/MovieMenu";
+import Search from "./pages/Search";
+import NotFound from "./pages/NotFound";
+import MyPage from "./pages/Mypage";
+import NoSearch from "./pages/NoSearch";
 
 function App() {
 	return (
 		<BrowserRouter>
-			<ThemeProvider theme={theme}>
+			<ThemeProvider mediaQuery={mediaQuery}>
 				<Navbar />
 				<Routes>
 					<Route path={"/"} element={<Home />} />

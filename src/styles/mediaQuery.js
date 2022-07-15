@@ -14,8 +14,8 @@ const device = {
 	desktop: `screen and (min-width: ${deviceSizes.desktop})`,
 };
 
-const theme = {
+const mediaQuery = {
 	device,
 };
 
-export default theme;
+export default mediaQuery;

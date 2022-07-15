@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import "./globalStyles.css";
+import "./styles/globalStyles.css";
 import UseAuth from "./aboutFirebase/UseAuth";
 
 ReactDOM.render(
